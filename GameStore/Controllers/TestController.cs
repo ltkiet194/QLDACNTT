@@ -9,8 +9,12 @@ namespace GameStore.Controllers
     public class TestController : Controller
     {
         // GET: Test
+
+        //QUy Thay JK
         public ActionResult Index()
         {
+            int a = 5;
+
             return View();
         }
     }
