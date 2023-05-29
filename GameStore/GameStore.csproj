@@ -481,11 +481,13 @@
     <Content Include="Views\StoreCart\StoreCart.cshtml" />
     <Content Include="Views\StoreCheckout\StoreCheckout.cshtml" />
     <Content Include="Views\Catalog\Catalog.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
