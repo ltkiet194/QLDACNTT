@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>GoodGames | Community and Store HTML Game Template</title>
+    <meta name="description" content="GoodGames - Bootstrap template for communities and games store">
+    <meta name="keywords" content="game, gaming, template, HTML template, responsive, Bootstrap, premium">
+    <meta name="author" content="_nK">
+    <link rel="icon" type="image/png" href="~/Theme/images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7cOpen+Sans:400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/Theme/vendor/bootstrap/dist/css/bootstrap.min.css">
+    <script defer src="~/Theme/vendor/fontawesome-free/js/all.js"></script>
+    <script defer src="~/Theme/vendor/fontawesome-free/js/v4-shims.js"></script>
+    <link rel="stylesheet" href="~/Theme/vendor/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Theme/vendor/flickity/dist/flickity.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Theme/vendor/photoswipe/dist/photoswipe.css">
+    <link rel="stylesheet" type="text/css" href="~/Theme/vendor/photoswipe/dist/default-skin/default-skin.css">
+    <link rel="stylesheet" href="~/Theme/vendor/bootstrap-slider/dist/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Theme/vendor/summernote/dist/summernote-bs4.css">
+    <link rel="stylesheet" href="~/Theme/css/goodgames.css">
+    <link rel="stylesheet" href="~/Theme/css/custom.css">
+
+</head>
+<body>
+    @Html.Action("PartialNav", "TrangChu")
+    <div class="nk-main">
+        <div class="nk-gap-1"></div>
+        @if (ViewBag.TrangChu == 1)
+        {
+            <div class="container">
+                <ul class="nk-breadcrumbs">
+                    <li><a href="@Url.Action("TrangChu","TrangChu")">Home</a></li>
+                    <li><span class="fa fa-angle-right"></span></li>
+                    <li><span>Gallery</span></li>
+                </ul>
+            </div>
+        }
+        <div class="nk-gap-1"></div>
+        <div class="container">
+            @if (ViewBag.Store == 0)
+            {
+                @Html.Action("PartialGameEnviroment", "StoreProduct")
+            }
+        </div>
+            <div class="container">
+                @RenderBody()
+            </div>
+            <div class="nk-gap-4"></div>
+        </div>
+    @Html.Action("PartialFooter", "TrangChu")
+    <img class="nk-page-background-top" src="~/Theme/images/bg-top.png" alt="">
+    <img class="nk-page-background-bottom" src="~/Theme/images/bg-bottom.png" alt="">
+    @Html.Action("PartialSearch", "TrangChu")
+    <script src="~/Theme/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="~/Theme/vendor/object-fit-images/dist/ofi.min.js"></script>
+    <script src="~/Theme/vendor/gsap/src/minified/TweenMax.min.js"></script>
+    <script src="~/Theme/vendor/gsap/src/minified/plugins/ScrollToPlugin.min.js"></script>
+    <script src="~/Theme/vendor/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/Theme/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Theme/vendor/sticky-kit/dist/sticky-kit.min.js"></script>
+    <script src="~/Theme/vendor/jarallax/dist/jarallax.min.js"></script>
+    <script src="~/Theme/vendor/jarallax/dist/jarallax-video.min.js"></script>
+    <script src="~/Theme/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Theme/vendor/flickity/dist/flickity.pkgd.min.js"></script>
+    <script src="~/Theme/vendor/photoswipe/dist/photoswipe.min.js"></script>
+    <script src="~/Theme/vendor/photoswipe/dist/photoswipe-ui-default.min.js"></script>
+    <script src="~/Theme/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/Theme/vendor/jquery-countdown/dist/jquery.countdown.min.js"></script>
+    <script src="~/Theme/vendor/moment/min/moment.min.js"></script>
+    <script src="~/Theme/vendor/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
+    <script src="~/Theme/vendor/hammerjs/hammer.min.js"></script>
+    <script src="~/Theme/vendor/nanoscroller/bin/javascripts/jquery.nanoscroller.js"></script>
+    <script src="~/Theme/vendor/soundmanager2/script/soundmanager2-nodebug-jsmin.js"></script>
+    <script src="~/Theme/vendor/bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+    <script src="~/Theme/vendor/summernote/dist/summernote-bs4.min.js"></script>
+    <script src="~/Theme/plugins/nk-share/nk-share.js"></script>
+    <script src="~/Theme/js/goodgames.min.js"></script>
+    <script src="~/Theme/js/goodgames-init.js"></script>
+
+</body>
+
+</html>
+
