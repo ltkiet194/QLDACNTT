@@ -139,6 +139,7 @@
     <Compile Include="Controllers\ForumSingleTopicsController.cs" />
     <Compile Include="Controllers\ForumTopicsController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
+    <Compile Include="Controllers\LienHeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\StoreCartController.cs" />
     <Compile Include="Controllers\StoreCheckoutController.cs" />
@@ -484,6 +485,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\LienHe\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
