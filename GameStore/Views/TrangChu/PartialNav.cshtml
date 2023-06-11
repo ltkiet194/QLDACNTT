@@ -1,4 +1,71 @@
-﻿<header class="nk-header nk-header-opaque">
+﻿
+
+
+@*<head>
+    <meta name="google-signin-client_id" content="630394691103-h9bopucc6dh3vplm4bk4q4l40an70u89.apps.googleusercontent.com">
+</head>*@
+
+@*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">*@
+<!-- Thêm thư viện Google Sign-In API -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+
+<div id="g_id_onload"
+     data-client_id="630394691103-h9bopucc6dh3vplm4bk4q4l40an70u89.apps.googleusercontent.com"
+     data-callback="handleCredentialResponse" data-login_uri="https://www.example.com/your_login_endpoint"
+      hidden>
+</div>
+
+
+<script>
+   
+    function handleCredentialResponse(googleUser) {
+        if (googleUser.credential) {
+            var idToken = googleUser.credential;
+            var payload = idToken.split('.')[1];
+            var decodedPayload = window.atob(payload);
+            var userInfo = JSON.parse(decodedPayload);
+
+            var name = userInfo.name;
+            $("#modalLogin").modal("hide");
+            $(".modal-backdrop").hide();
+            $("#name").text("Xin chào: "+ name);
+           /* alert('Login successful. Welcome, ' + name + '!');*/
+            console.log('User Info:', userInfo);
+        }
+    }
+</script>
+
+<style>
+    .nk-social-links-2 > li > * {
+        width: 40px;
+        height: 38px;
+        margin: 3px 5px;
+        font-size: 1.1em;
+        line-height: 26px;
+        background-color: #fff;
+        border-radius: 19px;
+    }
+    .nk-social-links-2 > li > a > svg {
+        margin-top: 12px;
+        font-size: 19px;
+    }
+
+    .g_id_signin {
+        /* Tùy chỉnh các thuộc tính phù hợp với thiết kế của bạn */
+        width: 26px;
+        height: 26px;
+        margin: 3px 5px;
+        font-size: 1.1em;
+        line-height: 26px;
+        background-color: #fff;
+        border-radius: 13px;
+        overflow: hidden;
+    }
+</style>
+<header class="nk-header nk-header-opaque">
     <!-- START: Top Contacts -->
     <div class="nk-contacts-top">
         <div class="container">
@@ -46,6 +113,7 @@
                         </a>
                     </li>
                     <li>
+                        <p id="name"></p>
                         <a href="#" data-toggle="modal" data-target="#modalLogin">
                             <span class="fa fa-user"></span>
                         </a>
@@ -150,7 +218,7 @@
                                 <a href="#">
                                     404
 
-                              </a>
+                                </a>
                             </li>
                         </ul>
                     </li>
@@ -301,3 +369,65 @@
     </div>
 </div>
 <!-- END: Navbar Mobile -->
+<!-- START: Login Modal -->
+<div class="nk-modal modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="ion-android-close"></span>
+                </button>
+
+                <h4 class="mb-0"><span class="text-main-1">Sign</span> In</h4>
+
+                <div class="nk-gap-1"></div>
+                <form action="#" class="nk-form text-white">
+                    <div class="row vertical-gap">
+                        <div class="col-md-6">
+                            Use email and password:
+
+                            <div class="nk-gap"></div>
+                            <input type="email" value="" name="email" class=" form-control" placeholder="Email">
+
+                            <div class="nk-gap"></div>
+                            <input type="password" value="" name="password" class="required form-control" placeholder="Password">
+                        </div>
+                        <div class="col-md-6">
+                            Or social account:
+
+                            <div class="nk-gap"></div>
+
+                            <ul class="nk-social-links-2">
+                                <li><a class="nk-social-facebook" href="#"><span class="fab fa-facebook"></span></a></li>
+                                <li><a class="nk-social-twitter" href="#"><span class="fab fa-twitter"></span></a></li>
+                                <li>
+                                    <a class="g_id_signin nk-social-google-plus" href="#" data-type="icon"><span class="fab fa-google-plus"></span></a>
+                                   
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="nk-gap-1"></div>
+                    <div class="row vertical-gap">
+                        <div class="col-md-6">
+                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-block">Sign In</a>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mnt-5">
+                                <small><a href="#">Forgot your password?</a></small>
+                            </div>
+                            <div class="mnt-5">
+                                <small><a href="#">Not a member? Sign up</a></small>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Login Modal -->
+
+
