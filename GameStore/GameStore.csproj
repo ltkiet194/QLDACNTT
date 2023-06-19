@@ -774,7 +774,6 @@
     <Content Include="Theme\vendor\keymaster\keymaster.js" />
     <Content Include="Theme\vendor\moment-timezone\builds\moment-timezone-with-data.min.js" />
     <Content Include="Theme\vendor\moment\min\moment.min.js" />
-    <Content Include="Theme\vendor\nanoscroller\bin\javascripts\jquery.nanoscroller.js" />
     <Content Include="Theme\vendor\object-fit-images\dist\ofi.min.js" />
     <Content Include="Theme\vendor\photoswipe\dist\default-skin\default-skin.css" />
     <Content Include="Theme\vendor\photoswipe\dist\default-skin\default-skin.png" />
@@ -841,6 +840,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Theme\vendor\nanoscroller\bin\javascripts\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Default\" />
     <Folder Include="Views\LienHe\" />

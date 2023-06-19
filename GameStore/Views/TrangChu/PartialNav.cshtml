@@ -1,8 +1,13 @@
-﻿@*<head>
-        <meta name="google-signin-client_id" content="630394691103-h9bopucc6dh3vplm4bk4q4l40an70u89.apps.googleusercontent.com">
-    </head>*@
+﻿
+@using GameStore.Models
 
-@*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">*@
+@{
+    HttpCookie cookie = Request.Cookies["KhachHang"];
+    string hoTen = cookie != null ? cookie.Values["HoTen"] : null;
+}
+
+
+
 <!-- Thêm thư viện Google Sign-In API -->
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
@@ -64,7 +69,9 @@
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.all.min.js"></script>
-
+<head>
+    <meta charset="utf-8">
+</head>
 <div id="g_id_onload"
      data-client_id="630394691103-h9bopucc6dh3vplm4bk4q4l40an70u89.apps.googleusercontent.com"
      data-callback="handleCredentialResponse" data-login_uri="https://www.example.com/your_login_endpoint"
@@ -73,6 +80,7 @@
 
 
 <script>
+
     function login() {
         Swal.fire({
             icon: 'success',
@@ -88,15 +96,15 @@
         if (googleUser.credential) {
             var idToken = googleUser.credential;
             var payload = idToken.split('.')[1];
-            var decodedPayload = window.atob(payload);
+            var decodedPayload = decodeURIComponent(escape(atob(payload)));
             var userInfo = JSON.parse(decodedPayload);
 
             var name = userInfo.name;
             $("#modalLogin").modal("hide");
             $(".modal-backdrop").hide();
-            
-            $("#name").text("Xin chào: " + name);
-            var str = userInfo.email + "|" + userInfo.name;
+
+            var encodedName = encodeURIComponent(name); // Mã hóa tên người dùng
+            var str = userInfo.email + "|" + encodedName;
             $.ajax({
                 url: '/Account/CheckLogin',
                 type: 'post',
@@ -104,8 +112,18 @@
                     strs: str
                 },
                 success: function (data) {
-                    if (data.code == 200) { 
+                    if (data.code == 200) {
+                        var hoTen = decodeURIComponent(data.dt[1]); // Giải mã tên người dùng từ phản hồi
+                        if (hoTen) {
+                            $("#name").text(hoTen);
+
+                            // Lưu thông tin người dùng vào cookie
+                            var expires = new Date();
+                            expires.setDate(expires.getDate() + 1);
+                            document.cookie = "KhachHang=HoTen=" + encodeURIComponent(hoTen) + "; expires=" + expires.toUTCString() + "; path=/";
+                        }
                         login();
+
                     }
                     else {
                         alert(data.msg);
@@ -116,7 +134,7 @@
         }
     }
 
-   
+
 </script>
 
 <style>
@@ -195,7 +213,15 @@
                         </a>
                     </li>
                     <li>
-                        <p id="name"></p>
+                        @if (!string.IsNullOrEmpty(hoTen))
+                        {
+                            <p id="name">@HttpUtility.UrlDecode(hoTen)</p>
+                        }
+                        else
+                        {
+                            <p id="name"></p>
+                        }
+
                         <a href="#" data-toggle="modal" data-target="#modalLogin">
                             <span class="fa fa-user"></span>
                         </a>

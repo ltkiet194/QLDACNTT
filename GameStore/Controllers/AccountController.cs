@@ -15,20 +15,31 @@ namespace GameStore.Controllers
         {
             return View();
         }
+
+        
         [HttpPost]
         public JsonResult CheckLogin(string strs)
         {
             try
             {
                 string[] list = strs.Split('|');
-                var check = db.KHACHHANGs.Where(s => s.TaiKhoan == list[1]).Count();
-                if(check <1)
+                var check = db.KHACHHANGs.Where(s => s.TaiKhoan == list[0]).Count();
+                var getkh = db.KHACHHANGs.Where(s => s.TaiKhoan == list[0]).SingleOrDefault();
+               
+                if (check <1)
                 {
-                    KHACHHANG kh = new KHACHHANG();
-                    kh.HoTen = list[0];
-                    kh.TaiKhoan = list[1];
+                    KHACHHANG kh = new KHACHHANG();                  
+                    kh.TaiKhoan = list[0];
+                    kh.HoTen = list[1];
                     db.KHACHHANGs.InsertOnSubmit(kh);
                     db.SubmitChanges();
+
+                    // Lưu thông tin người dùng vào cookie
+                    HttpCookie cookie = new HttpCookie("KhachHang");
+                    cookie.Values["HoTen"] = HttpUtility.UrlEncode(kh.HoTen);
+                    cookie.Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies.Add(cookie);
+
                 }
                 return Json(new { code = 200, dt = list, msg = "Lay thong tin thanh cong." },
                          JsonRequestBehavior.AllowGet);
