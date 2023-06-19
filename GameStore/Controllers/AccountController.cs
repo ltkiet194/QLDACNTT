@@ -9,7 +9,7 @@ namespace GameStore.Controllers
 {
     public class AccountController : Controller
     {
-        DataGameStoreDataContext db = new DataGameStoreDataContext();
+        GameStoreDataContext db = new GameStoreDataContext();
         // GET: Account
         public ActionResult Index()
         {
@@ -25,7 +25,10 @@ namespace GameStore.Controllers
                 string[] list = strs.Split('|');
                 var check = db.KHACHHANGs.Where(s => s.TaiKhoan == list[0]).Count();
                 var getkh = db.KHACHHANGs.Where(s => s.TaiKhoan == list[0]).SingleOrDefault();
-               
+                if(check == 1)
+                {
+                    Session["KhachHang"] = getkh;
+                }    
                 if (check <1)
                 {
                     KHACHHANG kh = new KHACHHANG();                  
@@ -36,10 +39,10 @@ namespace GameStore.Controllers
 
                     // Lưu thông tin người dùng vào cookie
                     HttpCookie cookie = new HttpCookie("KhachHang");
-                    cookie.Values["HoTen"] = HttpUtility.UrlEncode(kh.HoTen);
+                    cookie.Values["HoTen"] = kh.HoTen;
                     cookie.Expires = DateTime.Now.AddDays(1);
                     Response.Cookies.Add(cookie);
-
+                    Session["KhachHang"] = kh;
                 }
                 return Json(new { code = 200, dt = list, msg = "Lay thong tin thanh cong." },
                          JsonRequestBehavior.AllowGet);

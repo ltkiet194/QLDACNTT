@@ -103,8 +103,8 @@
             $("#modalLogin").modal("hide");
             $(".modal-backdrop").hide();
 
-            var encodedName = encodeURIComponent(name); // Mã hóa tên người dùng
-            var str = userInfo.email + "|" + encodedName;
+           
+            var str = userInfo.email + "|" + name;
             $.ajax({
                 url: '/Account/CheckLogin',
                 type: 'post',
