@@ -1,9 +1,8 @@
 ﻿
 @using GameStore.Models
-
 @{
-    HttpCookie cookie = Request.Cookies["KhachHang"];
-    string hoTen = cookie != null ? cookie.Values["HoTen"] : null;
+    KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+
 }
 
 
@@ -89,6 +88,12 @@
             showCloseButton: true,
             showConfirmButton: true,
             confirmButtonText: 'OK',
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                var currentPosition = window.scrollY;
+                window.location.reload();
+                window.scrollTo(0, currentPosition);
+            }
         });
     }
 
@@ -103,8 +108,7 @@
             $("#modalLogin").modal("hide");
             $(".modal-backdrop").hide();
 
-            var encodedName = encodeURIComponent(name); // Mã hóa tên người dùng
-            var str = userInfo.email + "|" + encodedName;
+            var str = userInfo.email + "|" + name;
             $.ajax({
                 url: '/Account/CheckLogin',
                 type: 'post',
@@ -113,15 +117,7 @@
                 },
                 success: function (data) {
                     if (data.code == 200) {
-                        var hoTen = decodeURIComponent(data.dt[1]); // Giải mã tên người dùng từ phản hồi
-                        if (hoTen) {
-                            $("#name").text(hoTen);
 
-                            // Lưu thông tin người dùng vào cookie
-                            var expires = new Date();
-                            expires.setDate(expires.getDate() + 1);
-                            document.cookie = "KhachHang=HoTen=" + encodeURIComponent(hoTen) + "; expires=" + expires.toUTCString() + "; path=/";
-                        }
                         login();
 
                     }
@@ -164,6 +160,42 @@
         border-radius: 13px;
         overflow: hidden;
     }
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 10000;
+        display: none;
+        float: left;
+        min-width: 160px;
+        padding: 5px 0;
+        margin: 2px 0 0;
+        font-size: 14px;
+        text-align: left;
+        list-style: none;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0, 0, 0, .15);
+        border-radius: 4px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    }
+
+        .dropdown-menu > li > a {
+            display: block;
+            padding: 3px 20px;
+            clear: both;
+            font-weight: normal;
+            line-height: 1.42857143;
+            color: #333;
+            white-space: nowrap;
+        }
+
+            .dropdown-menu > li > a:hover,
+            .dropdown-menu > li > a:focus {
+                text-decoration: none;
+                color: #262626;
+                background-color: #f5f5f5;
+            }
 </style>
 <header class="nk-header nk-header-opaque">
     <!-- START: Top Contacts -->
@@ -213,20 +245,6 @@
                         </a>
                     </li>
                     <li>
-                        @if (!string.IsNullOrEmpty(hoTen))
-                        {
-                            <p id="name">@HttpUtility.UrlDecode(hoTen)</p>
-                        }
-                        else
-                        {
-                            <p id="name"></p>
-                        }
-
-                        <a href="#" data-toggle="modal" data-target="#modalLogin">
-                            <span class="fa fa-user"></span>
-                        </a>
-                    </li>
-                    <li>
                         <span class="nk-cart-toggle">
                             <span class="fa fa-shopping-cart"></span>
                             <span class="nk-badge">27</span>
@@ -262,6 +280,34 @@
                             </div>
                         </div>
                     </li>
+                    @if (kh == null)
+                    {
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#modalLogin">
+                                <span class="fa fa-user"></span>
+                            </a>
+                        </li>
+
+                    }
+                    else
+                    {
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span id="name">@kh.HoTen</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#">Thông tin người dùng</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Logout","Account")">Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </li>
+                        
+                    }
+
+
 
                 </ul>
             </div>
