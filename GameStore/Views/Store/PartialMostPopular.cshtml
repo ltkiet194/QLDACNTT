@@ -1,0 +1,19 @@
+﻿
+@using GameStore.Models;
+@foreach (var game in Model)
+{
+<div class="col-lg-4 col-md-6">
+    <div class="nk-product-cat">
+        <a class="nk-product-image" href="store-product.html">
+            <img src="~/Theme/images/product-11-xs.jpg" alt="She gave my mother">
+        </a>
+        <div class="nk-product-cont">
+            <h3 class="nk-product-title h5"><a href="store-product.html">@game.nameGame</a></h3>
+            <div class="nk-gap-1"></div>
+            <div class="nk-product-rating" data-rating="3"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="far fa-star"></i> <i class="far fa-star"></i></div>
+            <div class="nk-gap-1"></div>
+            <div class="nk-product-price">@game.priceGame $</div>
+        </div>
+    </div>
+</div>
+}

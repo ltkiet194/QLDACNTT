@@ -1,0 +1,23 @@
+﻿@using GameStore.Models;
+@foreach (var game in Model)
+{
+    <div class="col-lg-6">
+        <div class="nk-product-cat-2">
+            <a class="nk-product-image" href="store-product.html">
+                <img src="~/Theme/images/product-7-md.jpg" alt="With what mingled joy">
+            </a>
+            <div class="nk-product-cont">
+                <h3 class="nk-product-title h5"><a href="store-product.html">@game.nameGame</a></h3>
+                <div class="nk-gap-1"></div>
+                <div class="nk-product-rating" data-rating="3.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i></div>
+                <div class="nk-gap-1"></div>
+                She clutched the matron by the arm, and forcing her into a chair by the bedside, was about to speak, when looking round, she caught sight of the two old women
+                <div class="nk-gap-2"></div>
+                <div class="nk-product-price">@game.priceGame  $</div>
+                <div class="nk-gap-1"></div>
+                <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+}
+
