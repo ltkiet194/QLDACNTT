@@ -493,10 +493,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataGameStore.designer.cs">
+    <Compile Include="Models\GameStore.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataGameStore.dbml</DependentUpon>
+      <DependentUpon>GameStore.dbml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -511,13 +511,13 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Models\DataGameStore.dbml">
+    <Content Include="Models\GameStore.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DataGameStore.designer.cs</LastGenOutput>
+      <LastGenOutput>GameStore.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Models\DataGameStore.dbml.layout">
-      <DependentUpon>DataGameStore.dbml</DependentUpon>
+    <None Include="Models\GameStore.dbml.layout">
+      <DependentUpon>GameStore.dbml</DependentUpon>
     </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
