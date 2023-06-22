@@ -54,9 +54,6 @@ namespace GameStore.Models
     partial void InsertGAME_THELOAI(GAME_THELOAI instance);
     partial void UpdateGAME_THELOAI(GAME_THELOAI instance);
     partial void DeleteGAME_THELOAI(GAME_THELOAI instance);
-    partial void InsertKETBAN(KETBAN instance);
-    partial void UpdateKETBAN(KETBAN instance);
-    partial void DeleteKETBAN(KETBAN instance);
     partial void InsertKHACHHANG(KHACHHANG instance);
     partial void UpdateKHACHHANG(KHACHHANG instance);
     partial void DeleteKHACHHANG(KHACHHANG instance);
@@ -189,14 +186,6 @@ namespace GameStore.Models
 			get
 			{
 				return this.GetTable<GAME_THELOAI>();
-			}
-		}
-		
-		public System.Data.Linq.Table<KETBAN> KETBANs
-		{
-			get
-			{
-				return this.GetTable<KETBAN>();
 			}
 		}
 		
@@ -922,13 +911,11 @@ namespace GameStore.Models
 		
 		private int _Id_Banbe;
 		
-		private System.Nullable<int> _Kh1;
+		private System.Nullable<int> _Id_KH;
 		
-		private System.Nullable<int> _Kh2;
+		private string _ListFriends;
 		
-		private System.Nullable<int> _TrangThai;
-		
-		private System.Nullable<System.DateTime> _Ngaykb;
+		private System.Nullable<System.DateTime> _NgayKB;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -936,14 +923,12 @@ namespace GameStore.Models
     partial void OnCreated();
     partial void OnId_BanbeChanging(int value);
     partial void OnId_BanbeChanged();
-    partial void OnKh1Changing(System.Nullable<int> value);
-    partial void OnKh1Changed();
-    partial void OnKh2Changing(System.Nullable<int> value);
-    partial void OnKh2Changed();
-    partial void OnTrangThaiChanging(System.Nullable<int> value);
-    partial void OnTrangThaiChanged();
-    partial void OnNgaykbChanging(System.Nullable<System.DateTime> value);
-    partial void OnNgaykbChanged();
+    partial void OnId_KHChanging(System.Nullable<int> value);
+    partial void OnId_KHChanged();
+    partial void OnListFriendsChanging(string value);
+    partial void OnListFriendsChanged();
+    partial void OnNgayKBChanging(System.Nullable<System.DateTime> value);
+    partial void OnNgayKBChanged();
     #endregion
 		
 		public BANBE()
@@ -971,82 +956,62 @@ namespace GameStore.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Kh1", DbType="Int")]
-		public System.Nullable<int> Kh1
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_KH", DbType="Int")]
+		public System.Nullable<int> Id_KH
 		{
 			get
 			{
-				return this._Kh1;
+				return this._Id_KH;
 			}
 			set
 			{
-				if ((this._Kh1 != value))
+				if ((this._Id_KH != value))
 				{
-					this.OnKh1Changing(value);
+					this.OnId_KHChanging(value);
 					this.SendPropertyChanging();
-					this._Kh1 = value;
-					this.SendPropertyChanged("Kh1");
-					this.OnKh1Changed();
+					this._Id_KH = value;
+					this.SendPropertyChanged("Id_KH");
+					this.OnId_KHChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Kh2", DbType="Int")]
-		public System.Nullable<int> Kh2
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ListFriends", DbType="NVarChar(MAX)")]
+		public string ListFriends
 		{
 			get
 			{
-				return this._Kh2;
+				return this._ListFriends;
 			}
 			set
 			{
-				if ((this._Kh2 != value))
+				if ((this._ListFriends != value))
 				{
-					this.OnKh2Changing(value);
+					this.OnListFriendsChanging(value);
 					this.SendPropertyChanging();
-					this._Kh2 = value;
-					this.SendPropertyChanged("Kh2");
-					this.OnKh2Changed();
+					this._ListFriends = value;
+					this.SendPropertyChanged("ListFriends");
+					this.OnListFriendsChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrangThai", DbType="Int")]
-		public System.Nullable<int> TrangThai
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NgayKB", DbType="DateTime")]
+		public System.Nullable<System.DateTime> NgayKB
 		{
 			get
 			{
-				return this._TrangThai;
+				return this._NgayKB;
 			}
 			set
 			{
-				if ((this._TrangThai != value))
+				if ((this._NgayKB != value))
 				{
-					this.OnTrangThaiChanging(value);
+					this.OnNgayKBChanging(value);
 					this.SendPropertyChanging();
-					this._TrangThai = value;
-					this.SendPropertyChanged("TrangThai");
-					this.OnTrangThaiChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ngaykb", DbType="DateTime")]
-		public System.Nullable<System.DateTime> Ngaykb
-		{
-			get
-			{
-				return this._Ngaykb;
-			}
-			set
-			{
-				if ((this._Ngaykb != value))
-				{
-					this.OnNgaykbChanging(value);
-					this.SendPropertyChanging();
-					this._Ngaykb = value;
-					this.SendPropertyChanged("Ngaykb");
-					this.OnNgaykbChanged();
+					this._NgayKB = value;
+					this.SendPropertyChanged("NgayKB");
+					this.OnNgayKBChanged();
 				}
 			}
 		}
@@ -2052,140 +2017,6 @@ namespace GameStore.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.KETBAN")]
-	public partial class KETBAN : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id_KetBan;
-		
-		private System.Nullable<int> _Id_NguoiGui;
-		
-		private System.Nullable<int> _Id_NguoiNhan;
-		
-		private System.Nullable<System.DateTime> _NgayKetBan;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnId_KetBanChanging(int value);
-    partial void OnId_KetBanChanged();
-    partial void OnId_NguoiGuiChanging(System.Nullable<int> value);
-    partial void OnId_NguoiGuiChanged();
-    partial void OnId_NguoiNhanChanging(System.Nullable<int> value);
-    partial void OnId_NguoiNhanChanged();
-    partial void OnNgayKetBanChanging(System.Nullable<System.DateTime> value);
-    partial void OnNgayKetBanChanged();
-    #endregion
-		
-		public KETBAN()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_KetBan", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id_KetBan
-		{
-			get
-			{
-				return this._Id_KetBan;
-			}
-			set
-			{
-				if ((this._Id_KetBan != value))
-				{
-					this.OnId_KetBanChanging(value);
-					this.SendPropertyChanging();
-					this._Id_KetBan = value;
-					this.SendPropertyChanged("Id_KetBan");
-					this.OnId_KetBanChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_NguoiGui", DbType="Int")]
-		public System.Nullable<int> Id_NguoiGui
-		{
-			get
-			{
-				return this._Id_NguoiGui;
-			}
-			set
-			{
-				if ((this._Id_NguoiGui != value))
-				{
-					this.OnId_NguoiGuiChanging(value);
-					this.SendPropertyChanging();
-					this._Id_NguoiGui = value;
-					this.SendPropertyChanged("Id_NguoiGui");
-					this.OnId_NguoiGuiChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_NguoiNhan", DbType="Int")]
-		public System.Nullable<int> Id_NguoiNhan
-		{
-			get
-			{
-				return this._Id_NguoiNhan;
-			}
-			set
-			{
-				if ((this._Id_NguoiNhan != value))
-				{
-					this.OnId_NguoiNhanChanging(value);
-					this.SendPropertyChanging();
-					this._Id_NguoiNhan = value;
-					this.SendPropertyChanged("Id_NguoiNhan");
-					this.OnId_NguoiNhanChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NgayKetBan", DbType="DateTime")]
-		public System.Nullable<System.DateTime> NgayKetBan
-		{
-			get
-			{
-				return this._NgayKetBan;
-			}
-			set
-			{
-				if ((this._NgayKetBan != value))
-				{
-					this.OnNgayKetBanChanging(value);
-					this.SendPropertyChanging();
-					this._NgayKetBan = value;
-					this.SendPropertyChanged("NgayKetBan");
-					this.OnNgayKetBanChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.KHACHHANG")]
 	public partial class KHACHHANG : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2208,6 +2039,8 @@ namespace GameStore.Models
 		
 		private System.Nullable<System.DateTime> _NgaySinh;
 		
+		private string _XacMinh;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2228,6 +2061,8 @@ namespace GameStore.Models
     partial void OnDienThoaiChanged();
     partial void OnNgaySinhChanging(System.Nullable<System.DateTime> value);
     partial void OnNgaySinhChanged();
+    partial void OnXacMinhChanging(string value);
+    partial void OnXacMinhChanged();
     #endregion
 		
 		public KHACHHANG()
@@ -2391,6 +2226,26 @@ namespace GameStore.Models
 					this._NgaySinh = value;
 					this.SendPropertyChanged("NgaySinh");
 					this.OnNgaySinhChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_XacMinh", DbType="VarChar(6)")]
+		public string XacMinh
+		{
+			get
+			{
+				return this._XacMinh;
+			}
+			set
+			{
+				if ((this._XacMinh != value))
+				{
+					this.OnXacMinhChanging(value);
+					this.SendPropertyChanging();
+					this._XacMinh = value;
+					this.SendPropertyChanged("XacMinh");
+					this.OnXacMinhChanged();
 				}
 			}
 		}
