@@ -104,10 +104,10 @@
         <elementListCompartment Id="7d98786a-2466-464b-980c-e57af7a4fb6d" absoluteBounds="1.2650000000000001, 6.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="9ac84217-68f1-4870-8c5d-e4e92f49b6ad" absoluteBounds="9.25, 5.125, 2, 2.3478011067708335">
+    <classShape Id="b4bce4ae-87b4-4af6-baba-e68b626abcc8" absoluteBounds="9.5, 4.875, 2, 2.5401025390625">
       <DataClassMoniker Name="/DataGameStoreDataContext/KHACHHANG" />
       <nestedChildShapes>
-        <elementListCompartment Id="2962b4fc-8675-4147-8d1d-7725f8d8cadc" absoluteBounds="9.265, 5.585, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="ac6e5e4f-81c2-466e-bd8b-370c1cb45806" absoluteBounds="9.515, 5.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

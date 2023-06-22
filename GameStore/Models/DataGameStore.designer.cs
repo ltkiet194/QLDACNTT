@@ -22,7 +22,7 @@ namespace GameStore.Models
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="DATAGAMESTORE")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="webgame")]
 	public partial class DataGameStoreDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -2783,6 +2783,8 @@ namespace GameStore.Models
 		
 		private System.Nullable<System.DateTime> _NgaySinh;
 		
+		private string _XacMinh;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2803,6 +2805,8 @@ namespace GameStore.Models
     partial void OnDienThoaiChanged();
     partial void OnNgaySinhChanging(System.Nullable<System.DateTime> value);
     partial void OnNgaySinhChanged();
+    partial void OnXacMinhChanging(string value);
+    partial void OnXacMinhChanged();
     #endregion
 		
 		public KHACHHANG()
@@ -2966,6 +2970,26 @@ namespace GameStore.Models
 					this._NgaySinh = value;
 					this.SendPropertyChanged("NgaySinh");
 					this.OnNgaySinhChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_XacMinh", DbType="VarChar(6)")]
+		public string XacMinh
+		{
+			get
+			{
+				return this._XacMinh;
+			}
+			set
+			{
+				if ((this._XacMinh != value))
+				{
+					this.OnXacMinhChanging(value);
+					this.SendPropertyChanging();
+					this._XacMinh = value;
+					this.SendPropertyChanged("XacMinh");
+					this.OnXacMinhChanged();
 				}
 			}
 		}

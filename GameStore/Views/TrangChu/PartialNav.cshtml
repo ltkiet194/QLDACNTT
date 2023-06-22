@@ -68,6 +68,7 @@
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.all.min.js"></script>
+
 <head>
     <meta charset="utf-8">
 </head>
@@ -83,8 +84,8 @@
     function login() {
         Swal.fire({
             icon: 'success',
-            title: 'Thành công !!!',
-            html: 'Bạn đăng nhập thành công!',
+            title: 'Success !!!',
+            html: 'Logged in successfully!',
             showCloseButton: true,
             showConfirmButton: true,
             confirmButtonText: 'OK',
@@ -110,7 +111,7 @@
 
             var str = userInfo.email + "|" + name;
             $.ajax({
-                url: '/Account/CheckLogin',
+                url: '/Account/CheckLoginSocialAccount',
                 type: 'post',
                 data: {
                     strs: str
@@ -126,7 +127,6 @@
                     }
                 }
             })
-            console.log('User Info:', userInfo);
         }
     }
 
@@ -160,6 +160,7 @@
         border-radius: 13px;
         overflow: hidden;
     }
+
     .dropdown-menu {
         position: absolute;
         top: 100%;
@@ -291,20 +292,20 @@
                     }
                     else
                     {
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span id="name">@kh.HoTen</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#">Thông tin người dùng</a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Logout","Account")">Đăng xuất</a>
-                            </li>
-                        </ul>
-                    </li>
-                        
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span id="name">@kh.HoTen</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Thông tin người dùng</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Logout","Account")">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </li>
+
                     }
 
 
@@ -471,7 +472,6 @@
                             <li>
                                 <a href="@Url.Action("StoreCheckout","StoreCheckout")">
                                     Checkout
-
                                 </a>
                             </li>
                             <li>
@@ -535,16 +535,16 @@
                 <h4 class="mb-0"><span class="text-main-1">Sign</span> In</h4>
 
                 <div class="nk-gap-1"></div>
-                <form action="" method="post" class="nk-form text-white">
+                <form action="" class="nk-form text-white">
                     <div class="row vertical-gap">
                         <div class="col-md-6">
-                            Use email and password:
+                            Use User name and password:
 
                             <div class="nk-gap"></div>
-                            <input type="email" value="" name="email" class=" form-control" placeholder="Email">
+                            <input type="text" value="" name="usernamesgin" class=" form-control" placeholder="User Name">
 
                             <div class="nk-gap"></div>
-                            <input type="password" value="" name="password" class="required form-control" placeholder="Password">
+                            <input type="password" value="" name="passwordsgin" class="form-control" placeholder="Password">
                         </div>
                         <div class="col-md-6">
                             Or social account:
@@ -556,9 +556,7 @@
                                 <li><a class="nk-social-twitter" href="#"><span class="fab fa-twitter"></span></a></li>
                                 <li>
                                     <a class="g_id_signin nk-social-google-plus" href="#" data-type="icon"><span class="fab fa-google-plus"></span></a>
-
                                 </li>
-
                             </ul>
                         </div>
                     </div>
@@ -566,14 +564,14 @@
                     <div class="nk-gap-1"></div>
                     <div class="row vertical-gap">
                         <div class="col-md-6">
-                            <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-block">Sign In</a>
+                            <button type="button" id="signIn" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-block">Sign In</button>
                         </div>
                         <div class="col-md-6">
                             <div class="mnt-5">
-                                <small><a href="#">Forgot your password?</a></small>
+                                <small><a href="#" id="forgotpassLink">Forgot your password?</a></small>
                             </div>
                             <div class="mnt-5">
-                                <small><a href="#">Not a member? Sign up</a></small>
+                                <small><a href="#" id="signUpLink">Not a member? Sign up</a></small>
                             </div>
                         </div>
                     </div>
@@ -583,3 +581,385 @@
     </div>
 </div>
 <!-- END: Login Modal -->
+<!-- START: Register Modal -->
+<div class="nk-modal modal fade" id="modalSignUp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="ion-android-close"></span>
+                </button>
+
+                <h4 class="mb-0"><span class="text-main-1">Sign</span> Up</h4>
+
+                <div class="nk-gap-1"></div>
+                <form action="" class="nk-form text-white">
+                    <div class="row vertical-gap">
+                        <div class="col-md-6">
+                            <label>User Name:</label>
+                            <input type="text" value="" name="usernamesgup" class="form-control" placeholder="User Name">
+                            <div class="nk-gap"></div>
+                            <label for="password">Password:</label>
+                            <input type="password" value="" name="passwordsgup" class="form-control" placeholder="Password">
+                            <label for="confirmPassword">Confirm Password:</label>
+                            <input type="password" value="" name="confirmPassword" class="form-control" placeholder="Confirm Password">
+
+                        </div>
+                        <div class="col-md-6">
+                            <label>Full Name</label>
+                            <input type="text" value="" name="fullnamesgup" class="form-control" placeholder="Full Name">
+                            <div class="nk-gap"></div>
+                            <label>Email:</label>
+                            <input type="text" value="" name="emailsgup" class="form-control" placeholder="Email">
+                            <label>Address</label>
+                            <input type="text" value="" name="addresssgup" class="form-control" placeholder="Address">
+                        </div>
+                    </div>
+                    <div class="nk-gap-1"></div>
+                    <div class="row vertical-gap">
+                        <div class="col-md-6">
+                            <input type="button" id="registerButton" value="Sign Up" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-block">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Register Modal -->
+<!-- START: Forgot pass Modal -->
+<div class="nk-modal modal fade" id="modalForgotpass" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="ion-android-close"></span>
+                </button>
+
+                <h4 class="mb-0"><span class="text-main-1">Forgot</span> Password</h4>
+
+                <div class="nk-gap-1"></div>
+                <form action="" class="nk-form text-white">
+                    <div class="row vertical-gap">
+                        <div class="col-md-12">
+                            <label>User Name:</label>
+                            <input type="text" value="" name="usernameforgot" class="form-control" placeholder="User Name">
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <div class="input-group">
+                                    <input type="text" value="" name="emailforgot" class="form-control" placeholder="Email">
+                                    <div class="input-group-append">
+                                        <button id="sendEmailButton" class="btn btn-primary" type="button">Gửi</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <label>Identification code:</label>
+                            <input type="text" value="" name="codeforgot" class="form-control" placeholder="Identification code">
+                            <label for="password">New Password:</label>
+                            <input type="password" value="" name="passwordforgot" class="form-control" placeholder="Password">
+                            <label for="confirmPassword">Confirm Password:</label>
+                            <input type="password" value="" name="confirmPasswordforgot" class="form-control" placeholder="Confirm Password">
+                        </div>
+
+                    </div>
+                    <div class="nk-gap-1"></div>
+                    <div class="row vertical-gap">
+                        <div class="col-md-6">
+                            <input type="button" id="changePassword" value="Submit" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-block">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Forgot pass Modal -->
+<style>
+
+    .swal2-icon.swal2-error [class^=swal2-x-mark-line] {
+        top: 0.3125rem !important;
+    }
+</style>
+
+<script>
+    //Gửi mã xác minh
+    $(document).ready(function () {
+        $('#sendEmailButton').click(function () {
+            var recipientEmail = $('input[name="emailforgot"]').val();
+            var username = $('input[name="usernameforgot"]').val();
+            // Kiểm tra điều kiện cho từng trường
+            if (recipientEmail.trim() === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Please enter your Email.',
+                });
+                return;
+            }
+            if (username.trim() === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Please enter your User Name.',
+                });
+                return;
+            }
+            // Gửi yêu cầu tạo và gửi mã xác minh
+            $.ajax({
+                url: '/Account/SendVerificationCode', // Đường dẫn xử lý request gửi mã xác minh trên máy chủ của bạn
+                type: 'POST',
+                data: {
+                    recipientEmail: recipientEmail,
+                    username: username
+                },
+                success: function (response) {
+                    if (response.code === 200) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành Công.',
+                            text: 'Email gửi thành công. Vui lòng kiểm tra hộp thư đến của bạn..',
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: response.msg,
+                        });
+                    }
+                },
+                error: function () {
+                    alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+                }
+            });
+        });
+    });
+
+    //Thay dổi mật khẩu
+    $(document).ready(function () {
+        $('#changePassword').click(function () {
+            var recipientEmail = $('input[name="emailforgot"]').val();
+            var username = $('input[name="usernameforgot"]').val();
+            var code = $('input[name="codeforgot"]').val();
+            var password = $('input[name="passwordforgot"]').val();
+            var confirmPassword = $('input[name="confirmPasswordforgot"]').val();
+            // Kiểm tra điều kiện cho từng trường
+            if (recipientEmail.trim() === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Please enter your Email.',
+                });
+                return;
+            }
+            if (username.trim() === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Please enter your User Name.',
+                });
+                return;
+            }
+            if (code.trim() === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Please enter your Identification code.',
+                });
+                return;
+            }
+            if (password.trim() === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Please enter your New password.',
+                });
+                return;
+            }
+            if (confirmPassword.trim() === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Please enter your Confirm password.',
+                });
+                return;
+            }
+            if (password !== confirmPassword) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Password and Confirm Password do not match.',
+                });
+                return;
+            }
+            var data = {
+                recipientEmail: recipientEmail,
+                code: code,
+                password: password,
+            };
+            $.ajax({
+                url: '/Account/Changepassword', 
+                type: 'POST',
+                data: data,
+                success: function (response) {
+                    if (response.code === 200) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Password has been changed.',
+                        }).then(function (result) {
+                            if (result.isConfirmed) {
+                                $('#modalForgotpass').modal('hide');
+                                $('#modalLogin').modal('show');
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: response.msg,
+                        });
+                    }
+                },
+                error: function () {
+                    alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+                }
+            });
+        });
+    });
+
+    //Báo lỗi
+    function error(errorMessage) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            html: errorMessage,
+            showCloseButton: true,
+            showConfirmButton: true,
+            confirmButtonText: 'OK',
+        });
+    }
+
+    document.getElementById("signUpLink").addEventListener("click", function (event) {
+        event.preventDefault();
+        $('#modalLogin').modal('hide');
+        $('#modalSignUp').modal('show');
+    });
+
+    document.getElementById("forgotpassLink").addEventListener("click", function (event) {
+        event.preventDefault();
+        $('#modalLogin').modal('hide');
+        $('#modalForgotpass').modal('show');
+    });
+    //Đăng Nhập
+    $(document).ready(function () {
+        $('#signIn').click(function () {
+            var username = $('input[name="usernamesgin"]').val();
+            var password = $('input[name="passwordsgin"]').val();
+
+            // Kiểm tra điều kiện cho từng trường
+            if (username.trim() === '') {
+                error("Please enter your username.")
+                return;
+            }
+            if (password.trim() === '') {
+                error("Please enter your password.");
+                return;
+            }
+            var data = {
+                username: username,
+                password: password,
+            };
+            $.ajax({
+                url: '/Account/CheckLogin', // Đường dẫn xử lý request lưu vào cơ sở dữ liệu
+                type: 'get',
+                data: data,
+                success: function (response) {
+                    if (response.code === 200) {
+                        // Xử lý sau khi thành công
+                        login();
+                    } else {
+                        error(response.msg)
+                    }
+                },
+                error: function () {
+                    error("An error occurred. Please try again.");
+                }
+            });
+        })
+    });
+
+    //Đăng ký
+    $(document).ready(function () {
+        $('#registerButton').click(function () {
+
+            // Lấy giá trị từ các ô input
+            var username = $('input[name="usernamesgup"]').val();
+            var password = $('input[name="passwordsgup"]').val();
+            var confirmPassword = $('input[name="confirmPassword"]').val();
+            var email = $('input[name="emailsgup"]').val();
+            var fullname = $('input[name="fullnamesgup"]').val();
+            var address = $('input[name="addresssgup"]').val();
+
+            // Kiểm tra điều kiện cho từng trường
+            if (username.trim() === '') {
+                error("Please enter your username.")
+                return;
+            }
+            if (address.trim() === '') {
+                error("Please enter your username.");
+                return;
+            }
+            if (fullname.trim() === '') {
+                error("Please enter your fullname.");
+                return;
+            }
+
+            if (password.trim() === '') {
+                error("Please enter your password.");
+                return;
+            }
+
+            if (confirmPassword.trim() === '') {
+                error("Please enter your confirm password.");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                error("Password and Confirm Password do not match.");
+                return;
+            }
+
+            if (email.trim() === '') {
+                error("Please enter your email.");
+                return;
+            }
+
+            // Gửi dữ liệu lên server
+            var data = {
+                username: username,
+                password: password,
+                email: email,
+                fullname: fullname,
+                address: address
+            };
+
+            $.ajax({
+                url: '/Account/Register', // Đường dẫn xử lý request lưu vào cơ sở dữ liệu
+                type: 'POST',
+                data: data,
+                success: function (response) {
+                    if (response.code === 200) {
+                        // Xử lý sau khi thành công
+                        login();
+                    } else {
+                        error(response.msg)
+                    }
+                },
+                error: function () {
+                    alert("An error occurred. Please try again.");
+                }
+            });
+        });
+    });
+
+</script>
