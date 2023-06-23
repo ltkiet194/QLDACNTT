@@ -493,6 +493,7 @@
     <Compile Include="Controllers\BlogListController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
+    <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\ForumSingleTopicsController.cs" />
     <Compile Include="Controllers\ForumTopicsController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
