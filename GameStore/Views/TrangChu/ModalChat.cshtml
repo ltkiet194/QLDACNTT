@@ -1,0 +1,222 @@
+﻿
+
+@{
+    ViewBag.Title = "chat";
+    Layout = null;
+}
+
+<style>
+    /*modal chat*/
+    .modal-container1 {
+        display: none;
+        position: fixed;
+        z-index: 999999;
+        right: 80px; /* Cách lề phải 20px */
+        bottom: 0px; /* Cách lề dưới 20px */
+        width: 400px;
+        height: auto;
+        background-color: #fefefe;
+        padding: 20px;
+        border: 1px solid #888;
+    }
+
+    .close {
+        font-size: 40px;
+        margin-top: -20px;
+        margin-right: -10px;
+    }
+
+    .chat-container {
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .chat-header {
+        text-align: center;
+    }
+
+        .chat-header h2 {
+            width: 365px;
+            margin-bottom: -60px;
+            color: #1877f2;
+            text-align: center;
+            border-bottom: solid 1px #ff0000;
+        }
+
+    .chat-messages {
+        font-size:18px;
+        margin-top: 50px;
+        overflow-y: scroll;
+        width: 365px;
+        height: 280px;
+        scroll-behavior: smooth;
+    }
+        .chat-messages ul {
+            padding-left: 0px;
+        }
+        .chat-messages li {
+            list-style: none;
+            display: block; /* Hiển thị mỗi tin nhắn trên một dòng riêng */
+        }
+
+            .chat-messages li .message-container {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+            }
+                .chat-messages li .message-container img {
+                    width: 20px; /* Độ rộng của ảnh */
+                    height: 20px; /* Chiều cao của ảnh */
+                    border-radius: 50%; /* Hình dạng tròn */
+                    margin-right: 5px; /* Khoảng cách giữa ảnh và chữ */
+                    margin-left: 5px; /* Khoảng cách giữa ảnh và chữ */
+                }
+                .chat-messages li .message-container.red-message {
+                    justify-content: flex-end;
+                }
+
+                    .chat-messages li .message-container.red-message strong {
+                        float: right;
+                    }
+
+                .chat-messages li .message-container.yellow-message strong {
+                    float: left;
+                }
+
+                .chat-messages li .message-container.yellow-message {
+                    color: black;
+                }
+
+                .chat-messages li .message-container.red-message {
+                    color: red;
+                }
+
+    .chat-input {
+        display: flex;
+        align-items: center;
+    }
+
+        .chat-input input[type="text"] {
+            width: 302px;
+            flex-grow: 1;
+            padding: 5px;
+        }
+
+        .chat-input button {
+            margin-left: 10px;
+        }
+
+
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<div class="modal-container1" id="modalMessenger">
+    <div class="modal-content1">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>Chat</h2>
+            </div>
+            <div class="chat-messages">
+
+                <ul id="messages-chat">
+                </ul>
+            </div>
+            <div class="chat-input">
+                <form id="chatForm">
+                    <input id="idtk" name="id" style="display:none" type="text" placeholder="Nhập tin nhắn...">
+                    <input name="message" type="text" placeholder="Nhập tin nhắn...">
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+   $(document).ready(function() {
+    $('#chatForm').submit(function(event) {
+        event.preventDefault(); // Ngăn chặn gửi dữ liệu trực tiếp
+        var id = $('#idtk').val();
+        var message = $('input[name=message]').val();
+        $.ajax({
+            url: "/TrangChu/sendChat",
+            type: 'POST',
+            data: {
+                message: message,
+                id: id
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                    $('input[name=message]').val("");
+                    loadFriendById(id);
+                }
+                else {
+                    alert(data.msg);
+                }
+
+            },
+            error: function() {
+                // Xử lý khi gửi gặp lỗi (nếu cần thiết)
+            }
+        });
+
+    });
+});
+
+    function scrollToBottom() {
+        var chatMessages = document.getElementById("messages-chat");
+        chatMessages.scrollIntoView(false);
+    }
+
+
+$(document).ready(function () {
+    var modal = document.getElementById("modalMessenger");
+    $(".friend-item").click(function () {
+        var id = $(this).attr("id");
+        $("#idtk").val(id);
+        loadFriendById(id);
+        modal.style.display = "block";
+    });
+    $('.close').click(function () {
+        $('#modalMessenger').fadeOut(); // Đặt biến cờ thành false khi modal được đóng
+    });
+
+});
+    function loadFriendById(id) {
+        $.ajax({
+            url: '/TrangChu/getdatachat',
+            type: 'GET',
+            data: { id: id },
+            success: function (result) {
+                $("#messages-chat").empty();
+                if (Array.isArray(result) && result.length > 0) {
+                    $.each(result, function (index, item) {
+                        var name = item["Name"] !== undefined ? item["Name"] : "";
+                        var message = item["Message"] !== undefined ? item["Message"] : "";
+                        if (name != id) {
+                            var li = '<li><div class="message-container red-message"><strong>' + message + '</strong><img src="/Theme/images/post-inner-img.jpg"></div></li>';
+                        } else {
+                            var li = '<li><div class="message-container yellow-message"><img src="/Theme/images/gallery-group-4.jpg"><strong>' + message + '</strong></div></li>';
+                        }
+                        $("#messages-chat").append(li);
+                        scrollToBottom();
+                    });
+
+                } else {
+                    var message = "<p>Không có tin nhắn nào.</p>";
+                    $("#messages-chat").append(message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+
+
+
+

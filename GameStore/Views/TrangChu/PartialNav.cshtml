@@ -1,4 +1,7 @@
 ﻿
+@model IEnumerable<GameStore.Models.DTO.Friends>
+
+
 @using GameStore.Models
 @{
     KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
@@ -6,70 +9,69 @@
 }
 
 
-
-<!-- Thêm thư viện Google Sign-In API -->
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
-<style>
-    .swal2-popup {
-        display: grid;
-        background-color: white;
-        border: none;
-        border-radius: 10px;
-        padding: 20px;
-        max-width: 400px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        font-family: Arial, sans-serif;
-    }
-
-    .swal2-close {
-        display: none;
-    }
-
-    .swal2-icon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-        .swal2-icon svg {
-            width: 80px;
-            height: 80px;
-        }
-
-    .swal2-title {
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .swal2-html-container {
-        font-size: 16px;
-        margin-bottom: 20px;
-    }
-
-    .swal2-confirm {
-        background-color: #3085d6;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-
-        .swal2-confirm:hover {
-            background-color: #2868c7;
-        }
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.all.min.js"></script>
-
 <head>
+    <!-- Thêm thư viện Google Sign-In API -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
+    <style>
+        .swal2-popup {
+            display: grid;
+            background-color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            font-family: Arial, sans-serif;
+        }
+
+        .swal2-close {
+            display: none;
+        }
+
+        .swal2-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+            .swal2-icon svg {
+                width: 80px;
+                height: 80px;
+            }
+
+        .swal2-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .swal2-html-container {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .swal2-confirm {
+            background-color: #3085d6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            .swal2-confirm:hover {
+                background-color: #2868c7;
+            }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <meta charset="utf-8">
 </head>
 <div id="g_id_onload"
@@ -130,7 +132,7 @@
         }
     }
 
-
+    // Comments
     $(document).ready(function () {
         var isModalOpen = false; // Biến cờ để theo dõi trạng thái modal
 
@@ -150,6 +152,7 @@
             isModalOpen = false; // Đặt biến cờ thành false khi modal được đóng
         });
     });
+    // end comment
 
 </script>
 
@@ -218,16 +221,16 @@
                 background-color: #f5f5f5;
             }
 
+    /* Style thong bao*/
 
-
-/*     CSS styles for modal container */
+    /*     CSS styles for modal container */
     .modal-containerFriend {
         position: fixed;
-        top: 42px;
+        top: 65px;
         right: 0;
         bottom: 0;
         width: 370px;
-        background-color: black;
+        background-color: #171A21;
         z-index: 100000;
         display: none;
         box-shadow: 0 0 5px rgba(120, 113, 113, 0.5);
@@ -247,7 +250,7 @@
 
     .closeFriend {
         position: absolute;
-        top: -7px;
+        top: 10px;
         right: 10px;
         border: none;
         background-color: transparent;
@@ -266,26 +269,30 @@
         }
 
     .top {
-        border-bottom: 1px solid red;
+        border-bottom: 1px solid #f70f36;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
     }
 
     h2 {
         margin-top: 15px;
-        color: #dfdfe6;
+        color: #1877f2;
         text-align: center;
         margin-right: 10px;
     }
 
     .search-barFriend {
-        background-color: white;
+        background-color: #e4ede6;
         width: 100%;
         display: flex;
         align-items: center;
         margin-bottom: 10px;
+        border-radius: 5px;
+        padding: 5px;
     }
 
         .search-barFriend input[type="text"] {
-            border-left: none;
+            border: none;
             flex: 1;
             padding: 5px;
             font-size: 17px;
@@ -293,15 +300,17 @@
 
             .search-barFriend input[type="text"]:focus {
                 outline: none;
-                box-shadow: none;
             }
 
-        .search-barFriend button {
+        .search-barFriend a {
             padding: 5px 10px;
-            background-color: #ddd;
+            background-color: #e4e6eb;
             border: none;
             border-radius: 3px;
+            margin-left: 10px;
+            text-decoration: none;
         }
+
 
     .bottom {
         margin-top: 10px;
@@ -309,8 +318,7 @@
 
     .friend-list {
         display: flex;
-        align-items: center;
-        margin-bottom: 10px;
+        justify-content: space-between;
     }
 
     .friend-avatar {
@@ -329,21 +337,39 @@
 
     .friend-details {
         flex: 1;
+        display: inline-flex;
+        align-items: center;
+        position: relative;
     }
 
         .friend-details h4 {
             margin: 0;
-            color: black;
+            color: #e4ede6;
+            font-size: 15px;
+            flex: 1;
+            white-space: nowrap; /* Tránh ngắt dòng */
+            overflow: hidden; /* Ẩn nội dung vượt quá chiều ngang */
+            text-overflow: ellipsis; /* Hiển thị dấu chấm (...) cho nội dung bị ẩn */
         }
 
-        .friend-details p {
-            margin: 0;
-            color: forestgreen;
-        }
+    .messenger-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #613b41;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 30px;
+        position: absolute; /* Thêm thuộc tính position */
+        right: 15px;
+    }
 
-    
+        .messenger-button:hover {
+            background-color: #452a2e;
+            text-decoration: none;
+        }
 </style>
 
+@Html.Action("ModalChat", "TrangChu");
 
 @*Modal ListFriend*@
 <div class="modal-containerFriend" id="modalMesseger">
@@ -352,21 +378,104 @@
             <span class="ion-android-close"></span>
         </button>
         <div class="top">
-            <h2 > <span class="text-main-1">Friend</span> Lists</h2>
+            <h2><span class="text-main-1">Friend</span> Lists</h2>
             <div class="search-barFriend">
-                @*<i style="border:none;font-size:17px" class="fa fa-search"></i>*@
                 <input type="text" placeholder="Tìm kiếm...">
-                <button><i class="fa-solid fa-user-plus"></i></button>
-
+                <a href="@Url.Action("Index","AddFriend")"><i style="color: #613b41" class="fa-solid fa-user-plus"></i></a>
             </div>
         </div>
         <div class="bottom">
-            <div class="friend-list">
+            @if (Model != null)
+            {
+                <div class="friend-list">
+                    <ul style="list-style: none; padding: inherit;">
+                        @foreach (var i in Model)
+                        {
+                            <li class="friend-item" id="@i.Id_banbe" style="display: flex; color: #f0f2f5; margin-bottom: 15px;">
+                                <div class="friend-avatar">
+                                    <img src="~/Theme/images/gallery-8-thumb.jpg" alt="@i.Tenbanbe">
+                                </div>
+                                <div class="friend-details">
+                                    <h4>@i.Tenbanbe</h4>
+                                </div>
+                                <div>
+                                    <a href="#" class="messenger-button">Messenger</a>
+                                </div>
 
-            </div>
+                            </li>
+
+                        }
+                    </ul>
+                </div>
+            }
         </div>
     </div>
 </div>
+
+@*end Modal thong bao*@
+
+
+
+<style>
+    #xemthongbao {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 10%;
+        width: 100%;
+        background-color: #232930;
+        z-index: 9999;
+        align-items: center;
+        justify-content: flex-start;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); /* Độ bóng */
+        border-radius: 10px;
+    }
+
+    #mothongbao::after {
+        display: block;
+        content: "";
+        position: absolute;
+        height: 10px;
+        left: 117px;
+        width: 16%;
+    }
+
+    #mothongbao:hover .modal-bodyy {
+        display: block;
+    }
+
+    #xemthongbao img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+        border-radius: 50%;
+        order: -1; /* Đặt thứ tự hiển thị đầu tiên */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); /* Độ bóng */
+    }
+
+    #xemthongbao h6 {
+        color: white;
+        margin-right: 15px; /* Chỉnh lại margin-right */
+        margin-top: 15px;
+        flex-grow: 1; /* Chiếm phần còn lại của không gian */
+    }
+
+    #xemthongbao button {
+        margin-right: 5px; /* Chỉnh lại margin-right */
+    }
+
+    #xemthongbao .divcon {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        justify-content: flex-end; /* Đổi thành justify-content: flex-end */
+    }
+
+    .modal-bodyy {
+        display: none;
+    }
+</style>
+
 
 <header class="nk-header nk-header-opaque">
     <!-- START: Top Contacts -->
@@ -415,11 +524,21 @@
                             <span class="fa fa-search"></span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#" data-toggle="modal" data-target="#modalFriend">
-                            <span class="fas fa-comments"></span>
-                        </a>
-                    </li>
+                    @if (kh != null)
+                    {
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#modalFriend">
+                                <span class="fas fa-comments"></span>
+                            </a>
+                        </li>
+                        <li id="mothongbao" class="notification-li">
+                            <a href="#">
+                                <span class="fa fa-bell"></span>
+                                <span class="nk-badge">!</span>
+                            </a>
+                            @Html.Action("AccessAddFriend", "TrangChu")
+                        </li>
+                    }
                     <li>
                         <span class="nk-cart-toggle">
                             <span class="fa fa-shopping-cart"></span>
@@ -509,114 +628,93 @@
                 <ul class="nk-nav nk-nav-right d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
 
                     <li class=" nk-drop-item">
-                        <a href="elements.html">
-                            Features
+                        <a href="@Url.Action("Forum","Forum")">
+                            Forum
                         </a><ul class="dropdown">
                             <li class=" nk-drop-item">
-                                <a href="@Url.Action("Forum","Forum")">
-                                    Forum
-                                </a><ul class="dropdown">
+                                <a href="@Url.Action("ForumTopics","ForumTopics")">
+                                    Topics
+                                </a>
+                                @*<ul class="dropdown">
 
-                                    <li>
-                                        <a href="@Url.Action("Forum","Forum")">
-                                            Forum
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("ForumTopics","ForumTopics")">
-                                            Topics
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("ForumFingleTopics","ForumFingleTopics")ForumFingleTopic">
-                                            Single Topic
-                                        </a>
-                                    </li>
-                                </ul>
+                                        <li>
+                                            <a href="@Url.Action("Forum","Forum")">
+                                                Forum
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("ForumTopics","ForumTopics")">
+                                                Topics
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("ForumFingleTopics","ForumFingleTopics")ForumFingleTopic">
+                                                Single Topic
+                                            </a>
+                                        </li>
+                                    </ul>*@
                             </li>
-                            <li>
-                                <a href="#">
-                                    Coming Soon
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Offline
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    404
+                            @*<li>
+                                    <a href="#">
+                                        Coming Soon
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Offline
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        404
 
-                                </a>
-                            </li>
+                                    </a>
+                                </li>*@
                         </ul>
                     </li>
                     <li class=" nk-drop-item">
                         <a href="@Url.Action("BlogList","BlogList")">
-                            Blog
+                            Community
                         </a><ul class="dropdown">
                             <li>
                                 <a href="@Url.Action("News","News")">
-                                    News
+                                    Blogs
                                 </a>
                             </li>
-                            <li class=" nk-drop-item">
-                                <a href="#">
-                                    Blog With Sidebar
-                                </a><ul class="dropdown">
-                                    <li>
-                                        <a href="#">
-                                            Blog Grid
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            Blog List
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Blog Fullwidth
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Blog Article
-                                </a>
-                            </li>
+                            @*<li class=" nk-drop-item">
+                                    <a href="#">
+                                        Blog With Sidebar
+                                    </a><ul class="dropdown">
+                                        <li>
+                                            <a href="#">
+                                                Blog Grid
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                Blog List
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Blog Fullwidth
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Blog Article
+                                    </a>
+                                </li>*@
                         </ul>
                     </li>
                     <li>
                         <a href="@Url.Action("Gallery","Gallery")">
-                            Gallery
+                            Library
                         </a>
                     </li>
-                    <li class=" nk-drop-item">
-                        <a href="tournaments.html">
-                            Tournaments
-                        </a><ul class="dropdown">
-                            <li>
-                                <a href="#">
-                                    Tournament
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Teams
 
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Teammate
-
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                     <li class=" nk-drop-item">
                         <a href="@Url.Action("Store","Store")">
                             Store

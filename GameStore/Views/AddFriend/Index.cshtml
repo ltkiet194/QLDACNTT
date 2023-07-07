@@ -1,0 +1,250 @@
+﻿@model IEnumerable<GameStore.Models.DTO.Users>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUserFullWidth.cshtml";
+}
+
+<style>
+    .search-friends {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    #search-input {
+        border-radius: 15px;
+        flex: 1;
+        padding: 5px;
+        font-size: 17px;
+    }
+
+    #search-button {
+        padding: 5px 10px;
+        background-color: #613b41;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    .friend-info {
+        display: flex;
+        align-items: center;
+        margin-right: 550px;
+    }
+
+    .friend-avatar {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px; /* Khoảng cách giữa avatar và tên bạn bè */
+        border-radius: 50%;
+    }
+
+    .friend-listadd {
+        padding: 40px;
+        flex-direction: column;
+    }
+
+        .friend-listadd ul {
+            font-size: 25px;
+            text-align: center;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .friend-listadd ul li {
+                border-bottom: solid 1px red;
+                font-size: 25px;
+                margin-bottom: 15px;
+                padding: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+                .friend-listadd ul li .friend-name {
+                    flex-grow: 1;
+                }
+
+                .friend-listadd ul li .friend-actions {
+                    display: flex;
+                    gap: 5px;
+                }
+
+                    .friend-listadd ul li .friend-actions i {
+                        margin-right: 10px;
+                        padding: 5px;
+                        background-color: #4CAF50;
+                        color: #fff;
+                        border-radius: 3px;
+                        cursor: pointer;
+                    }
+
+                        .friend-listadd ul li .friend-actions i:hover {
+                            background-color: #45a049;
+                        }
+
+        .friend-listadd .not-found {
+            color: red;
+            font-style: italic;
+        }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<input id="idtkadd" type="hidden" value="@ViewBag.kh" />
+<div class="search-friends">
+    <input type="text" id="search-input" placeholder="  Tìm kiếm bạn bè...">
+    <button type="button" id="search-button">Tìm kiếm</button>
+</div>
+
+<div class="friend-listadd">
+    <ul id="friend-listadd-ul">
+        @if (Model != null)
+        {
+            foreach (var friend in Model)
+            {
+                <li>
+                    <div class="friend-info">
+                        <img src="" alt="Avatar" class="friend-avatar">
+                        @friend.HoTen
+                    </div>
+                    <div class="friend-actions">
+                        <i class="fas fa-plus add-icon"></i>
+                        <i class="fas fa-info-circle info-icon"></i>
+                        <i class="fas fa-exclamation-triangle warning-icon"></i>
+                    </div>
+                </li>
+            }
+        }
+        else
+        {
+            <content class="not-found">Không tìm thấy bạn bè.</content>
+        }
+    </ul>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#friend-listadd-ul').on('click', '.add-icon', function () {
+            var idNguoinhan = $(this).attr('id');
+            var $icon = $(this);
+            if ($icon.hasClass('fa-plus')) {
+                // Gửi yêu cầu AJAX để tạo mối quan hệ bạn bè
+                $.ajax({
+                    url: '/AddFriend/CreateFriendship',
+                    type: 'POST',
+                    data: {
+                        friendId: idNguoinhan
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            // Thay đổi biểu tượng và màu sắc sau khi tạo mối quan hệ thành công
+                            $icon.removeClass('fa-plus').addClass('fa-check-circle').css('color', 'green');
+                            toastr.options.timeOut = 500;
+                            toastr.success("Thêm bạn bè thành công");
+                            reloadModalAddFriend();
+                        } else {
+                            toastr.options.timeOut = 500;
+                            toastr.error("Lỗi !");
+                        }
+                    },
+                });
+            }
+            else {
+                $.ajax({
+                    url: '/AddFriend/DeleteFriendship',
+                    type: 'POST',
+                    data: {
+                        friendId: idNguoinhan
+                    },
+                    success: function (data) {
+                        if (data.success == 200) {
+                            // Thay đổi biểu tượng và màu sắc sau khi xóa mối quan hệ thành công
+                            $icon.removeClass('fa-check-circle').addClass('fa-plus').css('color', 'green');
+                            toastr.options.timeOut = 1000;
+                            toastr.success("Xóa bạn bè thành công");
+                            reloadModalAddFriend();
+                        } else {
+                            toastr.options.timeOut = 1000;
+                            toastr.error("Lỗi !");
+                        }
+                    },
+                });
+            }
+        });
+
+
+        $('#search-button').click(function () {
+            var term = $('#search-input').val();
+
+            // Gọi API tìm kiếm và nhận danh sách bạn bè
+            $.ajax({
+                url: '/AddFriend/Search',
+                type: 'GET',
+                data: { term: term },
+                success: function (response) {
+                    var friendList = $('#friend-listadd-ul');
+
+                    // Xóa danh sách bạn bè hiện tại
+                    friendList.empty();
+
+                    if (response.length > 0) {
+                        // Đổ dữ liệu vào danh sách bạn bè
+                        $.each(response, function (index, friend) {
+                            var listItem = $('<li>');
+                            var friendInfo = $('<div>').addClass('friend-info');
+                            var friendAvatar = $('<img>').addClass('friend-avatar').attr('src', 'Theme/images/gallery-10.jpg').attr('alt', 'Avatar');
+                            var friendName = $('<span>').addClass('friend-name').text(friend.HoTen);
+                            friendInfo.append(friendAvatar, friendName);
+                            var friendActions = $('<div>').addClass('friend-actions');
+                            var addIcon = $('<i id="' + friend.MaKH + '">').addClass('fas fa-plus add-icon').attr('id', friend.MaKH).css('color', 'green');
+                            var infoIcon = $('<i>').addClass('fas fa-info-circle info-icon').css('color', 'yellow');
+                            var warningIcon = $('<i>').addClass('fas fa-exclamation-triangle warning-icon').css('color', 'red');
+
+                            addIcon.css('margin-right', '10px');
+                            infoIcon.css('margin-right', '10px');
+                            warningIcon.css('margin-right', '10px');
+
+                            friendActions.append(addIcon, infoIcon, warningIcon);
+                            listItem.append(friendInfo, friendActions);
+                            friendList.append(listItem);
+                        });
+
+                        // Gọi API để lấy danh sách bạn bè có trạng thái = 1
+                        $.ajax({
+                            url: '/AddFriend/CheckTrangThai',
+                            type: 'POST',
+                            success: function (response) {
+                                var friendsWithStatusOne = response.checkTrangThai;
+
+                                // Chuyển biểu tượng add-icon sang fa-check-circle cho các bạn bè có trạng thái = 1
+                                friendsWithStatusOne.forEach(function (friendId) {
+                                    $('#' + friendId).removeClass('fa-plus').addClass('fa-check-circle').css('color', 'green');
+                                });
+                            },
+                        });
+                    } else {
+                        // Hiển thị thông báo không tìm thấy bạn bè
+                        var listItem = $('<content>').addClass('not-found').text('Không tìm thấy bạn bè.');
+                        friendList.append(listItem);
+                    }
+                },
+            });
+        });
+
+
+    });
+
+    function reloadModalAddFriend() {
+        // Code để tải lại modal ở đây
+        var modal = document.getElementById("friend-listadd-ul");
+        var id = $("#idtkadd").val();
+        loadFriendById(id);
+        modal.style.display = "block";
+    }
+</script>

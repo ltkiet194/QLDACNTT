@@ -104,10 +104,10 @@
         <elementListCompartment Id="ad20aba8-fe71-413a-9897-ad845dade36c" absoluteBounds="12.765, 5.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="dcc05dbd-d66a-4f7c-96a5-09221fec7c54" absoluteBounds="6.875, 0.875, 2, 1.5785953776041666">
+    <classShape Id="6f0a6834-615e-43a1-9072-93b280857633" absoluteBounds="6.625, 1, 2, 1.5785953776041666">
       <DataClassMoniker Name="/GameStoreDataContext/BANBE" />
       <nestedChildShapes>
-        <elementListCompartment Id="b43f601f-9eaa-47f9-94b7-8cc07e3d100f" absoluteBounds="6.89, 1.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c5e60637-c79f-45f6-8ad8-3b7422826128" absoluteBounds="6.64, 1.46, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

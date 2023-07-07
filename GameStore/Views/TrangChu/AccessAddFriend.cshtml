@@ -1,0 +1,116 @@
+﻿@model IEnumerable<GameStore.Models.DTO.TBAddFriend>
+
+@using GameStore.Models
+@{
+    KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+@* start Modal ThongBao*@
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="modal-bodyy" id="xemthongbao" data-modal="@Model">
+        <div style="display: flex; flex-direction: column;">
+            <!-- Nội dung của modal -->
+            @foreach (var i in Model)
+            {
+                <div class="divcon" style="display:flex;" data-id="@i.Id_banbe">
+                    <img src="~/Theme/images/post-7-sm.jpg" />
+                    <h6>@i.Tenbanbe</h6>
+                    <button type="button" class="btn btn-success">Đồng ý</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Từ chối</button>
+                </div>
+            }
+        </div>
+     
+    </div>
+
+}
+
+<script>
+    $(document).ready(function () {
+        $(".notification-li").hover(
+            function () {
+                // Kiểm tra xem khối div có giá trị hay không
+                var isDivEmpty = $("#xemthongbao").is(":empty");
+                if (!isDivEmpty) {
+                    $("#xemthongbao").show();
+                }
+            },
+            function () {
+                $("#xemthongbao").hide();
+            }
+        );
+    });
+    function reloadLi() {
+        $.ajax({
+            url: '/TrangChu/PartialLi',
+            type: 'GET',
+            success: function (response) {
+                $("#mothongbao").empty().html(response);
+            },
+        });
+    }
+    $(document).ready(function () {
+        // Lắng nghe sự kiện click trên nút "Đồng ý"
+        $(".btn-success").click(function () {
+            // Lấy giá trị ID từ thuộc tính "data-id"
+            var friendId = $(this).closest('.divcon').data("id");
+
+            // Gửi yêu cầu Ajax
+            $.ajax({
+                url: '/TrangChu/DongYKetBan',
+                type: 'POST',
+                data: { friendId: friendId },
+                success: function (response) {
+                    if (response.success === 200) {
+                        toastr.options.timeOut = 500;
+                        toastr.success("Thêm bạn bè thành công");
+                        $(`div[data-id='${friendId}']`).remove();
+                        reloadLi();
+                    } else {
+                        console.log(response.message);
+                        alert("Đồng ý kết bạn thất bại!");
+                    }
+                },
+            });
+        });
+
+        $(".btn-danger").click(function () {
+            // Lấy giá trị ID từ thuộc tính "data-id"
+            var friendId = $(this).closest('.divcon').data("id");
+
+            // Gửi yêu cầu Ajax
+            $.ajax({
+                url: '/TrangChu/TuChoiKetBan',
+                type: 'POST',
+                data: { friendId: friendId },
+                success: function (response) {
+                    if (response.success === 200) {
+                        toastr.options.timeOut = 500;
+                        toastr.success("Từ chối kết bạn thành công");
+                        $(`div[data-id='${friendId}']`).remove();
+                        $("#xemthongbao").load(location.href + " #xemthongbao");
+                    } else {
+                        console.log(response.message);
+                        alert("Từ chối kết bạn thất bại!");
+                    }
+                },
+            });
+        });
+    });
+
+
+
+</script>
+
+
+
+
+
+
+
+
