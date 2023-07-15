@@ -1,0 +1,129 @@
+﻿@model IEnumerable<GameStore.Models.DTO.Games>
+@helper Truncate(string s, int length)
+{if (s.Length < length)
+    {
+        @s }
+    else
+    {
+        @s.Substring(0, length)<text>...</text>}
+}
+
+
+<!-- START: Featured Games -->
+<div class="nk-gap-3"></div>
+<h3 class="nk-decorated-h-2"><span><span class="text-main-1">Featured</span> Games</span></h3>
+<div class="nk-gap"></div>
+<div class="row vertical-gap">
+
+    @{
+
+        foreach (var item in Model)
+        {
+
+            <div class="col-lg-6">
+                <div class="nk-product-cat-2">
+                    <a class="nk-product-image" href="@Url.Action("GameDetail","Store", new { id =item.Id})">
+                        <img src="~/Theme/images/ImageResource/@item.ImgName" alt="With what mingled joy">
+                    </a>
+                    <div class="nk-product-cont">
+                        <h3 class="nk-product-title h5"><a href="store-product.html">@item.Name</a></h3>
+                        <div class="nk-gap-1"></div>
+                        <div class="nk-product-rating" data-rating="3.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i></div>
+                        <div class="nk-gap-1"></div>
+                        <div class="nk-gap-1">
+                            <b>Thể Loại</b> :
+                            @{
+                                foreach (string cate in item.TypeGame)
+                                {
+                                    <a href="#">@cate</a>
+                                }
+                            }
+
+
+                        </div>
+                        <div class="nk-gap-2"></div>
+                        <div class="nk-gap-1">
+                            <b>Thẻ Tag</b> :
+                            @{
+                                foreach (string tag in item.TagGame)
+                                {
+                                    <a href="#">@tag</a>
+                                }
+                            }
+                            
+
+                        </div>
+                        <div class="nk-gap-2"></div>
+                        <div class="nk-product-price">@item.PriceGame .00 $</div>
+                        <div class="nk-gap-1"></div>
+                        <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    }
+
+
+    @*<div class="col-lg-6">
+            <div class="nk-product-cat-2">
+                <a class="nk-product-image" href="store-product.html">
+                    <img src="~/Theme/images/product-8-md.jpg" alt="She was bouncing away">
+                </a>
+                <div class="nk-product-cont">
+                    <h3 class="nk-product-title h5"><a href="store-product.html">She was bouncing away</a></h3>
+                    <div class="nk-gap-1"></div>
+                    <div class="nk-product-rating" data-rating="4.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i></div>
+                    <div class="nk-gap-1"></div>
+                    For good, too; though, in consequence of my previous emotions, I was still occasionally seized with a stormy sob. After we had jogged on for some little time
+                    <div class="nk-gap-2"></div>
+                    <div class="nk-product-price">€ 20.00</div>
+                    <div class="nk-gap-1"></div>
+                    <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="nk-product-cat-2">
+                <a class="nk-product-image" href="store-product.html">
+                    <img src="~/Theme/images/product-9-md.jpg" alt="The word was">
+                </a>
+                <div class="nk-product-cont">
+                    <h3 class="nk-product-title h5"><a href="store-product.html">The word was</a></h3>
+                    <div class="nk-gap-1"></div>
+                    <div class="nk-product-rating" data-rating="5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
+                    <div class="nk-gap-1"></div>
+                    With what mingled joy and sorrow do I take up the pen to write to my dearest friend! Oh, what a change between to-day and yesterday! Now I am friendless and alone
+                    <div class="nk-gap-2"></div>
+                    <div class="nk-product-price">€ 23.00</div>
+                    <div class="nk-gap-1"></div>
+                    <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="nk-product-cat-2">
+                <a class="nk-product-image" href="store-product.html">
+                    <img src="~/Theme/images/product-10-md.jpg" alt="My mother was so much">
+                </a>
+                <div class="nk-product-cont">
+                    <h3 class="nk-product-title h5"><a href="store-product.html">My mother was so much</a></h3>
+                    <div class="nk-gap-1"></div>
+                    <div class="nk-product-rating" data-rating="3.5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half"></i> <i class="far fa-star"></i></div>
+                    <div class="nk-gap-1"></div>
+                    A hundred thousand grateful loves to your dear papa and mamma . Is your poor brother recovered of his rack - punch ? Oh, dear!Oh, dear!How men should beware of wicked
+                    <div class="nk-gap-2"></div>
+                    <div class="nk-product-price">€ 32.00</div>
+                    <div class="nk-gap-1"></div>
+                    <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                </div>
+            </div>
+        </div>*@
+
+</div>
+<!-- END: Featured Games -->

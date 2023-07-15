@@ -231,6 +231,15 @@ namespace GameStore.Controllers
                 }
             }
         }
+
+        public ActionResult DetailInfo()
+        {
+            KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+            var acc = db.KHACHHANGs.Where(n => n.MaKH ==kh.MaKH).Single();
+
+            return View(acc);
+        }
+
     }
 
 }

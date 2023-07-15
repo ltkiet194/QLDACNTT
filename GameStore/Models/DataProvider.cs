@@ -29,10 +29,15 @@ namespace GameStore.Models
             }
         }
 
-        private DataProvider()
-        {
-            connection = ConfigurationManager.ConnectionStrings["DATAGAMESTOREConnectionString"].ConnectionString;
-        }
+        //internal DataTable ExecuteQuery(string v)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //private DataProvider()
+        //{
+        //    connection = ConfigurationManager.ConnectionStrings["DATAGAMESTOREConnectionString"].ConnectionString;
+        //}
 
 
 

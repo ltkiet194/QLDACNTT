@@ -2,112 +2,112 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 15, 14" name="GameStore">
   <DataContextMoniker Name="/GameStoreDataContext" />
   <nestedChildShapes>
-    <classShape Id="5e3ecc05-0daa-4c16-ab6f-06b884744ee9" absoluteBounds="0.75, 0.75, 2, 2.1554996744791666">
+    <classShape Id="0844d68f-e3d1-416f-83b4-594faf1de769" absoluteBounds="0.75, 0.75, 2, 2.1554996744791666">
       <DataClassMoniker Name="/GameStoreDataContext/ADMIN" />
       <nestedChildShapes>
-        <elementListCompartment Id="a86a28fa-d227-409e-884c-28e543949c10" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="1363c2ad-dfc5-4d5d-b042-ab4c8152a8fc" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="6176b945-5c64-4c75-802e-85c9fa298640" absoluteBounds="3.75, 0.75, 2, 1.3862939453125">
-      <DataClassMoniker Name="/GameStoreDataContext/THELOAI" />
-      <nestedChildShapes>
-        <elementListCompartment Id="94b859d4-94e8-454f-8792-41878fedabc9" absoluteBounds="3.765, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="5263b5f1-6247-413e-818b-a36af47a1648" absoluteBounds="0.75, 3.75, 2, 1.3862939453125005">
-      <DataClassMoniker Name="/GameStoreDataContext/ANN" />
-      <nestedChildShapes>
-        <elementListCompartment Id="49359ba6-89fa-4bea-8108-bbfbdbfc49e2" absoluteBounds="0.765, 4.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="0d6ca63f-5b55-492e-b6a4-0f78c83fb599" absoluteBounds="3.75, 3.75, 2, 2.347801106770834">
-      <DataClassMoniker Name="/GameStoreDataContext/BAIDANGCONGDONG" />
-      <nestedChildShapes>
-        <elementListCompartment Id="b2cb4181-1f72-4ebc-84b1-32489ffb401f" absoluteBounds="3.765, 4.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="f95c076a-664d-4a9a-97ae-a72aa17e4b1a" absoluteBounds="6.75, 3.75, 2, 1.193992513020834">
-      <DataClassMoniker Name="/GameStoreDataContext/CHITIETDONHANG" />
-      <nestedChildShapes>
-        <elementListCompartment Id="c4bc5e08-d001-43e7-8963-8394113aac00" absoluteBounds="6.765, 4.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="0f2cd286-8780-4d88-8af2-7c198d9b2c6b" absoluteBounds="6.75, 5.75, 2, 1.9631982421875005">
-      <DataClassMoniker Name="/GameStoreDataContext/DANHGIA" />
-      <nestedChildShapes>
-        <elementListCompartment Id="e4b73bde-e185-49b9-b257-6468d8f6b1b8" absoluteBounds="6.765, 6.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="e776ffa0-bce2-46c2-aa0e-889c4b5a63aa" absoluteBounds="0.75, 7.75, 2, 1.9631982421874996">
-      <DataClassMoniker Name="/GameStoreDataContext/DANHGIACONGDONG" />
-      <nestedChildShapes>
-        <elementListCompartment Id="dccd9ab0-109c-479c-b068-06b77dc123c9" absoluteBounds="0.765, 8.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="2fa9c0c1-e26d-480a-a123-e86b7f63c85f" absoluteBounds="3.75, 8.75, 2, 1.9631982421874987">
-      <DataClassMoniker Name="/GameStoreDataContext/DONHANG" />
-      <nestedChildShapes>
-        <elementListCompartment Id="081dbc7b-4ed3-4be1-8176-1c975467993e" absoluteBounds="3.765, 9.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="3b1dc4ce-c84c-47be-a0b8-00ea802a7f2c" absoluteBounds="6.75, 8.75, 2, 3.6939111328124987">
-      <DataClassMoniker Name="/GameStoreDataContext/Game" />
-      <nestedChildShapes>
-        <elementListCompartment Id="9d12a016-8813-40ef-8830-39b7d7f6c993" absoluteBounds="6.765, 9.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="178ceeaa-4260-4985-8eda-f204bbc8d251" absoluteBounds="9.75, 0.75, 2, 1.3862939453125003">
-      <DataClassMoniker Name="/GameStoreDataContext/GAME_THELOAI" />
-      <nestedChildShapes>
-        <elementListCompartment Id="c4e2acea-7df0-4caf-b2f0-6db4c33dc148" absoluteBounds="9.765, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="d4fe578c-2eb5-4154-97ae-9936d6731279" absoluteBounds="9.75, 3.75, 2, 2.5401025390625005">
-      <DataClassMoniker Name="/GameStoreDataContext/KHACHHANG" />
-      <nestedChildShapes>
-        <elementListCompartment Id="84b91d24-40e3-41a0-a861-9abf5e0f06fa" absoluteBounds="9.765, 4.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="e55754e3-f112-4401-af28-54fab55e2bc1" absoluteBounds="9.75, 7.75, 2, 1.1939925130208344">
-      <DataClassMoniker Name="/GameStoreDataContext/Menu" />
-      <nestedChildShapes>
-        <elementListCompartment Id="fd9c0ebb-32b1-4c44-8bbc-b59bf75960e2" absoluteBounds="9.765, 8.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="0a7b5e9f-5d4f-470b-b20a-7ad8692078a9" absoluteBounds="9.75, 9.75, 2, 1.9631982421874987">
-      <DataClassMoniker Name="/GameStoreDataContext/NHAPHATHANH" />
-      <nestedChildShapes>
-        <elementListCompartment Id="44449b5e-3433-42ed-b562-6af692592c4c" absoluteBounds="9.765, 10.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="d1cf9df2-9eb8-4ef8-b801-3d2a88d8aa06" absoluteBounds="0.75, 11.75, 2, 1.9631982421874987">
-      <DataClassMoniker Name="/GameStoreDataContext/NHAPHATTRIEN" />
-      <nestedChildShapes>
-        <elementListCompartment Id="48d95760-7484-410c-9677-4fe778284a87" absoluteBounds="0.765, 12.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="a2a1d26e-7e51-474c-8c8b-237c55a85792" absoluteBounds="12.75, 0.75, 2, 1.1939925130208335">
-      <DataClassMoniker Name="/GameStoreDataContext/PTTHANHTOAN" />
-      <nestedChildShapes>
-        <elementListCompartment Id="55d86fbd-6f18-4ad1-b8ef-f502c9f1f77a" absoluteBounds="12.765, 1.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="fae4c73b-ff61-4b74-9b36-2f873ef8f46f" absoluteBounds="12.75, 2.75, 2, 1.1939925130208335">
-      <DataClassMoniker Name="/GameStoreDataContext/QUOCGIA" />
-      <nestedChildShapes>
-        <elementListCompartment Id="23bad9a3-2a9d-4fe0-82e7-61434c59a94f" absoluteBounds="12.765, 3.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="99ba6c89-2e4e-4d3e-9d00-181829b53f4b" absoluteBounds="12.75, 4.75, 2, 1.7708968098958327">
+    <classShape Id="e6d43eff-f3b0-4208-a7f4-7b1f11f0e4a5" absoluteBounds="3.75, 0.75, 2, 1.7708968098958331">
       <DataClassMoniker Name="/GameStoreDataContext/TINNHAN" />
       <nestedChildShapes>
-        <elementListCompartment Id="ad20aba8-fe71-413a-9897-ad845dade36c" absoluteBounds="12.765, 5.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="894b46f5-ece9-4b3c-8bbe-2a78d038306f" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="6f0a6834-615e-43a1-9072-93b280857633" absoluteBounds="6.625, 1, 2, 1.5785953776041666">
+    <classShape Id="30b4f5ce-1c8e-4c9d-8923-d6b4ddc17cab" absoluteBounds="0.75, 3.75, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/GameStoreDataContext/ANN" />
+      <nestedChildShapes>
+        <elementListCompartment Id="94e7e6bc-686e-42d6-9d0b-a6f6c589fa39" absoluteBounds="0.765, 4.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="741923d7-0cb5-4098-a299-0bbcbf79448a" absoluteBounds="3.75, 3.75, 2, 2.347801106770834">
+      <DataClassMoniker Name="/GameStoreDataContext/BAIDANGCONGDONG" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d9cc51f6-ba6f-4122-8d9c-4f0b6ceae9b0" absoluteBounds="3.765, 4.21, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c3c24b52-6f3d-4a7c-91d6-0c55c3d17967" absoluteBounds="6.75, 0.75, 2, 1.5785953776041666">
       <DataClassMoniker Name="/GameStoreDataContext/BANBE" />
       <nestedChildShapes>
-        <elementListCompartment Id="c5e60637-c79f-45f6-8ad8-3b7422826128" absoluteBounds="6.64, 1.46, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="12a9b05e-b4d3-463d-9985-edd84a1e2a2b" absoluteBounds="6.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="492c4668-aed6-45cc-99d3-c679460834f9" absoluteBounds="6.75, 3.75, 2, 1.193992513020834">
+      <DataClassMoniker Name="/GameStoreDataContext/CHITIETDONHANG" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8266b126-890d-4107-9a58-8be2a3bdcc31" absoluteBounds="6.765, 4.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="65fad565-f7fb-4713-91a8-4ff51753bcf1" absoluteBounds="6.75, 5.75, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/GameStoreDataContext/DANHGIA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c0dfec43-ced5-468b-9608-512421df591b" absoluteBounds="6.765, 6.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="80c91502-5b3f-4355-b330-650890bee0a7" absoluteBounds="0.75, 7.75, 2, 1.9631982421874996">
+      <DataClassMoniker Name="/GameStoreDataContext/DANHGIACONGDONG" />
+      <nestedChildShapes>
+        <elementListCompartment Id="48b3a359-9473-46a7-8caf-29139925c2de" absoluteBounds="0.765, 8.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="07e51c82-a07c-4120-bdf7-350410b2f1e8" absoluteBounds="3.75, 8.75, 2, 1.9631982421874987">
+      <DataClassMoniker Name="/GameStoreDataContext/DONHANG" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9914390b-0b11-4282-b1ca-e4972dfe87d9" absoluteBounds="3.765, 9.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0125b4d5-a57a-47c2-96e7-442575ba1aca" absoluteBounds="6.75, 8.75, 2, 3.8862125651041666">
+      <DataClassMoniker Name="/GameStoreDataContext/Game" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d2118266-f1b5-494b-b1dd-aa59ff96f460" absoluteBounds="6.765, 9.21, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="706578fd-513e-4af4-8caa-e435ff9047ee" absoluteBounds="9.75, 0.75, 2, 1.3862939453125003">
+      <DataClassMoniker Name="/GameStoreDataContext/GAME_THELOAI" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a33f342c-71a9-42fe-b187-7214383eaeda" absoluteBounds="9.765, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9eaed8e8-049b-405e-ad31-8ce6fcc2817e" absoluteBounds="9.75, 7.75, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/GameStoreDataContext/Menu" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b0feb97a-8081-4e9e-a14e-2381f9bda7f6" absoluteBounds="9.765, 8.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6a81e089-e935-4146-b439-544c67f279d4" absoluteBounds="9.75, 9.75, 2, 1.9631982421874987">
+      <DataClassMoniker Name="/GameStoreDataContext/NHAPHATHANH" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0f694eef-87d4-4ed7-afb2-a673c30d4522" absoluteBounds="9.765, 10.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3faf1f37-8118-4626-8fe2-679deb352184" absoluteBounds="0.75, 11.75, 2, 1.9631982421874987">
+      <DataClassMoniker Name="/GameStoreDataContext/NHAPHATTRIEN" />
+      <nestedChildShapes>
+        <elementListCompartment Id="32cc918b-751e-446f-a648-7355bc09c5eb" absoluteBounds="0.765, 12.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3dd488e4-399f-4b9b-a3f4-2d9d10581694" absoluteBounds="12.75, 0.75, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/GameStoreDataContext/PTTHANHTOAN" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9da69f57-a97b-4f9f-a720-c5f21f3f3e75" absoluteBounds="12.765, 1.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="db1f2d28-9363-4efb-a01c-261639176656" absoluteBounds="12.75, 2.75, 2, 1.1939925130208335">
+      <DataClassMoniker Name="/GameStoreDataContext/QUOCGIA" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0a163fd7-1468-48dd-932a-69fafbe9aa7e" absoluteBounds="12.765, 3.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9aaae266-e23d-41bf-b3c2-45243a695180" absoluteBounds="12.75, 4.75, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/GameStoreDataContext/THELOAI" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f73981aa-62f8-4a2c-a70e-f203458780cb" absoluteBounds="12.765, 5.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="61be41cf-ab75-4c10-a4f5-ced1ef5d0c62" absoluteBounds="9.875, 3.75, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/GameStoreDataContext/KHACHHANG" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3f5d7c05-f5ae-401e-ad5b-d25fbc54c021" absoluteBounds="9.89, 4.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

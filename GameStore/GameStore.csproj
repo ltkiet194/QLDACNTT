@@ -253,6 +253,12 @@
     <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.AppContext.4.3.0\lib\net463\System.AppContext.dll</HintPath>
@@ -264,6 +270,11 @@
     </Reference>
     <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.NonGeneric, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.NonGeneric.4.3.0\lib\net46\System.Collections.NonGeneric.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ComponentModel.Annotations.4.4.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
@@ -527,14 +538,23 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ConstServer.cs" />
+    <Compile Include="Models\DAO\GamesDAO.cs" />
+    <Compile Include="Models\DAO\QueryDAO.cs" />
     <Compile Include="Models\DataProvider.cs" />
     <Compile Include="Models\DTO\AddFriends.cs" />
     <Compile Include="Models\DTO\Friends.cs" />
+    <Compile Include="Models\DTO\GameModel\Category.cs" />
+    <Compile Include="Models\DTO\GameModel\Comment.cs" />
+    <Compile Include="Models\DTO\GameModel\DanhGia.cs" />
+    <Compile Include="Models\DTO\GameModel\GamesInCart.cs" />
+    <Compile Include="Models\DTO\Games.cs" />
     <Compile Include="Models\DTO\TBAddFriend.cs" />
+    <Compile Include="Models\DTO\UserInfo.cs" />
     <Compile Include="Models\DTO\Users.cs" />
     <Compile Include="Models\GameStore.designer.cs">
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>GameStore.dbml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -544,6 +564,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -879,12 +900,16 @@
     <Content Include="Views\TrangChu\ModalChat.cshtml" />
     <Content Include="Views\TrangChu\AccessAddFriend.cshtml" />
     <Content Include="Views\TrangChu\PartialLi.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Store\Store10Seller.cshtml" />
+    <Content Include="Views\Store\Store4Feature.cshtml" />
+    <Content Include="Views\Store\GameDetail.cshtml" />
+    <Content Include="Views\Account\DetailInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\DAO\" />
     <Folder Include="Theme\vendor\nanoscroller\bin\javascripts\" />
-    <Folder Include="Views\Account\" />
     <Folder Include="Views\Default\" />
     <Folder Include="Views\LienHe\" />
   </ItemGroup>
