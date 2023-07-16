@@ -805,6 +805,7 @@
     <Content Include="Theme\images\team-photo.png" />
     <Content Include="Theme\images\teammate-1.png" />
     <Content Include="Theme\images\teammate-team.png" />
+    <Content Include="Theme\img\4d09b852-d763-4562-99f6-e2f9750f8523.jpg" />
     <Content Include="Theme\js\demo.js" />
     <Content Include="Theme\js\goodgames-init.js" />
     <Content Include="Theme\js\goodgames.js" />
