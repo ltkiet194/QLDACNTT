@@ -11,5 +11,7 @@ namespace GameStore.Models.DTO
         public int TrangThai { get; set; }
         public DateTime NgayGui { get; set; }
         public string Tenbanbe { get; set; }
+
+
     }
 }
