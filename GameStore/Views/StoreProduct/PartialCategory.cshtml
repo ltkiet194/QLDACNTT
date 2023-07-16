@@ -1,18 +1,17 @@
-﻿
+﻿@model IEnumerable<GameStore.Models.THELOAI>
 <div class="nk-widget nk-widget-highlighted">
     <h4 class="nk-widget-title"><span><span class="text-main-1">Category</span> Menu</span></h4>
     <div class="nk-widget-content">
         <ul class="nk-widget-categories">
-            <li><a href="#">RTS</a></li>
-            <li><a href="#">Action</a></li>
-            <li><a href="#">RPG</a></li>
-            <li><a href="#">MMO</a></li>
-            <li><a href="#">MOBA</a></li>
-            <li><a href="#">Adventure</a></li>
-            <li><a href="#">Indie</a></li>
-            <li><a href="#">Strategy</a></li>
-            <li><a href="#">Racing</a></li>
-            <li><a href="#">Simulator</a></li>
+            @{ 
+                foreach (var category in Model)
+                {
+                    <li><a href="#">@category.TenTheLoai</a></li>
+                }
+            }
+
+            
+
         </ul>
     </div>
 </div>

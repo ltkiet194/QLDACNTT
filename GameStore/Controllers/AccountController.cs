@@ -8,6 +8,7 @@ using GameStore.Models;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.IO;
 
 namespace GameStore.Controllers
 {
@@ -231,6 +232,155 @@ namespace GameStore.Controllers
                 }
             }
         }
+
+        public ActionResult DetailInfo()
+        {
+            KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+            var acc = db.KHACHHANGs.Where(n => n.MaKH ==kh.MaKH).Single();
+
+            return View(acc);
+        }
+
+        [HttpPost]
+        public ActionResult DetailInfo(FormCollection form)
+        {
+            if (ModelState.IsValid)
+            {
+                KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+                var acc = db.KHACHHANGs.SingleOrDefault(n => n.MaKH == kh.MaKH);
+
+                if (acc != null)
+                {
+                    acc.HoTen = form["inputName"];
+                    acc.TaiKhoan = form["inputUsername"];
+                    acc.Email = form["inputEmailAddress"];
+                    acc.Avatar = form["inputAvatar"];
+                    acc.DiaChi = form["inputAddress"];
+                    acc.DienThoai = form["inputPhone"];
+                    DateTime ngaySinh;
+                    if (DateTime.TryParse(form["inputBirthday"], out ngaySinh))
+                    {
+                        acc.NgaySinh = ngaySinh;
+                    }
+                    db.SubmitChanges();
+
+                    var updatedAcc = db.KHACHHANGs.SingleOrDefault(n => n.MaKH == kh.MaKH);
+
+                    if (updatedAcc != null)
+                    {
+                        Session["KhachHang"] = updatedAcc; // Cập nhật session với thông tin mới
+                        return RedirectToAction("DetailInfo");
+                    }
+                }
+
+                return RedirectToAction("DetailInfo");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult ChangePass(string newPass, string confirmPass)
+        {
+            // Kiểm tra giá trị không được để trống
+            if (string.IsNullOrEmpty(newPass) || string.IsNullOrEmpty(confirmPass))
+            {
+                ModelState.AddModelError("", "Please fill in all fields.");
+                return Json(new { success = false, message = "Please fill in all fields." });
+            }
+
+            // Kiểm tra new password và confirm password khớp nhau
+            if (newPass != confirmPass)
+            {
+                ModelState.AddModelError("", "New password and confirm password do not match.");
+                return Json(new { success = false, message = "New password and confirm password do not match." });
+            }
+            KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+            var acc = db.KHACHHANGs.SingleOrDefault(n => n.MaKH == kh.MaKH);
+
+            acc.MatKhau = newPass;
+            db.SubmitChanges();
+
+            var updatedAcc = db.KHACHHANGs.SingleOrDefault(n => n.MaKH == kh.MaKH);
+
+            if (updatedAcc != null)
+            {
+                Session["KhachHang"] = updatedAcc; // Cập nhật session với thông tin mới
+            }
+            // Trả về phản hồi thành công
+            return Json(new { success = true, message = "Password changed successfully." });
+        }
+        [HttpPost]
+        public ActionResult UploadProfilePicture(HttpPostedFileBase profilePicture)
+        {
+            if (profilePicture != null && profilePicture.ContentLength > 0)
+            {
+                try
+                {
+                    // Kiểm tra kiểu tệp tin ảnh
+                    if (!IsImageFile(profilePicture))
+                    {
+                        return Json(new { success = false, message = "Invalid image file. Please upload a JPEG or PNG file." });
+                    }
+
+                    // Kiểm tra kích thước tệp tin ảnh
+                    if (!IsFileSizeValid(profilePicture))
+                    {
+                        return Json(new { success = false, message = "Image file size exceeds the limit. Please upload an image file no larger than 5 MB." });
+                    }
+
+                    // Tạo tên tệp tin duy nhất
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(profilePicture.FileName);
+                    string filePath = Path.Combine(Server.MapPath("~/Theme/img"), fileName);
+                    profilePicture.SaveAs(filePath);
+
+                    // Cập nhật đường dẫn ảnh hồ sơ trong cơ sở dữ liệu (theo mã khách hàng của bạn)
+                    KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+                    var acc = db.KHACHHANGs.SingleOrDefault(n => n.MaKH == kh.MaKH);
+                    acc.Avatar = $"/Theme/img/{fileName}"; // Lưu đường dẫn dựa trên src của thẻ <img>
+                    db.SubmitChanges();
+
+                    var updatedAcc = db.KHACHHANGs.SingleOrDefault(n => n.MaKH == kh.MaKH);
+
+                    if (updatedAcc != null)
+                    {
+                        Session["KhachHang"] = updatedAcc; // Cập nhật session với thông tin mới
+                        return RedirectToAction("DetailInfo");
+                    }
+
+                    return Json(new { success = true, message = "Profile picture updated successfully.", imageUrl = $"~/Theme/img/{fileName}" });
+                }
+                catch (Exception)
+                {
+                    return Json(new { success = false, message = "An error occurred while uploading the profile picture. Please try again." });
+                }
+            }
+
+            return Json(new { success = false, message = "No image file selected." });
+        }
+
+        // Kiểm tra kiểu tệp tin ảnh
+        private bool IsImageFile(HttpPostedFileBase file)
+        {
+            return file.ContentType.StartsWith("image/");
+        }
+
+        // Kiểm tra kích thước tệp tin ảnh (giới hạn là 5 MB)
+        private bool IsFileSizeValid(HttpPostedFileBase file)
+        {
+            const int maxFileSize = 5 * 1024 * 1024; // 5 MB
+            return file.ContentLength <= maxFileSize;
+        }
+
+        // Tạo tên tệp tin duy nhất dựa trên timestamp
+        private string GenerateFileName(HttpPostedFileBase file)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(file.FileName);
+            string fileExtension = Path.GetExtension(file.FileName);
+            string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+            return $"{fileName}_{timestamp}{fileExtension}";
+        }
+
     }
 
 }

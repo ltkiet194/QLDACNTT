@@ -1,10 +1,17 @@
 ﻿
 @model IEnumerable<GameStore.Models.DTO.Friends>
 
+@using GameStore.Models.DTO
 
 @using GameStore.Models
 @{
     KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+    UserInfo userinfo = new UserInfo();
+    if (kh != null)
+    {
+       userinfo = new UserInfo(kh);
+    }
+
 
 }
 
@@ -539,42 +546,55 @@
                             @Html.Action("AccessAddFriend", "TrangChu")
                         </li>
                     }
-                    <li>
+
+
+                <li>
+                    @if (@kh != null)
+                    {
                         <span class="nk-cart-toggle">
                             <span class="fa fa-shopping-cart"></span>
-                            <span class="nk-badge">27</span>
+                            <span class="nk-badge">@userinfo.listGames.Count</span>
                         </span>
-                        <div class="nk-cart-dropdown">
-                            <div class="nk-widget-post">
-                                <a href="store-product.html" class="nk-post-image">
-                                    <img src="~/Theme/images/product-5-xs.jpg" alt="In all revolutions of">
-                                </a>
-                                <h3 class="nk-post-title">
-                                    <a href="#" class="nk-cart-remove-item"><span class="ion-android-close"></span></a>
-                                    <a href="store-product.html">In all revolutions of</a>
-                                </h3>
-                                <div class="nk-gap-1"></div>
-                                <div class="nk-product-price">€ 23.00</div>
-                            </div>
 
-                            <div class="nk-widget-post">
-                                <a href="store-product.html" class="nk-post-image">
-                                    <img src="~/Theme/images/product-7-xs.jpg" alt="With what mingled joy">
-                                </a>
-                                <h3 class="nk-post-title">
-                                    <a href="#" class="nk-cart-remove-item"><span class="ion-android-close"></span></a>
-                                    <a href="store-product.html">With what mingled joy</a>
-                                </h3>
-                                <div class="nk-gap-1"></div>
-                                <div class="nk-product-price">€ 14.00</div>
-                            </div>
+                    }
 
-                            <div class="nk-gap-2"></div>
-                            <div class="text-center">
-                                <a href="store-checkout.html" class="nk-btn nk-btn-rounded nk-btn-color-main-1 nk-btn-hover-color-white">Proceed to Checkout</a>
-                            </div>
+                    <div class="nk-cart-dropdown">
+                        @{
+                            if (@kh != null)
+                            {
+
+                                foreach (var item in @userinfo.listGames)
+                                {
+                                    <div class="nk-widget-post">
+                                        <a href="@Url.Action("GameDetail", "Store", new { id = item.Id })" class="nk-post-image">
+                                            <img src="~/Theme/images/ImageResource/@item.ImgName" alt="@item.Name" style=" width: 90px; height: 90px; object-fit: fill;">
+                                        </a>
+                                        <h3 class="nk-post-title">
+                                            <a href="@Url.Action("RemoveToCart", "StoreCart", new { gameId = item.Id,url = Request.Url.ToString()})" class="nk-cart-remove-item"><span class="ion-android-close"></span></a>
+                                            <a href="@Url.Action("GameDetail", "Store", new { id = item.Id })">@item.Name</a>
+                                        </h3>
+                                        <div class="nk-product-price">@item.PriceGame .00 $</div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="nk-widget-post">
+
+                                </div>
+
+                            }
+
+                        }
+
+
+
+                        <div class="nk-gap-2"></div>
+                        <div class="text-center">
+                            <a href="@Url.Action("StoreCart","StoreCart")" class="nk-btn nk-btn-rounded nk-btn-color-main-1 nk-btn-hover-color-white">Proceed to Checkout</a>
                         </div>
-                    </li>
+                    </div>
+                </li>
                     @if (kh == null)
                     {
                         <li>
@@ -592,7 +612,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="#">Thông tin người dùng</a>
+                                    <a href="@Url.Action("DetailInfo","Account")">Thông tin người dùng</a>
                                 </li>
                                 <li>
                                     <a href="@Url.Action("Logout","Account")">Đăng xuất</a>

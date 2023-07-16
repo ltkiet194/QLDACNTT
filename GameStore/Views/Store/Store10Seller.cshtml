@@ -1,0 +1,203 @@
+﻿@model IEnumerable<GameStore.Models.DTO.Games>
+@helper Truncate(string s, int length)
+{if (s.Length < length)
+                    {
+    @s }
+                    else
+                    {
+    @s.Substring(0, length)<text>...</text>}
+}
+<style>
+
+
+</style>
+
+<!-- START: Top 10 Best Sellers -->
+<div class="nk-gap-3"></div>
+<h3 class="nk-decorated-h-2"><span><span class="text-main-1">Top 10</span> Best Sellers</span></h3>
+<div class="nk-gap"></div>
+<div class="nk-carousel nk-carousel-x4" data-autoplay="5000" data-dots="false" data-cell-align="left" data-arrows="true">
+    <div class="nk-carousel-inner">
+        @{
+
+            foreach (var item in Model)
+            {
+
+                <div>
+                    <div class="pl-5 pr-5">
+                        <div class="nk-product-cat-3">
+                            <a class="nk-product-image" href="@Url.Action("GameDetail","Store", new { id =item.Id})">
+                                <img class="resized-image" src="~/Theme/images/ImageResource/@item.ImgName" alt="So saying he unbuckled "style=" width: 140px; height: 145px; object-fit: fill;">
+                            </a>
+                            <div class="nk-product-cont">
+                                <div class="nk-gap-1"></div>
+                                <h3 class="nk-product-title h5"><a href="store-product.html">@Truncate(@item.Name, 9)</a></h3>
+                                <div class="nk-gap-1"></div>
+                                <div class="nk-product-price"> @item.PriceGame .00 $</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+
+
+
+
+
+        @*<div>
+                <div class="pl-5 pr-5">
+                    <div class="nk-product-cat-3">
+                        <a class="nk-product-image" href="store-product.html">
+                            <img src="~/Theme/images/product-2-xs.jpg" alt="However, I have reason">
+                        </a>
+                        <div class="nk-product-cont">
+                            <div class="nk-gap-1"></div>
+                            <h3 class="nk-product-title h5"><a href="store-product.html">However, I have reason</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">€ 32.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="pl-5 pr-5">
+                    <div class="nk-product-cat-3">
+                        <a class="nk-product-image" href="store-product.html">
+                            <img src="~/Theme/images/product-3-xs.jpg" alt="It was some time before">
+                        </a>
+                        <div class="nk-product-cont">
+                            <div class="nk-gap-1"></div>
+                            <h3 class="nk-product-title h5"><a href="store-product.html">It was some time before</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">€ 14.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="pl-5 pr-5">
+                    <div class="nk-product-cat-3">
+                        <a class="nk-product-image" href="store-product.html">
+                            <img src="~/Theme/images/product-4-xs.jpg" alt="She was bouncing">
+                        </a>
+                        <div class="nk-product-cont">
+                            <div class="nk-gap-1"></div>
+                            <h3 class="nk-product-title h5"><a href="store-product.html">She was bouncing</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">€ 20.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="pl-5 pr-5">
+                    <div class="nk-product-cat-3">
+                        <a class="nk-product-image" href="store-product.html">
+                            <img src="~/Theme/images/product-5-xs.jpg" alt="In all revolutions of">
+                        </a>
+                        <div class="nk-product-cont">
+                            <div class="nk-gap-1"></div>
+                            <h3 class="nk-product-title h5"><a href="store-product.html">In all revolutions of</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">€ 23.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="pl-5 pr-5">
+                    <div class="nk-product-cat-3">
+                        <a class="nk-product-image" href="store-product.html">
+                            <img src="~/Theme/images/product-6-xs.jpg" alt="Just then her head ">
+                        </a>
+                        <div class="nk-product-cont">
+                            <div class="nk-gap-1"></div>
+                            <h3 class="nk-product-title h5"><a href="store-product.html">Just then her head </a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">€ 32.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="pl-5 pr-5">
+                    <div class="nk-product-cat-3">
+                        <a class="nk-product-image" href="store-product.html">
+                            <img src="~/Theme/images/product-7-xs.jpg" alt="With what mingled joy">
+                        </a>
+                        <div class="nk-product-cont">
+                            <div class="nk-gap-1"></div>
+                            <h3 class="nk-product-title h5"><a href="store-product.html">With what mingled joy</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">€ 14.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="pl-5 pr-5">
+                    <div class="nk-product-cat-3">
+                        <a class="nk-product-image" href="store-product.html">
+                            <img src="~/Theme/images/product-8-xs.jpg" alt="She was bouncing away">
+                        </a>
+                        <div class="nk-product-cont">
+                            <div class="nk-gap-1"></div>
+                            <h3 class="nk-product-title h5"><a href="store-product.html">She was bouncing away</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">€ 20.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="pl-5 pr-5">
+                    <div class="nk-product-cat-3">
+                        <a class="nk-product-image" href="store-product.html">
+                            <img src="~/Theme/images/product-9-xs.jpg" alt="The word was">
+                        </a>
+                        <div class="nk-product-cont">
+                            <div class="nk-gap-1"></div>
+                            <h3 class="nk-product-title h5"><a href="store-product.html">The word was</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">€ 23.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="pl-5 pr-5">
+                    <div class="nk-product-cat-3">
+                        <a class="nk-product-image" href="store-product.html">
+                            <img src="~/Theme/images/product-10-xs.jpg" alt="My mother was so much">
+                        </a>
+                        <div class="nk-product-cont">
+                            <div class="nk-gap-1"></div>
+                            <h3 class="nk-product-title h5"><a href="store-product.html">My mother was so much</a></h3>
+                            <div class="nk-gap-1"></div>
+                            <div class="nk-product-price">€ 32.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+    </div>
+</div>
+<!-- END: Top 10 Best Sellers -->
