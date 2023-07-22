@@ -69,6 +69,9 @@ namespace GameStore.Models
     partial void InsertKHACHHANG(KHACHHANG instance);
     partial void UpdateKHACHHANG(KHACHHANG instance);
     partial void DeleteKHACHHANG(KHACHHANG instance);
+    partial void InsertMaTheNap(MaTheNap instance);
+    partial void UpdateMaTheNap(MaTheNap instance);
+    partial void DeleteMaTheNap(MaTheNap instance);
     #endregion
 		
 		public GameStoreDataContext() : 
@@ -242,6 +245,14 @@ namespace GameStore.Models
 			get
 			{
 				return this.GetTable<KHACHHANG>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MaTheNap> MaTheNaps
+		{
+			get
+			{
+				return this.GetTable<MaTheNap>();
 			}
 		}
 	}
@@ -2701,6 +2712,8 @@ namespace GameStore.Models
 		
 		private string _Email;
 		
+		private string _ListGameInCart;
+		
 		private string _Avatar;
 		
 		private string _DiaChi;
@@ -2710,6 +2723,10 @@ namespace GameStore.Models
 		private System.Nullable<System.DateTime> _NgaySinh;
 		
 		private string _XacMinh;
+		
+		private System.Nullable<double> _Balance;
+		
+		private string _ListGameInLibrary;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2725,6 +2742,8 @@ namespace GameStore.Models
     partial void OnMatKhauChanged();
     partial void OnEmailChanging(string value);
     partial void OnEmailChanged();
+    partial void OnListGameInCartChanging(string value);
+    partial void OnListGameInCartChanged();
     partial void OnAvatarChanging(string value);
     partial void OnAvatarChanged();
     partial void OnDiaChiChanging(string value);
@@ -2735,6 +2754,10 @@ namespace GameStore.Models
     partial void OnNgaySinhChanged();
     partial void OnXacMinhChanging(string value);
     partial void OnXacMinhChanged();
+    partial void OnBalanceChanging(System.Nullable<double> value);
+    partial void OnBalanceChanged();
+    partial void OnListGameInLibraryChanging(string value);
+    partial void OnListGameInLibraryChanged();
     #endregion
 		
 		public KHACHHANG()
@@ -2842,6 +2865,26 @@ namespace GameStore.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ListGameInCart", DbType="NText", UpdateCheck=UpdateCheck.Never)]
+		public string ListGameInCart
+		{
+			get
+			{
+				return this._ListGameInCart;
+			}
+			set
+			{
+				if ((this._ListGameInCart != value))
+				{
+					this.OnListGameInCartChanging(value);
+					this.SendPropertyChanging();
+					this._ListGameInCart = value;
+					this.SendPropertyChanged("ListGameInCart");
+					this.OnListGameInCartChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Avatar", DbType="NText", UpdateCheck=UpdateCheck.Never)]
 		public string Avatar
 		{
@@ -2938,6 +2981,204 @@ namespace GameStore.Models
 					this._XacMinh = value;
 					this.SendPropertyChanged("XacMinh");
 					this.OnXacMinhChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Balance", DbType="Float")]
+		public System.Nullable<double> Balance
+		{
+			get
+			{
+				return this._Balance;
+			}
+			set
+			{
+				if ((this._Balance != value))
+				{
+					this.OnBalanceChanging(value);
+					this.SendPropertyChanging();
+					this._Balance = value;
+					this.SendPropertyChanged("Balance");
+					this.OnBalanceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ListGameInLibrary", DbType="NText", UpdateCheck=UpdateCheck.Never)]
+		public string ListGameInLibrary
+		{
+			get
+			{
+				return this._ListGameInLibrary;
+			}
+			set
+			{
+				if ((this._ListGameInLibrary != value))
+				{
+					this.OnListGameInLibraryChanging(value);
+					this.SendPropertyChanging();
+					this._ListGameInLibrary = value;
+					this.SendPropertyChanged("ListGameInLibrary");
+					this.OnListGameInLibraryChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MaTheNap")]
+	public partial class MaTheNap : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _MaThe;
+		
+		private System.Nullable<decimal> _GiaTriNap;
+		
+		private System.Nullable<System.DateTime> _HieuLuc;
+		
+		private System.Nullable<bool> _TrangThai;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnMaTheChanging(string value);
+    partial void OnMaTheChanged();
+    partial void OnGiaTriNapChanging(System.Nullable<decimal> value);
+    partial void OnGiaTriNapChanged();
+    partial void OnHieuLucChanging(System.Nullable<System.DateTime> value);
+    partial void OnHieuLucChanged();
+    partial void OnTrangThaiChanging(System.Nullable<bool> value);
+    partial void OnTrangThaiChanged();
+    #endregion
+		
+		public MaTheNap()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaThe", DbType="NVarChar(10)")]
+		public string MaThe
+		{
+			get
+			{
+				return this._MaThe;
+			}
+			set
+			{
+				if ((this._MaThe != value))
+				{
+					this.OnMaTheChanging(value);
+					this.SendPropertyChanging();
+					this._MaThe = value;
+					this.SendPropertyChanged("MaThe");
+					this.OnMaTheChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GiaTriNap", DbType="Decimal(10,2)")]
+		public System.Nullable<decimal> GiaTriNap
+		{
+			get
+			{
+				return this._GiaTriNap;
+			}
+			set
+			{
+				if ((this._GiaTriNap != value))
+				{
+					this.OnGiaTriNapChanging(value);
+					this.SendPropertyChanging();
+					this._GiaTriNap = value;
+					this.SendPropertyChanged("GiaTriNap");
+					this.OnGiaTriNapChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HieuLuc", DbType="Date")]
+		public System.Nullable<System.DateTime> HieuLuc
+		{
+			get
+			{
+				return this._HieuLuc;
+			}
+			set
+			{
+				if ((this._HieuLuc != value))
+				{
+					this.OnHieuLucChanging(value);
+					this.SendPropertyChanging();
+					this._HieuLuc = value;
+					this.SendPropertyChanged("HieuLuc");
+					this.OnHieuLucChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrangThai", DbType="Bit")]
+		public System.Nullable<bool> TrangThai
+		{
+			get
+			{
+				return this._TrangThai;
+			}
+			set
+			{
+				if ((this._TrangThai != value))
+				{
+					this.OnTrangThaiChanging(value);
+					this.SendPropertyChanging();
+					this._TrangThai = value;
+					this.SendPropertyChanged("TrangThai");
+					this.OnTrangThaiChanged();
 				}
 			}
 		}

@@ -907,6 +907,8 @@
     <Content Include="Views\Store\Store4Feature.cshtml" />
     <Content Include="Views\Store\GameDetail.cshtml" />
     <Content Include="Views\Account\DetailInfo.cshtml" />
+    <Content Include="Views\Account\AddBalance.cshtml" />
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

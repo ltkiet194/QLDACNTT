@@ -231,7 +231,7 @@
                                 <div class="row vertical-gap sm-gap">
                                     <div class="col-sm-6">
                                         <div class="nk-comment-meta">
-                                            <img src="~/Theme/images/avatar-2.jpg" alt="Witch Murder" class="rounded-circle" width="35"> by
+                                            <img src="@kh.Avatar" alt="Witch Murder" class="rounded-circle" width="35"> by
                                             <a href="#">@kh.HoTen</a>
                                         </div>
                                     </div>
@@ -329,7 +329,7 @@
 
                             <div class="nk-comment">
                                                     <div class="nk-comment-meta">
-                                                        <img src="~/Theme/images/avatar-2.jpg" alt="@item.IdKhachHang" class="rounded-circle" width="35"> by <a href="#"> @item.TenKH</a> @item.DateModified
+                                                        <img src="@item.Avatar" alt="@item.IdKhachHang" class="rounded-circle" width="35"> by <a href="#"> @item.TenKH</a> @item.DateModified
                                                         <div class="nk-review-rating" data-rating="@item.Rating">
                                                             @{
                                                                 for (int i = 0; i < 10; i++)
@@ -415,7 +415,7 @@
             @{
                 if (kh != null)
                 {
-                    <img src="~/Theme/images/avatar-2.jpg" alt="@kh.HoTen" class="rounded-circle" width="35"><a> by</a>
+                    <img src="@kh.Avatar" alt="@kh.HoTen" class="rounded-circle" width="35"><a> by</a>
                     <a href="#" class="author" name="author">@kh.HoTen</a> <a>@DateTime.Now.ToString()</a>
                 }
                 else

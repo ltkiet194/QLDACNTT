@@ -232,6 +232,37 @@ namespace GameStore.Controllers
                 }
             }
         }
+      
+
+        public ActionResult AddBalance()
+        {
+            KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+            var acc = db.KHACHHANGs.Where(n => n.MaKH == kh.MaKH).Single();
+
+            return View(kh);
+        }
+
+        [HttpPost]
+        public ActionResult AddBalance(string Code)
+        {
+            KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+            var acc = db.KHACHHANGs.Where(n => n.MaKH == kh.MaKH).Single();
+            MaTheNap the = db.MaTheNaps.SingleOrDefault(n => n.MaThe == Code);
+            if (the == null || the.TrangThai == true)
+            {
+                return Json(new { success = false, message = "Giftcode does not exist or used!" });
+            }else{
+
+                the.TrangThai = true;
+
+                kh.Balance += (float)the.GiaTriNap;
+                acc.Balance += (float)the.GiaTriNap;
+                db.SubmitChanges();
+
+
+                return Json(new { success = true, message = "Redeem Giftcode success !", data = kh.Balance });
+            }
+        }
 
         public ActionResult DetailInfo()
         {

@@ -162,11 +162,23 @@
       <Column Name="TaiKhoan" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="MatKhau" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
       <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ListGameInCart" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="Avatar" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
       <Column Name="DiaChi" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="DienThoai" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
       <Column Name="NgaySinh" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
       <Column Name="XacMinh" Type="System.String" DbType="VarChar(6)" CanBeNull="true" />
+      <Column Name="Balance" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="ListGameInLibrary" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MaTheNap" Member="MaTheNaps">
+    <Type Name="MaTheNap">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MaThe" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="GiaTriNap" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="HieuLuc" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="TrangThai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
