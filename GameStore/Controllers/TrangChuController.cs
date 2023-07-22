@@ -54,9 +54,10 @@ namespace GameStore.Controllers
                     var listjsonFriend = listbb.ListFriends;
                     List<Friends> fr = JsonSerializer.Deserialize<List<Friends>>(listjsonFriend);
                     var listfriendLocTT = fr.Where(n => n.TrangThai == 0).Select(n => n.Id_banbe).ToList();
+                    var listfriendLocTT2 = fr.Where(n => n.TrangThai == 2).Select(n => n.Id_banbe).ToList();
 
                     var listfriendDaloc = fr.Where(f => listfriendLocTT.Contains(f.Id_banbe)).ToList();
-
+                    ViewBag.SL = listfriendLocTT2.Count();
                     foreach (var i in listfriendDaloc)
                     {
                         var listInfoKH = db.KHACHHANGs.FirstOrDefault(n => n.MaKH == i.Id_banbe);
@@ -70,6 +71,7 @@ namespace GameStore.Controllers
                 }
             }
             return PartialView();
+
         }
 
         public ActionResult PartialLi()

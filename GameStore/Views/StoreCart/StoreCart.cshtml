@@ -87,14 +87,14 @@
                     }
                 </tbody>
             </table>
-            <button type="submit" class="nk-btn nk-btn-rounded nk-btn-color-white float-right" >Update Cart</button>
+            <button type="submit" class="nk-btn nk-btn-rounded nk-btn-color-white float-right">Update Cart</button>
         </form>
 
-            <!-- END: Products in Cart -->
+        <!-- END: Products in Cart -->
 
     </div>
     <div class="nk-gap-1"></div>
-    
+
 
     <div class="clearfix"></div>
     <div class="nk-gap-2"></div>
@@ -122,7 +122,7 @@
                 </div>
 
                 <div class="nk-gap-1"></div>
-               
+
             </form>
             <!-- END: Calculate Shipping -->
 
@@ -163,9 +163,47 @@
     </div>
 
     <div class="nk-gap-2"></div>
-    <a class="nk-btn nk-btn-rounded nk-btn-color-main-1 float-right" href="store-checkout.html">Proceed to Checkout</a>
+    <a class="nk-btn nk-btn-rounded nk-btn-color-main-1 float-right" style="color:white;"  id="buycart">Submit</a>
     <div class="clearfix"></div>
 </div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.all.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#buycart').click(function () {
+            var total =  @TotalBillVat;
 
+            $.ajax({
+                url: '/StoreCart/BuyCart',
+                type: 'POST',
+                data: {
+                    total: total
+                },
+                success: function (response) {
+                    if (response.success === true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành Công.',
+                            text: response.message,
+
+                        }).then((response) => {
+                            location.reload();
+
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: response.message,
+                        });
+                    }
+                },
+                error: function () {
+                    alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+                }
+            });
+        });
+    });
+</script>
 
 

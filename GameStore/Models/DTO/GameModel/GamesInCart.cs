@@ -28,5 +28,6 @@ namespace GameStore.Models.DTO.GameModel
             Quantity = quantity;
             PriceGame = priceGame;
         }
+
     }
 }
