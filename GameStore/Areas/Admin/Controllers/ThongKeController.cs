@@ -11,6 +11,7 @@ namespace GameStore.Areas.Admin.Controllers
         // GET: Admin/ThongKe
         public ActionResult Index()
         {
+
             return View();
         }
     }

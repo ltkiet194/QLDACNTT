@@ -164,6 +164,24 @@
       <Column Name="TongTien" Type="System.Double" DbType="Float" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.KEYGAME" Member="KEYGAMEs">
+    <Type Name="KEYGAME">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_KH" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="KeyGames" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="DateModified" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="NameGame" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MaTheNap" Member="MaTheNaps">
+    <Type Name="MaTheNap">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MaThe" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="GiaTriNap" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="HieuLuc" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="TrangThai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.KHACHHANG" Member="KHACHHANGs">
     <Type Name="KHACHHANG">
       <Column Name="MaKH" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -179,15 +197,7 @@
       <Column Name="XacMinh" Type="System.String" DbType="VarChar(6)" CanBeNull="true" />
       <Column Name="Balance" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="ListGameInLibrary" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
-    </Type>
-  </Table>
-  <Table Name="dbo.KEYGAME" Member="KEYGAMEs">
-    <Type Name="KEYGAME">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ID_KH" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="KeyGames" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
-      <Column Name="DateModified" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="NameGame" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="LastActivity" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

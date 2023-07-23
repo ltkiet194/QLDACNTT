@@ -82,6 +82,7 @@ namespace GameStore.Controllers
 
             return RedirectToAction("StoreCart","StoreCart");
         }
+        [HttpPost]
         public JsonResult BuyCart(string total)
         {
             try
@@ -107,11 +108,26 @@ namespace GameStore.Controllers
 
                         // Add the generated key to the database
                         db.KEYGAMEs.InsertOnSubmit(keyGame);
+                        var existingGame = games.SingleOrDefault(g => g.Id == game.Id);
+                        if (existingGame != null)
+                        {
+                            existingGame.Quantity += 1; 
+                        }
+                        else
+                        {
+                            games.Add(new GamesInCart
+                            {
+                                Id = game.Id,
+                                Name = game.Name,
+                                ImgName = game.ImgName,
+                                Quantity = 1,
+                                PriceGame = game.PriceGame
+                            });
+                        }
                     }
                 }
-                var existingLibraryData = JsonConvert.DeserializeObject<List<GamesInCart>>(GetKH.ListGameInLibrary);
-                existingLibraryData.AddRange(games);
-                GetKH.ListGameInLibrary = JsonConvert.SerializeObject(existingLibraryData);
+                
+                GetKH.ListGameInLibrary = JsonConvert.SerializeObject(games);
                 
                 if (GetKH.Balance < float.Parse(total))
                 {
@@ -133,6 +149,7 @@ namespace GameStore.Controllers
                     
                     GetKH.Balance = GetKH.Balance - float.Parse(total);
                     db.SubmitChanges();
+                    Session["KhachHang"] = db.KHACHHANGs.Where(m=>m.MaKH == kh.MaKH).SingleOrDefault();
                     return Json(new { success = true, message = "Mua thành công." });
                 }
             }

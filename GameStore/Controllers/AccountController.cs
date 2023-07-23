@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.IO;
+using System.Net.PeerToPeer;
 
 namespace GameStore.Controllers
 {
@@ -32,6 +33,8 @@ namespace GameStore.Controllers
                 var getkh = db.KHACHHANGs.Where(s => s.TaiKhoan == list[0]).SingleOrDefault();
                 if(check == 1)
                 {
+                    getkh.LastActivity = true;
+                    db.SubmitChanges();
                     Session["KhachHang"] = getkh;
                 }    
                 if (check <1)
@@ -40,6 +43,7 @@ namespace GameStore.Controllers
                     kh.TaiKhoan = list[0];
                     kh.HoTen = list[1];
                     db.KHACHHANGs.InsertOnSubmit(kh);
+                    kh.LastActivity = true;
                     db.SubmitChanges();
                     Session["KhachHang"] = kh;
                 }
@@ -62,7 +66,10 @@ namespace GameStore.Controllers
                 var getkh = db.KHACHHANGs.Where(s => s.TaiKhoan == username && s.MatKhau == password).SingleOrDefault();
                 if (check == 1)
                 {
+                    getkh.LastActivity = true;
+                    db.SubmitChanges();
                     Session["KhachHang"] = getkh;
+                    
                 }
                 else
                 {                
@@ -80,7 +87,11 @@ namespace GameStore.Controllers
         }
         public ActionResult Logout()
         {
+            KHACHHANG kh = (KHACHHANG) Session["KhachHang"];
+            var getkh = db.KHACHHANGs.Where(s => s.MaKH == kh.MaKH).SingleOrDefault();
             FormsAuthentication.SignOut();
+            getkh.LastActivity = false;
+            db.SubmitChanges();
             Session["KhachHang"] = null;
             return RedirectToAction("TrangChu", "TrangChu");
         }
@@ -126,6 +137,7 @@ namespace GameStore.Controllers
                 kh.Email = email;
                 kh.HoTen = fullname;
                 kh.DiaChi = address;
+                kh.LastActivity = true;
                 db.KHACHHANGs.InsertOnSubmit(kh);
                 db.SubmitChanges();
 

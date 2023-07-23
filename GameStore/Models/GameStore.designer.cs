@@ -72,12 +72,15 @@ namespace GameStore.Models
     partial void InsertDONHANG(DONHANG instance);
     partial void UpdateDONHANG(DONHANG instance);
     partial void DeleteDONHANG(DONHANG instance);
-    partial void InsertKHACHHANG(KHACHHANG instance);
-    partial void UpdateKHACHHANG(KHACHHANG instance);
-    partial void DeleteKHACHHANG(KHACHHANG instance);
     partial void InsertKEYGAME(KEYGAME instance);
     partial void UpdateKEYGAME(KEYGAME instance);
     partial void DeleteKEYGAME(KEYGAME instance);
+    partial void InsertMaTheNap(MaTheNap instance);
+    partial void UpdateMaTheNap(MaTheNap instance);
+    partial void DeleteMaTheNap(MaTheNap instance);
+    partial void InsertKHACHHANG(KHACHHANG instance);
+    partial void UpdateKHACHHANG(KHACHHANG instance);
+    partial void DeleteKHACHHANG(KHACHHANG instance);
     #endregion
 		
 		public GameStoreDataContext() : 
@@ -254,19 +257,27 @@ namespace GameStore.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<KHACHHANG> KHACHHANGs
-		{
-			get
-			{
-				return this.GetTable<KHACHHANG>();
-			}
-		}
-		
 		public System.Data.Linq.Table<KEYGAME> KEYGAMEs
 		{
 			get
 			{
 				return this.GetTable<KEYGAME>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MaTheNap> MaTheNaps
+		{
+			get
+			{
+				return this.GetTable<MaTheNap>();
+			}
+		}
+		
+		public System.Data.Linq.Table<KHACHHANG> KHACHHANGs
+		{
+			get
+			{
+				return this.GetTable<KHACHHANG>();
 			}
 		}
 	}
@@ -2993,6 +3004,322 @@ namespace GameStore.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.KEYGAME")]
+	public partial class KEYGAME : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private System.Nullable<int> _ID_KH;
+		
+		private string _KeyGames;
+		
+		private System.Nullable<System.DateTime> _DateModified;
+		
+		private string _NameGame;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnID_KHChanging(System.Nullable<int> value);
+    partial void OnID_KHChanged();
+    partial void OnKeyGamesChanging(string value);
+    partial void OnKeyGamesChanged();
+    partial void OnDateModifiedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateModifiedChanged();
+    partial void OnNameGameChanging(string value);
+    partial void OnNameGameChanged();
+    #endregion
+		
+		public KEYGAME()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_KH", DbType="Int")]
+		public System.Nullable<int> ID_KH
+		{
+			get
+			{
+				return this._ID_KH;
+			}
+			set
+			{
+				if ((this._ID_KH != value))
+				{
+					this.OnID_KHChanging(value);
+					this.SendPropertyChanging();
+					this._ID_KH = value;
+					this.SendPropertyChanged("ID_KH");
+					this.OnID_KHChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KeyGames", DbType="VarChar(10)")]
+		public string KeyGames
+		{
+			get
+			{
+				return this._KeyGames;
+			}
+			set
+			{
+				if ((this._KeyGames != value))
+				{
+					this.OnKeyGamesChanging(value);
+					this.SendPropertyChanging();
+					this._KeyGames = value;
+					this.SendPropertyChanged("KeyGames");
+					this.OnKeyGamesChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateModified", DbType="Date")]
+		public System.Nullable<System.DateTime> DateModified
+		{
+			get
+			{
+				return this._DateModified;
+			}
+			set
+			{
+				if ((this._DateModified != value))
+				{
+					this.OnDateModifiedChanging(value);
+					this.SendPropertyChanging();
+					this._DateModified = value;
+					this.SendPropertyChanged("DateModified");
+					this.OnDateModifiedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NameGame", DbType="NVarChar(500)")]
+		public string NameGame
+		{
+			get
+			{
+				return this._NameGame;
+			}
+			set
+			{
+				if ((this._NameGame != value))
+				{
+					this.OnNameGameChanging(value);
+					this.SendPropertyChanging();
+					this._NameGame = value;
+					this.SendPropertyChanged("NameGame");
+					this.OnNameGameChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MaTheNap")]
+	public partial class MaTheNap : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _MaThe;
+		
+		private System.Nullable<decimal> _GiaTriNap;
+		
+		private System.Nullable<System.DateTime> _HieuLuc;
+		
+		private System.Nullable<bool> _TrangThai;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnMaTheChanging(string value);
+    partial void OnMaTheChanged();
+    partial void OnGiaTriNapChanging(System.Nullable<decimal> value);
+    partial void OnGiaTriNapChanged();
+    partial void OnHieuLucChanging(System.Nullable<System.DateTime> value);
+    partial void OnHieuLucChanged();
+    partial void OnTrangThaiChanging(System.Nullable<bool> value);
+    partial void OnTrangThaiChanged();
+    #endregion
+		
+		public MaTheNap()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaThe", DbType="NVarChar(10)")]
+		public string MaThe
+		{
+			get
+			{
+				return this._MaThe;
+			}
+			set
+			{
+				if ((this._MaThe != value))
+				{
+					this.OnMaTheChanging(value);
+					this.SendPropertyChanging();
+					this._MaThe = value;
+					this.SendPropertyChanged("MaThe");
+					this.OnMaTheChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GiaTriNap", DbType="Decimal(10,2)")]
+		public System.Nullable<decimal> GiaTriNap
+		{
+			get
+			{
+				return this._GiaTriNap;
+			}
+			set
+			{
+				if ((this._GiaTriNap != value))
+				{
+					this.OnGiaTriNapChanging(value);
+					this.SendPropertyChanging();
+					this._GiaTriNap = value;
+					this.SendPropertyChanged("GiaTriNap");
+					this.OnGiaTriNapChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HieuLuc", DbType="Date")]
+		public System.Nullable<System.DateTime> HieuLuc
+		{
+			get
+			{
+				return this._HieuLuc;
+			}
+			set
+			{
+				if ((this._HieuLuc != value))
+				{
+					this.OnHieuLucChanging(value);
+					this.SendPropertyChanging();
+					this._HieuLuc = value;
+					this.SendPropertyChanged("HieuLuc");
+					this.OnHieuLucChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TrangThai", DbType="Bit")]
+		public System.Nullable<bool> TrangThai
+		{
+			get
+			{
+				return this._TrangThai;
+			}
+			set
+			{
+				if ((this._TrangThai != value))
+				{
+					this.OnTrangThaiChanging(value);
+					this.SendPropertyChanging();
+					this._TrangThai = value;
+					this.SendPropertyChanged("TrangThai");
+					this.OnTrangThaiChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.KHACHHANG")]
 	public partial class KHACHHANG : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3025,6 +3352,8 @@ namespace GameStore.Models
 		
 		private string _ListGameInLibrary;
 		
+		private System.Nullable<bool> _LastActivity;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -3055,6 +3384,8 @@ namespace GameStore.Models
     partial void OnBalanceChanged();
     partial void OnListGameInLibraryChanging(string value);
     partial void OnListGameInLibraryChanged();
+    partial void OnLastActivityChanging(System.Nullable<bool> value);
+    partial void OnLastActivityChanged();
     #endregion
 		
 		public KHACHHANG()
@@ -3322,160 +3653,22 @@ namespace GameStore.Models
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.KEYGAME")]
-	public partial class KEYGAME : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private System.Nullable<int> _ID_KH;
-		
-		private string _KeyGames;
-		
-		private System.Nullable<System.DateTime> _DateModified;
-		
-		private string _NameGame;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnID_KHChanging(System.Nullable<int> value);
-    partial void OnID_KHChanged();
-    partial void OnKeyGamesChanging(string value);
-    partial void OnKeyGamesChanged();
-    partial void OnDateModifiedChanging(System.Nullable<System.DateTime> value);
-    partial void OnDateModifiedChanged();
-    partial void OnNameGameChanging(string value);
-    partial void OnNameGameChanged();
-    #endregion
-		
-		public KEYGAME()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastActivity", DbType="Bit")]
+		public System.Nullable<bool> LastActivity
 		{
 			get
 			{
-				return this._id;
+				return this._LastActivity;
 			}
 			set
 			{
-				if ((this._id != value))
+				if ((this._LastActivity != value))
 				{
-					this.OnidChanging(value);
+					this.OnLastActivityChanging(value);
 					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_KH", DbType="Int")]
-		public System.Nullable<int> ID_KH
-		{
-			get
-			{
-				return this._ID_KH;
-			}
-			set
-			{
-				if ((this._ID_KH != value))
-				{
-					this.OnID_KHChanging(value);
-					this.SendPropertyChanging();
-					this._ID_KH = value;
-					this.SendPropertyChanged("ID_KH");
-					this.OnID_KHChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KeyGames", DbType="VarChar(10)")]
-		public string KeyGames
-		{
-			get
-			{
-				return this._KeyGames;
-			}
-			set
-			{
-				if ((this._KeyGames != value))
-				{
-					this.OnKeyGamesChanging(value);
-					this.SendPropertyChanging();
-					this._KeyGames = value;
-					this.SendPropertyChanged("KeyGames");
-					this.OnKeyGamesChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateModified", DbType="Date")]
-		public System.Nullable<System.DateTime> DateModified
-		{
-			get
-			{
-				return this._DateModified;
-			}
-			set
-			{
-				if ((this._DateModified != value))
-				{
-					this.OnDateModifiedChanging(value);
-					this.SendPropertyChanging();
-					this._DateModified = value;
-					this.SendPropertyChanged("DateModified");
-					this.OnDateModifiedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NameGame", DbType="NVarChar(500)")]
-		public string NameGame
-		{
-			get
-			{
-				return this._NameGame;
-			}
-			set
-			{
-				if ((this._NameGame != value))
-				{
-					this.OnNameGameChanging(value);
-					this.SendPropertyChanging();
-					this._NameGame = value;
-					this.SendPropertyChanged("NameGame");
-					this.OnNameGameChanged();
+					this._LastActivity = value;
+					this.SendPropertyChanged("LastActivity");
+					this.OnLastActivityChanged();
 				}
 			}
 		}
