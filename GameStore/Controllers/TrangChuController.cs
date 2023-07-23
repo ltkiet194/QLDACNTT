@@ -53,7 +53,8 @@ namespace GameStore.Controllers
                 {
                     var listjsonFriend = listbb.ListFriends;
                     List<Friends> fr = JsonSerializer.Deserialize<List<Friends>>(listjsonFriend);
-                    var listfriendLocTT = fr.Where(n => n.TrangThai == 0).Select(n => n.Id_banbe).ToList();
+                    var listfriendLocTT = fr.Where(n => n.TrangThai == 2).Select(n => n.Id_banbe).ToList();
+                    ViewBag.FriendCount = listfriendLocTT.Count();
 
                     var listfriendDaloc = fr.Where(f => listfriendLocTT.Contains(f.Id_banbe)).ToList();
 

@@ -37,6 +37,7 @@ namespace GameStore.Controllers
         {
             DataTable gameList = DataProvider.Instance.ExcuteQuery("SELECT TOP 10 * FROM Game ORDER BY numSale DESC");
 
+            
             List<Games> games = new List<Games>();
 
             foreach (DataRow row in gameList.Rows)
