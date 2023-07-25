@@ -43,6 +43,7 @@ namespace GameStore.Areas.Admin.Controllers
         // POST: Admin/QLGame/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)] // Disable request validation for this action
         public ActionResult Create(FormCollection formData, HttpPostedFileBase imgGame)
         {
             if (ModelState.IsValid)
@@ -99,11 +100,11 @@ namespace GameStore.Areas.Admin.Controllers
                 if (imgGame != null && imgGame.ContentLength > 0)
                 {
                     string fileName = Path.GetFileName(imgGame.FileName);
-                    string path = Path.Combine(Server.MapPath("~/Theme/img/"), fileName);
+                    string path = Path.Combine(Server.MapPath("~/Theme/images/ImageResource/"), fileName);
                     imgGame.SaveAs(path);
 
                     // Lưu đường dẫn của hình ảnh vào formData
-                    formData["imgGame"] = "~/Theme/img/" + fileName;
+                    formData["imgGame"] = "~/Theme/images/ImageResource/" + fileName;
                 }
 
                 // Tạo đối tượng Game từ formData
@@ -118,7 +119,10 @@ namespace GameStore.Areas.Admin.Controllers
                     priceGame = float.Parse(formData["priceGame"]),
                     desGame = formData["desGame"],
                     yearRelease = int.Parse(formData["yearRelease"]),
-                    requireGame = formData["requireGame"]
+                    requireGame = formData["requireGame"],
+                    numSale = 10,
+                    enableGame=true,
+                    dateModified=DateTime.Now
                 };
 
                 // Thêm đối tượng newGame vào cơ sở dữ liệu bằng LINQ to SQL

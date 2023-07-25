@@ -8,7 +8,7 @@ using GameStore.Models.DTO;
 using System.Text.Json;
 using FireSharp.Interfaces;
 using FireSharp.Config;
-
+using System.Threading;
 
 namespace GameStore.Controllers
 {
@@ -241,8 +241,10 @@ namespace GameStore.Controllers
             }
             else
             {
-                string authen = "UEX3DWXKythkhw9EfQTi6NO3jyahnKbTZA2gOPic";
-                string path = "https://chat-project-85651-default-rtdb.firebaseio.com/";
+                //string authen = "UEX3DWXKythkhw9EfQTi6NO3jyahnKbTZA2gOPic";
+                string authen = "uYT2Yr1RSr0qCSqoGZZwjMoZJugqGu0H2ynAVHw9";
+                //string path = "https://chat-project-85651-default-rtdb.firebaseio.com/";
+                string path = "https://chat-gamestore-default-rtdb.firebaseio.com/";
                 IFirebaseClient client;
                 IFirebaseConfig config = new FirebaseConfig
                 {
@@ -265,7 +267,8 @@ namespace GameStore.Controllers
                         var name = dataItem["Name"].ToString();
                         var message = dataItem["Message"].ToString();
                         var room = dataItem["Room"].ToString();
-                        if ((name == id && id != null) || (kh != null && name == kh.MaKH.ToString()) && room == kh.MaKH + "-" + id || room == id + "-" + kh.MaKH)
+                        if ((kh != null && name == kh.MaKH.ToString() && room == kh.MaKH + "-" + id) ||
+                    (kh != null && name == id && room == id + "-" + kh.MaKH))
                         {
                             var dataDict = new Dictionary<string, object>();
                             dataDict["Key"] = key;
@@ -281,12 +284,16 @@ namespace GameStore.Controllers
             }
         }
 
+
+
         [HttpPost]
         public JsonResult sendChat(string message, string id)
         {
             KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
-            string authen = "UEX3DWXKythkhw9EfQTi6NO3jyahnKbTZA2gOPic";
-            string path = "https://chat-project-85651-default-rtdb.firebaseio.com/";
+            //string authen = "UEX3DWXKythkhw9EfQTi6NO3jyahnKbTZA2gOPic";
+            string authen = "uYT2Yr1RSr0qCSqoGZZwjMoZJugqGu0H2ynAVHw9";
+            //string path = "https://chat-project-85651-default-rtdb.firebaseio.com/";
+            string path = "https://chat-gamestore-default-rtdb.firebaseio.com/";
             IFirebaseClient client;
             IFirebaseConfig config = new FirebaseConfig
             {

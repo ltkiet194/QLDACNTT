@@ -88,7 +88,7 @@ namespace GameStore.Controllers
             try
             {
                 KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
-                
+
                 var GetKH = db.KHACHHANGs.SingleOrDefault(k => k.MaKH == kh.MaKH);
                 var LuuListGame = GetKH.ListGameInCart;
                 List<GamesInCart> games = JsonConvert.DeserializeObject<List<GamesInCart>>(LuuListGame);
@@ -108,30 +108,30 @@ namespace GameStore.Controllers
 
                         // Add the generated key to the database
                         db.KEYGAMEs.InsertOnSubmit(keyGame);
-                        var existingGame = games.SingleOrDefault(g => g.Id == game.Id);
-                        if (existingGame != null)
-                        {
-                            existingGame.Quantity += 1; 
-                        }
-                        else
-                        {
-                            games.Add(new GamesInCart
-                            {
-                                Id = game.Id,
-                                Name = game.Name,
-                                ImgName = game.ImgName,
-                                Quantity = 1,
-                                PriceGame = game.PriceGame
-                            });
-                        }
                     }
                 }
-                
-                GetKH.ListGameInLibrary = JsonConvert.SerializeObject(games);
-                
+                var existingLibraryData = JsonConvert.DeserializeObject<List<GamesInCart>>(GetKH.ListGameInLibrary);
+
+                foreach (var newGame in games)
+                {
+                    var existingGame = existingLibraryData.SingleOrDefault(g => g.Id == newGame.Id);
+                    if (existingGame != null)
+                    {
+                        // If the game already exists in the library, increase its Quality
+                        existingGame.Quantity += newGame.Quantity;
+                    }
+                    else
+                    {
+                        // If the game doesn't exist in the library, add it to the library
+                        existingLibraryData.Add(newGame);
+                    }
+                }
+
+                GetKH.ListGameInLibrary = JsonConvert.SerializeObject(existingLibraryData);
+
                 if (GetKH.Balance < float.Parse(total))
                 {
-                    return Json(new { success = false, message = "Bạn không đủ tiền trong tài khoản !"});
+                    return Json(new { success = false, message = "Bạn không đủ tiền trong tài khoản !" });
                 }
                 else
                 {
@@ -146,14 +146,14 @@ namespace GameStore.Controllers
 
                     db.DONHANGs.InsertOnSubmit(donhang);
                     GetKH.ListGameInCart = null;
-                    
+
                     GetKH.Balance = GetKH.Balance - float.Parse(total);
                     db.SubmitChanges();
-                    Session["KhachHang"] = db.KHACHHANGs.Where(m=>m.MaKH == kh.MaKH).SingleOrDefault();
+                    Session["KhachHang"] = db.KHACHHANGs.Where(m => m.MaKH == kh.MaKH).SingleOrDefault();
                     return Json(new { success = true, message = "Mua thành công." });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
                 return Json(new { success = false, message = "Đã xảy ra lỗi khi mua hàng: " + ex.Message });

@@ -35,7 +35,7 @@
                 <ul class="nk-breadcrumbs">
                     <li><a href="@Url.Action("TrangChu","TrangChu")">Home</a></li>
                     <li><span class="fa fa-angle-right"></span></li>
-                    
+
                 </ul>
             </div>
         }
@@ -46,11 +46,11 @@
                 @Html.Action("PartialGameEnviroment", "StoreProduct")
             }
         </div>
-            <div class="container">
-                @RenderBody()
-            </div>
-            <div class="nk-gap-4"></div>
+        <div class="container">
+            @RenderBody()
         </div>
+        <div class="nk-gap-4"></div>
+    </div>
     @Html.Action("PartialFooter", "TrangChu")
     <img class="nk-page-background-top" src="~/Theme/images/bg-top.png" alt="">
     <img class="nk-page-background-bottom" src="~/Theme/images/bg-bottom.png" alt="">
@@ -80,7 +80,6 @@
     <script src="~/Theme/plugins/nk-share/nk-share.js"></script>
     <script src="~/Theme/js/goodgames.min.js"></script>
     <script src="~/Theme/js/goodgames-init.js"></script>
-
 </body>
 
 </html>

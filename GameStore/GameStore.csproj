@@ -530,6 +530,7 @@
     <Compile Include="Controllers\AddFriendController.cs" />
     <Compile Include="Controllers\BlogListController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
+    <Compile Include="Controllers\CommunityController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\ForumSingleTopicsController.cs" />
@@ -550,6 +551,7 @@
     <Compile Include="Models\DAO\QueryDAO.cs" />
     <Compile Include="Models\DataProvider.cs" />
     <Compile Include="Models\DTO\AddFriends.cs" />
+    <Compile Include="Models\DTO\CommentNew.cs" />
     <Compile Include="Models\DTO\Friends.cs" />
     <Compile Include="Models\DTO\GameModel\Category.cs" />
     <Compile Include="Models\DTO\GameModel\Comment.cs" />
@@ -558,6 +560,7 @@
     <Compile Include="Models\DTO\Games.cs" />
     <Compile Include="Models\DTO\TBAddFriend.cs" />
     <Compile Include="Models\DTO\UserInfo.cs" />
+    <Compile Include="Models\DTO\UserLike.cs" />
     <Compile Include="Models\DTO\Users.cs" />
     <Compile Include="Models\GameStore.designer.cs">
       <AutoGen>True</AutoGen>
@@ -2854,6 +2857,7 @@
     <Content Include="Views\Account\DetailInfo.cshtml" />
     <Content Include="Views\Account\AddBalance.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Community\SocialNetwork.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
