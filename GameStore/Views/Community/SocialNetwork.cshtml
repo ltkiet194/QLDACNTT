@@ -508,9 +508,9 @@
                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                                 @if (kh != null)
                                                 {
-                                                          <a id="DL_@item.Id_BaiDang" class="dropdown-item Deletenew" href="#">Delete</a>
+                                                    <a id="DL_@item.Id_BaiDang" class="dropdown-item Deletenew" href="#">Delete</a>
                                                 }
-                                                
+
                                                 <a class="dropdown-item" href="#">Another action</a>
                                                 <a class="dropdown-item" href="#">Something else here</a>
                                             </div>
@@ -543,13 +543,13 @@
                                                 }
                                                 @if (!userHasLiked)
                                                 {
-                                                    <button id="@item.Id_BaiDang" type="button" class="btn-likenew btn btn-fbook btn-block btn-sm">
+                                                    <button id="@item.Id_BaiDang" type="button" class="btn-likenew btn btn-fbook btn-block btn-sm ">
                                                         <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
                                                     </button>
                                                 }
                                                 else
                                                 {
-                                                    <button style="color:blue" id="@item.Id_BaiDang" type="button" class="btn-likenew btn btn-fbook btn-block btn-sm">
+                                                    <button id="@item.Id_BaiDang" type="button" class="btn-likenew btn btn-fbook btn-block btn-sm liked">
                                                         <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
                                                     </button>
                                                 }
@@ -579,22 +579,61 @@
                                     </div>
                                 </div>
                             </div>
+                            List<CommentNew> cm = item.ListComment != null ? JsonConvert.DeserializeObject<List<CommentNew>>(item.ListComment) : new List<CommentNew>();
 
-                            <div id="mdcm_@item.Id_BaiDang" class="comment-thread" style="border: 1px solid rgba(0,0,0,.125);display:none ">
+                    <div id="mdcm_@item.Id_BaiDang" class="comment-thread" style="border: 1px solid rgba(0,0,0,.125);display:none ">
+                        @{
+                            
+                            int i = 0;
+                        }
+                        @if (item.ListComment == null)
+                        {
+                            <textarea placeholder="Reply to comment" rows="4" style="width: 100%;"></textarea>
+                        }
+                        @foreach (var comment in cm)
+                        {
+                            i = i + 1;
+
                                 <!-- Comment 1 start -->
-                                <details open class="comment" id="comment-1">
+                                <details open class="comment" id="comment-@comment.Id_Conmment">
                                     <a href="#comment-1" class="comment-border-link">
                                         <span class="sr-only">Jump to comment</span>
                                     </a>
                                     <summary>
                                         <div class="comment-heading">
 
-                                            <img class="circle-image" src="" />
+                                            <img class="circle-image" src="@comment.Avatar" />
 
                                             <div class="comment-info">
-                                                <a href="#" class="comment-author">someguy14</a>
+                                                <a href="#" class="comment-author">@comment.Name</a>
                                                 <p class="m-0">
-                                                    22 points &bull; 4 days ago
+                                                    @{
+                                                        // Hàm tính khoảng thời gian từ thời điểm hiện tại đến thời gian cung cấp
+                                                        DateTime cmTime = Convert.ToDateTime(comment.DateModified); // Assuming NgayDang is the property for the post's timestamp
+                                                        DateTime cmcurrentTime = DateTime.Now;
+                                                        TimeSpan cmtimeDifference = currentTime.Subtract(cmTime);
+
+                                                        if (timeDifference.TotalMinutes < 1)
+                                                        {
+                                                            @: Just now
+                                                        }
+                                                        else if (cmtimeDifference.TotalMinutes < 60)
+                                                        {
+                                                            @: @cmtimeDifference.Minutes minute(s) ago
+                                                        }
+                                                        else if (cmtimeDifference.TotalHours < 24)
+                                                        {
+                                                            @: @cmtimeDifference.Hours hour(s) ago
+                                                        }
+                                                        else if (cmtimeDifference.TotalDays < 7)
+                                                        {
+                                                            @: @cmtimeDifference.Days day(s) ago
+                                                        }
+                                                        else
+                                                        {
+                                                            @: @postTime.ToString("MMMM dd, yyyy") <!-- Display full date if older than a week -->
+                                                        }
+                                                    }
                                                 </p>
                                             </div>
                                         </div>
@@ -602,63 +641,66 @@
 
                                     <div class="comment-body">
                                         <p>
-                                            This is really great! I fully agree with what you wrote, and this is sure to help me out in the future. Thank you for posting this.
+                                            @comment.Content
                                         </p>
-                                        <button type="button" data-toggle="reply-form" data-target="comment-1-reply-form">Reply</button>
+                                        <button type="button" id="comment-@comment.Id_Conmment-@item.Id_BaiDang-reply-form" class="reply" >Reply</button>
                                         <!-- Reply form start -->
-                                        <form method="POST" class="reply-form d-none" id="comment-1-reply-form">
+                                        <form method="POST" class="reply-form d-none" id="txcomment-@comment.Id_Conmment-@item.Id_BaiDang-reply-form" style="display:block">
                                             <textarea placeholder="Reply to comment" rows="4"></textarea>
                                             <button type="submit">Submit</button>
-                                            <button type="button" data-toggle="reply-form" data-target="comment-1-reply-form">Cancel</button>
+                                            <button type="button" class="cancelc">Cancel</button>
                                         </form>
                                         <!-- Reply form end -->
                                     </div>
 
                                     <div class="replies">
-                                        <!-- Comment 2 start -->
-                                        <details open class="comment" id="comment-2">
-                                            <a href="#comment-2" class="comment-border-link">
-                                                <span class="sr-only">Jump to comment-2</span>
-                                            </a>
-                                            <summary>
-                                                <div class="comment-heading">
+                                        
+                                            <details open class="comment" id="comment-2">
+                                                <a href="#comment-2" class="comment-border-link">
+                                                    <span class="sr-only">Jump to comment-2</span>
+                                                </a>
+                                                <summary>
+                                                    <div class="comment-heading">
 
-                                                    <img class="circle-image" src="" />
+                                                        <img class="circle-image" src="" />
 
 
-                                                    <div class="comment-info">
-                                                        <a href="#" class="comment-author">randomperson81</a>
-                                                        <p class="m-0">
-                                                            4 points &bull; 3 days ago
-                                                        </p>
+                                                        <div class="comment-info">
+                                                            <a href="#" class="comment-author">randomperson81</a>
+                                                            <p class="m-0">
+                                                                4 points &bull; 3 days ago
+                                                            </p>
+                                                        </div>
                                                     </div>
+                                                </summary>
+
+                                                <div class="comment-body">
+                                                    <p>
+                                                        Took the words right out of my mouth!
+                                                    </p>
+                                                    <button type="button" data-toggle="reply-form" data-target="comment-2-reply-form">Reply</button>
+
+                                                    <!-- Reply form start -->
+                                                    <form method="POST" class="reply-form d-none" id="comment-2-reply-form">
+                                                        <textarea placeholder="Reply to comment" rows="4"></textarea>
+                                                        <button type="submit">Submit</button>
+                                                        <button type="button" data-toggle="reply-form" data-target="comment-2-reply-form">Cancel</button>
+                                                    </form>
+                                                    <!-- Reply form end -->
                                                 </div>
-                                            </summary>
+                                            </details>
 
-                                            <div class="comment-body">
-                                                <p>
-                                                    Took the words right out of my mouth!
-                                                </p>
-                                                <button type="button" data-toggle="reply-form" data-target="comment-2-reply-form">Reply</button>
-
-                                                <!-- Reply form start -->
-                                                <form method="POST" class="reply-form d-none" id="comment-2-reply-form">
-                                                    <textarea placeholder="Reply to comment" rows="4"></textarea>
-                                                    <button type="submit">Submit</button>
-                                                    <button type="button" data-toggle="reply-form" data-target="comment-2-reply-form">Cancel</button>
-                                                </form>
-                                                <!-- Reply form end -->
-                                            </div>
-                                        </details>
+                                        <!-- Comment 2 start -->
                                         <!-- Comment 2 end -->
+                                        @if (i == cm.Count)
+                                        {<textarea placeholder="Reply to comment" rows="4" style="width: 100%;"></textarea>}
 
-                                        <textarea placeholder="Reply to comment" rows="4" style="width: 100%;"></textarea>
                                     </div>
-                                   
-                                </details>
-                                <!-- Comment 1 end -->
-                            </div>
 
+                                </details>
+                            }
+                            <!-- Comment 1 end -->
+                        </div>
 
                         }
                         <!-- ITEM -->
@@ -711,19 +753,7 @@
                 }
             });
         });
-        document.addEventListener(
-            "click",
-            function (event) {
-                var target = event.target;
-                var replyForm;
-                if (target.matches("[data-toggle='reply-form']")) {
-                    replyForm = document.getElementById(target.getAttribute("data-target"));
-                    replyForm.classList.toggle("d-none");
-                }
-            },
-            false
-        );
-
+      
         $(document).ready(function () {
 
             $("#postnew").click(function () {
@@ -785,10 +815,8 @@
             // Cập nhật màu sắc của nút "Like" dựa trên trạng thái isPostLiked
             if (isPostLiked) {
                 $(this).addClass("liked"); // Thêm class "liked" để thay đổi màu sắc
-                $(this).css("color", "blue"); // Đổi màu sắc thành màu xanh
             } else {
                 $(this).removeClass("liked"); // Xóa class "liked" để đổi màu sắc trở lại mặc định
-                $(this).css("color", ""); // Xóa thuộc tính màu sắc để trở về màu sắc mặc định
             }
             var countlike = "#countlike_" + id;
             $.ajax({
@@ -829,6 +857,14 @@
             })
         })
 
+        $(".reply").click(function () {
+            var id = $(this).attr('id');
+            
+            var gettg = "#tx" + id;
+          
+            $(gettg).toggleClass("d-none");
+           
+        })
 
     </script>
 </body>

@@ -19,7 +19,6 @@ namespace GameStore.Controllers
             KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
             var posts = db.BAIDANGCONGDONGs.OrderByDescending(n=>n.NgayDang).ToList();
          
-            List<PostviewModel> postViewModels = new List<PostviewModel>();
 
             // Fetch the user information for each post and add it to the ViewBag (or use a ViewModel)
             var userIds = posts.Select(p => p.Id_NguoiDang).ToList();
