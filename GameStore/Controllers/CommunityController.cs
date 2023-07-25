@@ -60,6 +60,7 @@ namespace GameStore.Controllers
                         bd.NgayDang = DateTime.Now;
                         bd.KiemDuyet = false;
                         bd.CountLike = 0;
+                        bd.ListComment = "[]";
                         db.BAIDANGCONGDONGs.InsertOnSubmit(bd);
                         db.SubmitChanges();
 
@@ -136,5 +137,101 @@ namespace GameStore.Controllers
                   JsonRequestBehavior.AllowGet);
             }
         }
+
+
+
+        [HttpPost]
+        public ActionResult CommentParent(FormCollection f)
+        {
+            KHACHHANG kh = (KHACHHANG)Session["KhachHang"];            
+            if (ModelState.IsValid)
+            {
+                if (f["textCommentContent"] == "")
+                {
+                    return View("SocialNetwork");
+                }
+                var baidang = db.BAIDANGCONGDONGs.SingleOrDefault(n=>n.Id_BaiDang==int.Parse(f["id"]));
+                List<CommentNew> list = JsonConvert.DeserializeObject<List<CommentNew>>(baidang.ListComment);
+                CommentNew cmt = new CommentNew
+                {
+                    Id_Post = int.Parse(f["id"]),
+                    Id_Conmment = list.Count(),
+                    Id_kh = kh.MaKH,
+                    Avatar = kh.Avatar,
+                    IdParent = -1,
+                    Content = f["textCommentContent"],
+                    Name = kh.HoTen,
+                    DateModified = DateTime.Now
+                };
+                list.Add(cmt);
+                baidang.ListComment = JsonConvert.SerializeObject(list);
+                db.SubmitChanges();
+
+            }
+
+            return RedirectToAction("SocialNetwork","Community");
+        }
+
+
+        [HttpPost]
+        public ActionResult CommentChild(FormCollection f)
+        {
+            KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+            if (ModelState.IsValid)
+            {
+                if (f["textCommentContent"] == "")
+                {
+                    return View("SocialNetwork");
+                }
+                string[] itemId = f["id"].Split('-');
+                int idBd = int.Parse(itemId[0]);
+                int idCmt = int.Parse(itemId[1]);
+
+                var baidang = db.BAIDANGCONGDONGs.SingleOrDefault(n => n.Id_BaiDang == idBd);
+                List<CommentNew> list = JsonConvert.DeserializeObject<List<CommentNew>>(baidang.ListComment);
+                CommentNew cmt = new CommentNew
+                {
+                    Id_Post = idBd,
+                    Id_Conmment = list.Count(),
+                    Id_kh = kh.MaKH,
+                    Avatar = kh.Avatar,
+                    IdParent = idCmt,
+                    Content = f["textCommentContent"],
+                    Name = kh.HoTen,
+                    DateModified = DateTime.Now
+                };
+                list.Add(cmt);
+                baidang.ListComment = JsonConvert.SerializeObject(list);
+                db.SubmitChanges();
+
+            }
+
+            return RedirectToAction("SocialNetwork", "Community");
+        }
+
+
+
+
+        [ChildActionOnly]
+        public ActionResult LoadChildComment(int idBaiDang,int parentId)
+        {
+            List<CommentNew> lst = new List<CommentNew>();
+
+            var liscm = db.BAIDANGCONGDONGs.Where(n => n.Id_BaiDang == idBaiDang).SingleOrDefault();
+            List<CommentNew> cm = JsonConvert.DeserializeObject<List<CommentNew>>(liscm.ListComment);
+         
+            ViewBag.Count = lst.Count();
+            lst = cm.Where(m => m.IdParent == parentId).ToList();
+            int[] a = new int[cm.Count()];
+            for (int ia = 0; ia < lst.Count; ia++)
+            {
+                var l = cm.Where(m => m.IdParent == lst[ia].Id_Conmment);
+                a[ia] = l.Count();
+            }
+            ViewBag.lst = a;
+            return PartialView("LoadChildComment", lst);
+        }
+
+
     }
 }
