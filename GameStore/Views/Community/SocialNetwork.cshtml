@@ -678,10 +678,10 @@
                                                     <p>
                                                         Took the words right out of my mouth!
                                                     </p>
-                                                    <button type="button" data-toggle="reply-form" data-target="comment-2-reply-form">Reply</button>
+                                                    <button type="button"  class="reply2" id="r2comment-@comment.Id_Conmment-@item.Id_BaiDang-reply-form">Reply</button>
 
                                                     <!-- Reply form start -->
-                                                    <form method="POST" class="reply-form d-none" id="comment-2-reply-form">
+                                                    <form method="POST" class="reply-form d-none" id="txr2comment-@comment.Id_Conmment-@item.Id_BaiDang-reply-form">
                                                         <textarea placeholder="Reply to comment" rows="4"></textarea>
                                                         <button type="submit">Submit</button>
                                                         <button type="button" data-toggle="reply-form" data-target="comment-2-reply-form">Cancel</button>
@@ -865,7 +865,14 @@
             $(gettg).toggleClass("d-none");
            
         })
+        $(".reply2").click(function () {
+            var id = $(this).attr('id');
 
+            var gettg = "#tx" + id;
+
+            $(gettg).toggleClass("d-none");
+
+        })
     </script>
 </body>
 
