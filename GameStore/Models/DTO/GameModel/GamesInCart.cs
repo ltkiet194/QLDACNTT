@@ -13,7 +13,7 @@ namespace GameStore.Models.DTO.GameModel
 
         public int Quantity { get; set; }
         public float PriceGame { get; set; }
-
+        
         public GamesInCart()
         {
             // Không làm gì cả, để các thuộc tính giữ giá trị mặc định của kiểu dữ liệu
@@ -28,5 +28,6 @@ namespace GameStore.Models.DTO.GameModel
             Quantity = quantity;
             PriceGame = priceGame;
         }
+
     }
 }

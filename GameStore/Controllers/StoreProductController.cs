@@ -43,7 +43,7 @@ namespace GameStore.Controllers
                
             if (GamesDAO.Instance.CheckExistGameCommentById(GameId) == 0)
             {
-                Comment cmt = new Comment(0, kh.MaKH, Message, int.Parse(Rating), kh.HoTen);
+                Comment cmt = new Comment(0, kh.MaKH, Message, int.Parse(Rating), kh.HoTen,kh.Avatar);
                 listcmt.Add(cmt);
                 string json = JsonConvert.SerializeObject(listcmt);
                 GamesDAO.Instance.InsertCommentList(GameId, json);
@@ -52,7 +52,7 @@ namespace GameStore.Controllers
             else
             {
                 listcmt = JsonConvert.DeserializeObject<List<Comment>>(GamesDAO.Instance.GetCommentLisStringtById(GameId));
-                Comment cmt = new Comment(listcmt.Count, kh.MaKH, Message, int.Parse(Rating), kh.HoTen);
+                Comment cmt = new Comment(listcmt.Count, kh.MaKH, Message, int.Parse(Rating), kh.HoTen,kh.Avatar);
                 listcmt.Add(cmt);
                 string json = JsonConvert.SerializeObject(listcmt);
                 GamesDAO.Instance.SaveCommentListById(GameId, json);
