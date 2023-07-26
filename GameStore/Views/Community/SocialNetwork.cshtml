@@ -673,7 +673,7 @@
 
                                             @if (i == lst.Count)
                                             {
-                                                <form method="POST" action="/Community/CommentParent" class="reply-form" id="txcomment-@item.Id_BaiDang-reply-form" style="display:block">
+                                                <form method="POST" action="/Community/CommentChild" class="reply-form" id="txcomment-@item.Id_BaiDang-reply-form" style="display:block">
                                                     <input name="id" value="@item.Id_BaiDang" class="d-none" />
                                                     <textarea placeholder="Reply to comment" rows="4" style="width: 100%;" name="textCommentContent"></textarea>
                                                     <button type="submit">Submit</button>

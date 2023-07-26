@@ -222,7 +222,7 @@ namespace GameStore.Controllers
          
             ViewBag.Count = lst.Count();
             lst = cm.Where(m => m.IdParent == parentId).ToList();
-            int[] a = new int[cm.Count()];
+            int[] a = new int[lst.Count()];
             for (int ia = 0; ia < lst.Count; ia++)
             {
                 var l = cm.Where(m => m.IdParent == lst[ia].Id_Conmment);
@@ -231,7 +231,5 @@ namespace GameStore.Controllers
             ViewBag.lst = a;
             return PartialView("LoadChildComment", lst);
         }
-
-
     }
 }
