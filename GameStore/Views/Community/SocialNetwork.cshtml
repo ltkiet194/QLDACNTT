@@ -611,78 +611,78 @@
                                 {
                                     i = i + 1;
                                     <!-- Comment 1 start -->
-                                    <details open class="comment" id="comment-@comment.Id_Conmment">
-                                        <a href="#comment-1" class="comment-border-link">
-                                            <span class="sr-only">Jump to comment</span>
-                                        </a>
-                                        <summary>
-                                            <div class="comment-heading">
+                            <details open class="comment" id="comment-@comment.Id_Conmment">
+                                <a href="#comment-1" class="comment-border-link">
+                                    <span class="sr-only">Jump to comment</span>
+                                </a>
+                                <summary>
+                                    <div class="comment-heading">
 
-                                                <img class="circle-image" src="@comment.Avatar" />
+                                        <img class="circle-image" src="@comment.Avatar" />
 
-                                                <div class="comment-info">
-                                                    <a href="#" class="comment-author">@comment.Name</a>
-                                                    <p class="m-0">
-                                                        @{
-                                                            // Hàm tính khoảng thời gian từ thời điểm hiện tại đến thời gian cung cấp
-                                                            DateTime cmTime = Convert.ToDateTime(comment.DateModified); // Assuming NgayDang is the property for the post's timestamp
-                                                            DateTime cmcurrentTime = DateTime.Now;
-                                                            TimeSpan cmtimeDifference = currentTime.Subtract(cmTime);
+                                        <div class="comment-info">
+                                            <a href="#" class="comment-author">@comment.Name</a>
+                                            <p class="m-0">
+                                                @{
+                                                    // Hàm tính khoảng thời gian từ thời điểm hiện tại đến thời gian cung cấp
+                                                    DateTime cmTime = Convert.ToDateTime(comment.DateModified); // Assuming NgayDang is the property for the post's timestamp
+                                                    DateTime cmcurrentTime = DateTime.Now;
+                                                    TimeSpan cmtimeDifference = currentTime.Subtract(cmTime);
 
-                                                            if (timeDifference.TotalMinutes < 1)
-                                                            {
-                                                                @: Just now
-                                                            }
-                                                            else if (cmtimeDifference.TotalMinutes < 60)
-                                                            {
-                                                                @: @cmtimeDifference.Minutes minute(s) ago
-                                                            }
-                                                            else if (cmtimeDifference.TotalHours < 24)
-                                                            {
-                                                                @: @cmtimeDifference.Hours hour(s) ago
-                                                            }
-                                                            else if (cmtimeDifference.TotalDays < 7)
-                                                            {
-                                                                @: @cmtimeDifference.Days day(s) ago
-                                                            }
-                                                            else
-                                                            {
-                                                                @: @postTime.ToString("MMMM dd, yyyy") <!-- Display full date if older than a week -->
-                                                            }
-                                                        }
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </summary>
-                                        <div class="comment-body">
-                                            <p>
-                                                @comment.Content
+                                                    if (timeDifference.TotalMinutes < 1)
+                                                    {
+                                                        @: Just now
+                                                    }
+                                                    else if (cmtimeDifference.TotalMinutes < 60)
+                                                    {
+                                                        @: @cmtimeDifference.Minutes minute(s) ago
+                                                    }
+                                                    else if (cmtimeDifference.TotalHours < 24)
+                                                    {
+                                                        @: @cmtimeDifference.Hours hour(s) ago
+                                                    }
+                                                    else if (cmtimeDifference.TotalDays < 7)
+                                                    {
+                                                        @: @cmtimeDifference.Days day(s) ago
+                                                    }
+                                                    else
+                                                    {
+                                                        @: @postTime.ToString("MMMM dd, yyyy") <!-- Display full date if older than a week -->
+                                                    }
+                                                }
                                             </p>
-                                            <button type="button" id="comment-@comment.Id_Conmment-@item.Id_BaiDang-reply-form" class="reply">Reply</button>
-                                            <!-- Reply form start -->
-                                            <form method="POST" action="/Community/CommentChild" class="reply-form d-none" id="txcomment-@comment.Id_Conmment-@item.Id_BaiDang-reply-form" style="display:block">
-                                                <input name="id" value="@item.Id_BaiDang-@comment.Id_Conmment" class="d-none" />
-                                                <textarea placeholder="Reply to comment" rows="4" name="textCommentContent"></textarea>
-                                                <button type="submit">Submit</button>
-                                                <button type="button" class="cancelc">Cancel</button>
-                                            </form>
-                                            <!-- Reply form end -->
                                         </div>
-                                        <div class="replies">
-                                            @Html.Action("LoadChildComment", "Community", new { idBaiDang = item.Id_BaiDang, parentId = comment.Id_Conmment })
+                                    </div>
+                                </summary>
+                                <div class="comment-body">
+                                    <p>
+                                        @comment.Content
+                                    </p>
+                                    <button type="button" id="comment-@comment.Id_Conmment-@item.Id_BaiDang-reply-form" class="reply">Reply</button>
+                                    <!-- Reply form start -->
+                                    <form method="POST" action="/Community/CommentChild" class="reply-form d-none" id="txcomment-@comment.Id_Conmment-@item.Id_BaiDang-reply-form" style="display:block">
+                                        <input name="id" value="@item.Id_BaiDang-@comment.Id_Conmment" class="d-none" />
+                                        <textarea placeholder="Reply to comment" rows="4" name="textCommentContent"></textarea>
+                                        <button type="submit">Submit</button>
+                                        <button type="button" class="cancelc">Cancel</button>
+                                    </form>
+                                    <!-- Reply form end -->
+                                </div>
+                                <div class="replies">
+                                    @Html.Action("LoadChildComment", "Community", new { idBaiDang = item.Id_BaiDang, parentId = comment.Id_Conmment })
 
-                                            @if (i == lst.Count)
-                                            {
-                                                <form method="POST" action="/Community/CommentChild" class="reply-form" id="txcomment-@item.Id_BaiDang-reply-form" style="display:block">
-                                                    <input name="id" value="@item.Id_BaiDang" class="d-none" />
-                                                    <textarea placeholder="Reply to comment" rows="4" style="width: 100%;" name="textCommentContent"></textarea>
-                                                    <button type="submit">Submit</button>
-                                                    <button type="button" class="cancelc">Cancel</button>
-                                                </form>
-                                            }
-                                        </div>
 
-                                    </details>
+                                </div>
+                                @if (i == lst.Count)
+                                {
+                                    <form method="POST" action="/Community/CommentChild" class="reply-form" id="txcomment-@item.Id_BaiDang-reply-form" style="display:block">
+                                        <input name="id" value="@item.Id_BaiDang" class="d-none" />
+                                        <textarea placeholder="Reply to comment" rows="4" style="width: 100%;" name="textCommentContent"></textarea>
+                                        <button type="submit">Submit</button>
+                                        <button type="button" class="cancelc">Cancel</button>
+                                    </form>
+                                }
+                            </details>
                                 }
                                 <!-- Comment 1 end -->
                             </div>
