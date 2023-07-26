@@ -17,7 +17,7 @@ namespace GameStore.Controllers
         public ActionResult SocialNetwork()
         {
             KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
-            var posts = db.BAIDANGCONGDONGs.OrderByDescending(n=>n.NgayDang).ToList();
+            var posts = db.BAIDANGCONGDONGs.OrderByDescending(n=>n.NgayDang).Where(n=>n.KiemDuyet == true).ToList();
          
 
             // Fetch the user information for each post and add it to the ViewBag (or use a ViewModel)
@@ -64,7 +64,7 @@ namespace GameStore.Controllers
                         db.BAIDANGCONGDONGs.InsertOnSubmit(bd);
                         db.SubmitChanges();
 
-                        return Json(new { success = true, message = "Post successful. Pending pending!." });
+                        return Json(new { success = true, message = "Your Post is pending confirmation. Pending pending!." });
                     }
                     catch (Exception)
                     {
@@ -219,8 +219,7 @@ namespace GameStore.Controllers
 
             var liscm = db.BAIDANGCONGDONGs.Where(n => n.Id_BaiDang == idBaiDang).SingleOrDefault();
             List<CommentNew> cm = JsonConvert.DeserializeObject<List<CommentNew>>(liscm.ListComment);
-         
-            ViewBag.Count = lst.Count();
+           
             lst = cm.Where(m => m.IdParent == parentId).ToList();
             int[] a = new int[lst.Count()];
             for (int ia = 0; ia < lst.Count; ia++)

@@ -1,0 +1,106 @@
+﻿@model IEnumerable<GameStore.Models.DTO.Statistical>
+
+@{
+    ViewBag.Title = "Statistical";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<h2 style="text-align:center">Statistical</h2>
+
+<button id="export" style="text-align:right;cursor:pointer">EXPORT</button>
+<hr>
+<table class="table table-bordered table-dark">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NameKH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Namegame)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PriceGame)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameKH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Namegame)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PriceGame)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+
+        </tr>
+    }
+
+</table>
+<script>
+    function exportToExcel() {
+        // Get the current date
+        var currentDate = new Date().toLocaleDateString();
+
+        // Get the table element
+        var table = document.querySelector('.table');
+
+        // Prepare the data to be exported
+        var rows = [];
+        // Add the header row with the serial number column
+        var headerRow = ['STT'];
+        for (var i = 0; i < table.rows[0].cells.length; i++) {
+            headerRow.push(table.rows[0].cells[i].innerText);
+        }
+        rows.push(headerRow);
+
+        // Add the data rows with serial numbers
+        for (var i = 1; i < table.rows.length; i++) {
+            var row = [i];
+            for (var j = 0; j < table.rows[i].cells.length; j++) {
+                row.push(table.rows[i].cells[j].innerText);
+            }
+            rows.push(row);
+        }
+
+        // Create a workbook
+        var wb = XLSX.utils.book_new();
+        var ws_name = "Danh sách khách hàng mua game";
+
+        // Create a worksheet
+        var ws = XLSX.utils.aoa_to_sheet(rows);
+
+        // Add the worksheet to the workbook
+        XLSX.utils.book_append_sheet(wb, ws, ws_name);
+
+        // Generate a File object from the workbook
+        var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+        var blob = new Blob([wbout], { type: 'application/octet-stream' });
+
+        // Save the file using FileSaver.js (https://github.com/eligrey/FileSaver.js/)
+        saveAs(blob, 'Danh_sach_khach_hang_mua_game_' + currentDate + '.xlsx');
+    }
+
+    // Add a click event listener to the export button
+    document.getElementById('export').addEventListener('click', exportToExcel);
+</script>

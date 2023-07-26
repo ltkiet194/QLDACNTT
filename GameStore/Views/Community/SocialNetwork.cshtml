@@ -453,6 +453,15 @@
                         @foreach (var item in Model)
                         {
                             bool userHasLiked = false;
+                            List<CommentNew> cm = item.ListComment != null ? JsonConvert.DeserializeObject<List<CommentNew>>(item.ListComment) : new List<CommentNew>();
+                            var lst = cm.Where(m => m.IdParent == -1).ToList();
+                            int[] a = new int[cm.Count()];
+                            for (int ia = 0; ia < lst.Count; ia++)
+                            {
+                                var l = cm.Where(m => m.IdParent == lst[ia].Id_Conmment);
+                                a[ia] = l.Count();
+                            }
+                            ViewBag.lst = a;
                             <div class="card my-3">
                                 <div class="card-header bg-white border-0 py-2">
                                     <div class="d-flex justify-content-between">
@@ -524,10 +533,16 @@
                                 <img class="card-img-top rounded-0" src="@item.HinhAnh" alt="Card image cap">
                                 <div class="card-footer bg-white border-0 p-0">
                                     <div class="d-flex justify-content-between align-items-center py-2 mx-3 border-bottom">
+                                        <div style="display:flex">
+                                            <div  class="h7"><span id="countlike_@item.Id_BaiDang">@item.CountLike </span> <a href="#"> Like</a></div>
+                                            <div style=" margin-left: 14px;" class="h7"><span id="countlike_@item.Id_BaiDang">@cm.Count </span> <a href="#"> Comment</a></div>
+                                        </div>
                                         <div>
 
                                         </div>
-                                        <div class="h7"><span id="countlike_@item.Id_BaiDang">@item.CountLike </span> <a href="#"> Like</a></div>
+                                        <div>
+
+                                        </div>
                                     </div>
 
                                     <div class="d-flex justify-content-between align-items-center my-1">
@@ -579,15 +594,7 @@
                                 </div>
                             </div>
 
-                            List<CommentNew> cm = item.ListComment != null ? JsonConvert.DeserializeObject<List<CommentNew>>(item.ListComment) : new List<CommentNew>();
-                            var lst = cm.Where(m => m.IdParent == -1).ToList();
-                            int[] a = new int[cm.Count()];
-                            for (int ia = 0; ia < lst.Count; ia++)
-                            {
-                                var l = cm.Where(m => m.IdParent == lst[ia].Id_Conmment);
-                                a[ia] = l.Count();
-                            }
-                            ViewBag.lst = a;
+                           
 
 
 
@@ -675,13 +682,14 @@
                                 </div>
                                 @if (i == lst.Count)
                                 {
-                                    <form method="POST" action="/Community/CommentChild" class="reply-form" id="txcomment-@item.Id_BaiDang-reply-form" style="display:block">
+                                    <form method="POST" action="/Community/CommentParent" class="reply-form" id="txcomment-@item.Id_BaiDang-reply-form" style="position: absolute; display: block; width: 100%;">
                                         <input name="id" value="@item.Id_BaiDang" class="d-none" />
                                         <textarea placeholder="Reply to comment" rows="4" style="width: 100%;" name="textCommentContent"></textarea>
                                         <button type="submit">Submit</button>
                                         <button type="button" class="cancelc">Cancel</button>
                                     </form>
                                 }
+
                             </details>
                                 }
                                 <!-- Comment 1 end -->

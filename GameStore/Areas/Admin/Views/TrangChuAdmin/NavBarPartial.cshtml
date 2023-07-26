@@ -19,17 +19,8 @@
     </form>
     <!-- User -->
     <ul class="navbar-nav align-items-center d-none d-md-flex">
-        @if (admin == null)
-        {
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Login", "LoginAdmin")">
-                    <i class="ni ni-key-25 text-info"></i> Login
-                </a>
-            </li>
-        }
-        else
-        {
-
+        @if (admin != null)
+        {       
             <li class="nav-item dropdown">
                 <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">

@@ -520,6 +520,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdCommunityController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Admin\Controllers\QLGameController.cs" />
@@ -558,6 +559,7 @@
     <Compile Include="Models\DTO\GameModel\DanhGia.cs" />
     <Compile Include="Models\DTO\GameModel\GamesInCart.cs" />
     <Compile Include="Models\DTO\Games.cs" />
+    <Compile Include="Models\DTO\Statistical.cs" />
     <Compile Include="Models\DTO\TBAddFriend.cs" />
     <Compile Include="Models\DTO\UserInfo.cs" />
     <Compile Include="Models\DTO\UserLike.cs" />
@@ -2524,6 +2526,8 @@
     <Content Include="Areas\Admin\Views\QLGame\QLGames.cshtml" />
     <Content Include="Areas\Admin\Views\QLGame\Create.cshtml" />
     <Content Include="Areas\Admin\Views\QLGame\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdCommunity\VerifiedPost.cshtml" />
+    <Content Include="Areas\Admin\Views\TrangChuAdmin\Statistical.cshtml" />
     <None Include="Models\GameStore.dbml.layout">
       <DependentUpon>GameStore.dbml</DependentUpon>
     </None>

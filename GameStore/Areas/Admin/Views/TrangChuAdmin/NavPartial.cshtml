@@ -1,20 +1,37 @@
 ﻿
-
+@using GameStore.Models
+@{
+    ADMIN admin = Session["Admin"] as ADMIN;
+}
 <li class="nav-item  active ">
     <a class="nav-link  active " href="@Url.Action("Index","TrangChuAdmin")">
         <i class="ni ni-tv-2 text-primary"></i> Dashboard
     </a>
 </li>
-<li class="nav-item">
-    <a class="nav-link " href="@Url.Action("Profile", "Profile")">
-        <i class="ni ni-single-02 text-yellow"></i> My profile
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link " href="@Url.Action("QLGames", "QLGame")">
-        <i class="ni ni-bullet-list-67 text-red"></i> Game
-    </a>
-</li>
+@if (admin != null)
+{
+    <li class="nav-item">
+        <a class="nav-link " href="@Url.Action("Profile", "Profile")">
+            <i class="ni ni-single-02 text-yellow"></i> My profile
+        </a>
+    </li>
+}
+    <li class="nav-item">
+        <a class="nav-link " href="@Url.Action("QLGames", "QLGame")">
+            <i class="ni ni-bullet-list-67 text-red"></i> Game
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="@Url.Action("VerifiedPost", "AdCommunity")">
+            <i class="ni ni-album-2 text-green"></i> Community
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link " href="@Url.Action("Statistical", "TrangChuAdmin")">
+            <i class="ni ni-chart-bar-32 text-orange"></i>
+            Statistical
+        </a>
+    </li>
 
 
 

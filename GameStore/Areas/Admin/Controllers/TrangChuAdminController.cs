@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GameStore.Models.DTO;
+using GameStore.Models.DTO.GameModel;
+using Newtonsoft.Json;
 
 namespace GameStore.Areas.Admin.Controllers
 {
@@ -76,6 +79,43 @@ namespace GameStore.Areas.Admin.Controllers
             var totalAmountYesterday = db.DONHANGs.Where(m => m.NgayMua != null && m.NgayMua.Value.Date == yesterday).Sum(m => m.TongTien);
 
             return Json(new { totalAmountYesterday }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Statistical()
+        {
+            List<Statistical> list = new List<Statistical>();
+            var kh = db.KHACHHANGs.ToList();
+            foreach(var item in kh)
+            {
+                if(item.ListGameInLibrary == null)
+                {
+                    Statistical listgame = new Statistical { 
+                        NameKH = item.HoTen,
+                        Namegame ="Chưa Mua",
+                        
+                    };
+                    list.Add(listgame);
+                }
+                else {
+                    List<GamesInCart> listgame = JsonConvert.DeserializeObject<List<GamesInCart>>(item.ListGameInLibrary);
+                    if (listgame != null)
+                    {
+                        foreach (var i in listgame)
+                        {
+                            Statistical st = new Statistical
+                            {
+                                NameKH = item.HoTen,
+                                Namegame = i.Name,
+                                Quantity = i.Quantity,
+                                PriceGame = i.PriceGame,
+                                Total = i.Quantity * i.PriceGame
+                            };
+                            list.Add(st);
+                        }
+                    }
+                }                                          
+            }    
+            return View(list);
         }
     }
 }
