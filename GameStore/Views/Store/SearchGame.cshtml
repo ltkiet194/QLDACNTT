@@ -5,7 +5,7 @@
 @using GameStore.Models.DTO
 @{
     KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
-    ViewBag.Title = "Store";
+    ViewBag.Title = "Search Game";
     Layout = "~/Views/Shared/_LayoutUserFullWidth.cshtml";
 }
 
@@ -43,10 +43,9 @@
             }
 </style>
 
-<!-- START: Some Products -->
 
 <!-- END: Some Products -->
-@Html.Action("Store10Seller", "Store")
+
 <!-- START: All Game -->
 <div class="nk-gap-3"></div>
 <h3 class="nk-decorated-h-2"><span><span class="text-main-1">All</span> Game</span></h3>
@@ -64,12 +63,12 @@
                         <h3 class="nk-product-title h5"><a href="@Url.Action("GameDetail","Store", new { id =item.Id})">@item.Name</a></h3>
                         <div class="nk-gap-1"></div>
                         @*<div class="nk-product-rating" data-rating="3">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                        </div>*@
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>*@
                         <div class="nk-gap-1"></div>
                         <div class="nk-product-price">@item.PriceGame .00 $</div>
                         <div class="nk-gap-1"></div>
@@ -96,9 +95,9 @@
 
 <div class="nk-gap"></div>
 <div class="pagination">
-    @if (ViewBag.TotalPages > 1)  // Kiểm tra nếu có nhiều hơn 1 trang
+    @if (ViewBag.SearchTotalPages > 1)  // Kiểm tra nếu có nhiều hơn 1 trang
     {
-        if (ViewBag.CurrentPage <= 3)
+        if (ViewBag.SearchCurrentPage <= 3)
         {
             // Hiển thị 5 trang đầu
             for (int i = 1; i <= 5; i++)
@@ -109,59 +108,59 @@
                 }
                 else
                 {
-                    <a href="@Url.Action("Store", new { page = i })">@i</a>
+                    <a href="@Url.Action("SearchGame", new { page = i })">@i</a>
                 }
             }
             // Hiển thị dấu chấm gián đoạn
             <span>...</span>
             // Hiển thị trang cuối
-            <a href="@Url.Action("Store", new { page = ViewBag.TotalPages })">@ViewBag.TotalPages</a>
+            <a href="@Url.Action("SearchGame", new { page = ViewBag.SearchTotalPages })">@ViewBag.SearchTotalPages</a>
         }
-        else if (ViewBag.CurrentPage > ViewBag.TotalPages - 3)
+        else if (ViewBag.SearchCurrentPage > ViewBag.SearchTotalPages - 3)
         {
             // Hiển thị trang đầu
-            <a href="@Url.Action("Store", new { page = 1 })">1</a>
+            <a href="@Url.Action("SearchGame", new { page = 1 })">1</a>
             // Hiển thị dấu chấm gián đoạn
             <span>...</span>
             // Hiển thị 5 trang cuối
-            for (int i = ViewBag.TotalPages - 4; i <= ViewBag.TotalPages; i++)
+            for (int i = ViewBag.SearchTotalPages - 4; i <= ViewBag.SearchTotalPages; i++)
             {
-                if (i == ViewBag.CurrentPage)
+                if (i == ViewBag.SearchCurrentPage)
                 {
                     <span>@i</span>
                 }
                 else
                 {
-                    <a href="@Url.Action("Store", new { page = i })">@i</a>
+                    <a href="@Url.Action("SearchGame", new { page = i })">@i</a>
                 }
             }
         }
         else
         {
             // Hiển thị trang đầu
-            <a href="@Url.Action("Store", new { page = 1 })">1</a>
+            <a href="@Url.Action("SearchGame", new { page = 1 })">1</a>
             // Hiển thị dấu chấm gián đoạn
             <span>...</span>
             // Hiển thị 3 trang trước và sau trang hiện tại
-            for (int i = ViewBag.CurrentPage - 2; i <= ViewBag.CurrentPage + 2; i++)
+            for (int i = ViewBag.SearchCurrentPage - 2; i <= ViewBag.SearchCurrentPage + 2; i++)
             {
-                if (i == ViewBag.CurrentPage)
+                if (i == ViewBag.SearchCurrentPage)
                 {
                     <span>@i</span>
                 }
                 else
                 {
-                    <a href="@Url.Action("Store", new { page = i })">@i</a>
+                    <a href="@Url.Action("SearchGame", new { page = i })">@i</a>
                 }
             }
             // Hiển thị dấu chấm gián đoạn
             <span>...</span>
             // Hiển thị trang cuối
-            <a href="@Url.Action("Store", new { page = ViewBag.TotalPages })">@ViewBag.TotalPages</a>
+            <a href="@Url.Action("SearchGame", new { page = ViewBag.SearchTotalPages })">@ViewBag.SearchTotalPages</a>
         }
     }
 </div>
 <!-- END: Most Popular -->
 
-@Html.Action("Store4Feature", "Store")
+
 

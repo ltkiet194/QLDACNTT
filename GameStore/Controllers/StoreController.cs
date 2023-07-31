@@ -33,12 +33,10 @@ namespace GameStore.Controllers
             return View(productsForPage);
         }
 
-        public ActionResult SearchGame(string searchQuery,int page = 1, int pageSize = 21)
+        public ActionResult SearchGame(string searchQuery,int page = 1, int pageSize = 9)
         {
-            int totalGames = ConstServer.Instance.TongSoLuongGame;
 
-            // Tính toán số trang dựa trên số lượng sản phẩm và kích thước trang
-            int totalPages = (int)Math.Ceiling((double)totalGames / pageSize);
+            int countSearch = GamesDAO.Instance.GetNumGameBySearch(searchQuery);
 
             // Perform the search based on the searchQuery
             List<Games> searchResults;
@@ -52,13 +50,14 @@ namespace GameStore.Controllers
                 // If the search query is empty, display all games (or a default list of games)
                 searchResults = GamesDAO.Instance.GetGameByPage(page, pageSize);
             }
+            int totalPages = (int)Math.Ceiling((double)countSearch / pageSize);
 
             // Truyền danh sách sản phẩm tìm kiếm và thông tin phân trang đến View
-            ViewBag.Products = searchResults;
-            ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = totalPages;
+            ViewBag.SearchProducts = searchResults;
+            ViewBag.SearchCurrentPage = page;
+            ViewBag.SearchTotalPages = totalPages;
 
-            return View("Store", searchResults); // Assuming you have a view called "Store" to display the search results.       
+            return View(searchResults); // Assuming you have a view called "Store" to display the search results.       
         }
 
             public ActionResult Store10Seller()
