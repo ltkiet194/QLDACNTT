@@ -13,7 +13,7 @@ namespace GameStore.Controllers
     public class StoreController : Controller
     {
         // GET: Store   
-     
+        GameStoreDataContext db = new GameStoreDataContext();
         public ActionResult Store(int page = 1, int pageSize = 21)
         {
             //int products = GetProductsFromDataSource();
@@ -33,24 +33,24 @@ namespace GameStore.Controllers
             return View(productsForPage);
         }
 
-        public ActionResult SearchGame(string searchQuery,int page = 1, int pageSize = 9)
+        public ActionResult SearchGame(string searchQuery,int page = 1, int pageSize =21)
         {
-
-            int countSearch = GamesDAO.Instance.GetNumGameBySearch(searchQuery);
+            ViewData["searchQuery"] = searchQuery;
+            var countSearch = db.Games.Where(n => n.nameGame.Contains(searchQuery));
 
             // Perform the search based on the searchQuery
-            List<Games> searchResults;
+            List<Game> searchResults;
             if (!string.IsNullOrEmpty(searchQuery))
             {
                 // Assuming you have a method to search for games by the given query in your GamesDAO
-                searchResults = GamesDAO.Instance.GetGameBySearch(searchQuery,page, pageSize);
+                searchResults = countSearch.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             }
             else
             {
                 // If the search query is empty, display all games (or a default list of games)
-                searchResults = GamesDAO.Instance.GetGameByPage(page, pageSize);
+                return RedirectToAction("Store");
             }
-            int totalPages = (int)Math.Ceiling((double)countSearch / pageSize);
+            int totalPages = (int)Math.Ceiling((double)countSearch.Count() / pageSize);
 
             // Truyền danh sách sản phẩm tìm kiếm và thông tin phân trang đến View
             ViewBag.SearchProducts = searchResults;
@@ -59,8 +59,33 @@ namespace GameStore.Controllers
 
             return View(searchResults); // Assuming you have a view called "Store" to display the search results.       
         }
+        public ActionResult GameByCategory(string category, int page = 1, int pageSize = 21)
+        {
+            ViewData["category"] = category;
+            var countSearch = db.Games.Where(n => n.typeGame.Contains(category));
 
-            public ActionResult Store10Seller()
+            // Perform the search based on the searchQuery
+            List<Game> searchResults;
+            if (!string.IsNullOrEmpty(category))
+            {
+                // Assuming you have a method to search for games by the given query in your GamesDAO
+                searchResults = countSearch.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            }
+            else
+            {
+                // If the search query is empty, display all games (or a default list of games)
+                return RedirectToAction("Store");
+            }
+            int totalPages = (int)Math.Ceiling((double)countSearch.Count() / pageSize);
+
+            // Truyền danh sách sản phẩm tìm kiếm và thông tin phân trang đến View
+            ViewBag.SearchProducts = searchResults;
+            ViewBag.SearchCurrentPage = page;
+            ViewBag.SearchTotalPages = totalPages;
+
+            return View(searchResults); // Assuming you have a view called "Store" to display the search results.       
+        }
+        public ActionResult Store10Seller()
         {
             DataTable gameList = DataProvider.Instance.ExcuteQuery("SELECT TOP 10 * FROM Game ORDER BY numSale DESC");
 

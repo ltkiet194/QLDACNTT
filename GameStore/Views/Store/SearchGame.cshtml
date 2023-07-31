@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<GameStore.Models.DTO.Games>
+@model IEnumerable<GameStore.Models.Game>
 
 @using GameStore.Models
 @using GameStore.Models.DTO
@@ -48,7 +48,7 @@
 
 <!-- START: All Game -->
 <div class="nk-gap-3"></div>
-<h3 class="nk-decorated-h-2"><span><span class="text-main-1">All</span> Game</span></h3>
+<h3 class="nk-decorated-h-2"><span><span class="text-main-1">Keyword</span> @ViewData["searchQuery"]</span></h3>
 <div class="nk-gap"></div>
 <div class="row vertical-gap">
     @{
@@ -56,11 +56,11 @@
         {
             <div class="col-lg-4 col-md-6">
                 <div class="nk-product-cat">
-                    <a class="nk-product-image" href="@Url.Action("GameDetail","Store", new { id =item.Id})">
-                        <img src="~/Theme/images/ImageResource/@item.ImgName" alt="@item.Name">
+                    <a class="nk-product-image" href="@Url.Action("GameDetail","Store", new { id =item.id})">
+                        <img src="~/Theme/images/ImageResource/@item.imgName" alt="@item.nameGame">
                     </a>
                     <div class="nk-product-cont">
-                        <h3 class="nk-product-title h5"><a href="@Url.Action("GameDetail","Store", new { id =item.Id})">@item.Name</a></h3>
+                        <h3 class="nk-product-title h5"><a href="@Url.Action("GameDetail","Store", new { id =item.id})">@item.nameGame</a></h3>
                         <div class="nk-gap-1"></div>
                         @*<div class="nk-product-rating" data-rating="3">
                                 <i class="fa fa-star"></i>
@@ -70,12 +70,12 @@
                                 <i class="far fa-star"></i>
                             </div>*@
                         <div class="nk-gap-1"></div>
-                        <div class="nk-product-price">@item.PriceGame .00 $</div>
+                        <div class="nk-product-price">@item.priceGame .00 $</div>
                         <div class="nk-gap-1"></div>
                         @{
                             if (@kh != null)
                             {
-                                <a href="@Url.Action("AddToCart","StoreCart", new {gameId = item.Id,gameName =item.Name,imgName=item.ImgName, priceGame=item.PriceGame, url = Request.Url.ToString()})" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                                <a href="@Url.Action("AddToCart","StoreCart", new {gameId = item.id,gameName =item.nameGame,imgName=item.imgName, priceGame=item.priceGame, url = Request.Url.ToString()})" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
                             }
                             else
                             {
@@ -104,22 +104,22 @@
             {
                 if (i == ViewBag.CurrentPage)
                 {
-                    <span>@i</span>
+                    <span style="background-color: #d3d3d3;">@i</span>
                 }
                 else
                 {
-                    <a href="@Url.Action("SearchGame", new { page = i })">@i</a>
+                    <a href="@Url.Action("SearchGame", new {searchQuery = ViewData["searchQuery"], page = i })">@i</a>
                 }
             }
             // Hiển thị dấu chấm gián đoạn
             <span>...</span>
             // Hiển thị trang cuối
-            <a href="@Url.Action("SearchGame", new { page = ViewBag.SearchTotalPages })">@ViewBag.SearchTotalPages</a>
+            <a href="@Url.Action("SearchGame", new {searchQuery = ViewData["searchQuery"], page = ViewBag.SearchTotalPages })">@ViewBag.SearchTotalPages</a>
         }
         else if (ViewBag.SearchCurrentPage > ViewBag.SearchTotalPages - 3)
         {
             // Hiển thị trang đầu
-            <a href="@Url.Action("SearchGame", new { page = 1 })">1</a>
+            <a href="@Url.Action("SearchGame", new {searchQuery = ViewData["searchQuery"], page = 1 })">1</a>
             // Hiển thị dấu chấm gián đoạn
             <span>...</span>
             // Hiển thị 5 trang cuối
@@ -127,18 +127,18 @@
             {
                 if (i == ViewBag.SearchCurrentPage)
                 {
-                    <span>@i</span>
+                    <span style="background-color: #d3d3d3;">@i</span>
                 }
                 else
                 {
-                    <a href="@Url.Action("SearchGame", new { page = i })">@i</a>
+                    <a href="@Url.Action("SearchGame", new {searchQuery = ViewData["searchQuery"], page = i })">@i</a>
                 }
             }
         }
         else
         {
             // Hiển thị trang đầu
-            <a href="@Url.Action("SearchGame", new { page = 1 })">1</a>
+            <a href="@Url.Action("SearchGame", new {searchQuery = ViewData["searchQuery"], page = 1 })">1</a>
             // Hiển thị dấu chấm gián đoạn
             <span>...</span>
             // Hiển thị 3 trang trước và sau trang hiện tại
@@ -146,17 +146,17 @@
             {
                 if (i == ViewBag.SearchCurrentPage)
                 {
-                    <span>@i</span>
+                    <span style="background-color: #d3d3d3;">@i</span>
                 }
                 else
                 {
-                    <a href="@Url.Action("SearchGame", new { page = i })">@i</a>
+                    <a href="@Url.Action("SearchGame", new { searchQuery = ViewData["searchQuery"],page = i })">@i</a>
                 }
             }
             // Hiển thị dấu chấm gián đoạn
             <span>...</span>
             // Hiển thị trang cuối
-            <a href="@Url.Action("SearchGame", new { page = ViewBag.SearchTotalPages })">@ViewBag.SearchTotalPages</a>
+            <a href="@Url.Action("SearchGame", new { searchQuery = ViewData["searchQuery"],page = ViewBag.SearchTotalPages })">@ViewBag.SearchTotalPages</a>
         }
     }
 </div>

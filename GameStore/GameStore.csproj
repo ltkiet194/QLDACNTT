@@ -2864,6 +2864,7 @@
     <Content Include="Views\Community\SocialNetwork.cshtml" />
     <Content Include="Views\Community\LoadChildComment.cshtml" />
     <Content Include="Views\Store\SearchGame.cshtml" />
+    <Content Include="Views\Store\GameByCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

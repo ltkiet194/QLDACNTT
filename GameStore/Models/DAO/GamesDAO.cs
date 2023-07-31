@@ -65,7 +65,7 @@ namespace GameStore.Models.DAO
             }
             return result;
         }
-        public int GetNumGameBySearch(string query)
+        public List<Games> GetNumGameBySearch(string query)
         {
             var result = new List<Games>();
             DataTable dt = DataProvider.Instance.ExcuteQuery($"SELECT * FROM Game WHERE nameGame LIKE '%{query}%' ");
@@ -74,7 +74,7 @@ namespace GameStore.Models.DAO
                 Games game = new Games(row);
                 result.Add(game);
             }
-            return result.Count();
+            return result;
         }
 
         public Games GetGameById(int id)
