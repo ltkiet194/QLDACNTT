@@ -75,6 +75,18 @@
             .swal2-confirm:hover {
                 background-color: #2868c7;
             }
+
+         @@media
+        (max-width: 767px)
+         {
+            .nk-contacts-icons {
+                position: absolute !important;
+                top: 15px !important;
+                right: 0 !important;
+            }
+
+         }
+
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.all.min.js"></script>
@@ -329,17 +341,30 @@
     }
 
     .friend-avatar {
+        position: relative;
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        overflow: hidden;
         margin-right: 10px;
     }
 
         .friend-avatar img {
             width: 100%;
+            border-radius:50%;
             height: 100%;
             object-fit: cover;
+        }         
+
+        /* Định dạng pseudo-element thể hiện trạng thái online */
+        .friend-avatar .status-circle {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            background: green;
+            border-radius: 50%;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
         }
 
     .friend-details {
@@ -399,18 +424,34 @@
                         @foreach (var i in Model)
                         {
                             <li class="friend-item" id="@i.Id_banbe" style="display: flex; color: #f0f2f5; margin-bottom: 15px;">
-                                <div class="friend-avatar">
-                                    <img src="~/Theme/images/gallery-8-thumb.jpg" alt="@i.Tenbanbe">
-                                </div>
+                                @if (i.Avatar == null)
+                                {
+                                    <div class="friend-avatar">
+                                        <img src="~/Theme/images/gallery-8-thumb.jpg" alt="@i.Tenbanbe">
+                                        @if (i.Online == true)
+                                        {
+                                            <span class="status-circle"></span>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="friend-avatar">
+                                        <img src="@i.Avatar" alt="@i.Tenbanbe">
+                                        @if (i.Online == true)
+                                        {
+                                            <span class="status-circle"></span>
+                                        }
+                                    </div>
+                                }
+                            
                                 <div class="friend-details">
                                     <h4>@i.Tenbanbe</h4>
                                 </div>
                                 <div>
                                     <a href="#" class="messenger-button">Messenger</a>
                                 </div>
-
                             </li>
-
                         }
                     </ul>
                 </div>
@@ -689,9 +730,18 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="@Url.Action("Gallery","Gallery")">
-                            Library
-                        </a>
+                        @if (kh == null)
+                        {
+                            <a href="#">
+                                Library
+                            </a>
+                        }
+                        else {
+                            <a href="@Url.Action("Gallery","Gallery")">
+                                Library
+                            </a>
+                        }
+                        
                     </li>
                     <li class=" nk-drop-item">
                         <a href="@Url.Action("Forum","Forum")">

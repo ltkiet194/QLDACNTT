@@ -12,7 +12,7 @@ namespace GameStore.Controllers
 {
     public class StoreController : Controller
     {
-        // GET: Store
+        // GET: Store   
      
         public ActionResult Store(int page = 1, int pageSize = 21)
         {
@@ -33,7 +33,35 @@ namespace GameStore.Controllers
             return View(productsForPage);
         }
 
-        public ActionResult Store10Seller()
+        public ActionResult SearchGame(string searchQuery,int page = 1, int pageSize = 21)
+        {
+            int totalGames = ConstServer.Instance.TongSoLuongGame;
+
+            // Tính toán số trang dựa trên số lượng sản phẩm và kích thước trang
+            int totalPages = (int)Math.Ceiling((double)totalGames / pageSize);
+
+            // Perform the search based on the searchQuery
+            List<Games> searchResults;
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                // Assuming you have a method to search for games by the given query in your GamesDAO
+                searchResults = GamesDAO.Instance.GetGameBySearch(searchQuery,page, pageSize);
+            }
+            else
+            {
+                // If the search query is empty, display all games (or a default list of games)
+                searchResults = GamesDAO.Instance.GetGameByPage(page, pageSize);
+            }
+
+            // Truyền danh sách sản phẩm tìm kiếm và thông tin phân trang đến View
+            ViewBag.Products = searchResults;
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View("Store", searchResults); // Assuming you have a view called "Store" to display the search results.       
+        }
+
+            public ActionResult Store10Seller()
         {
             DataTable gameList = DataProvider.Instance.ExcuteQuery("SELECT TOP 10 * FROM Game ORDER BY numSale DESC");
 

@@ -44,6 +44,7 @@ namespace GameStore.Controllers
                     kh.HoTen = list[1];
                     db.KHACHHANGs.InsertOnSubmit(kh);
                     kh.LastActivity = true;
+                    kh.Balance = 0;
                     db.SubmitChanges();
                     Session["KhachHang"] = kh;
                 }
@@ -137,6 +138,7 @@ namespace GameStore.Controllers
                 kh.Email = email;
                 kh.HoTen = fullname;
                 kh.DiaChi = address;
+                kh.Balance = 0;
                 kh.LastActivity = true;
                 db.KHACHHANGs.InsertOnSubmit(kh);
                 db.SubmitChanges();

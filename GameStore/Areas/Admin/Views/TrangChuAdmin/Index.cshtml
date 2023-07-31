@@ -6,8 +6,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
-        Argon Dashboard - Free Dashboard for Bootstrap 4 by Creative Tim
+        Dashboard Admin
     </title>
+    <script src=" https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js "></script>
     <!-- Favicon -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
@@ -32,12 +33,12 @@
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
                                                 <i class="fas fa-chart-pie"></i>
-                                                
+
                                             </div>
                                         </div>
                                     </div>
                                     <p class="mt-3 mb-0 text-muted text-sm">
-                         
+
                                         <span class="text-nowrap">Today</span>
                                     </p>
                                 </div>
@@ -54,12 +55,12 @@
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
                                                 <i class="fas fa-users"></i>
-                                                
+
                                             </div>
                                         </div>
                                     </div>
                                     <p class="mt-3 mb-0 text-muted text-sm">
-                                       
+
                                         <span class="text-nowrap">Login last three minutes ago</span>
                                     </p>
                                 </div>
@@ -75,10 +76,11 @@
                                             {
                                                 <span class="h2 font-weight-bold mb-0" id="Sumtotal">0 $</span>
                                             }
-                                            else {
+                                            else
+                                            {
                                                 <span class="h2 font-weight-bold mb-0" id="Sumtotal">@ViewBag.TongDoanhThu $</span>
                                             }
-                                            
+
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-info text-white rounded-circle shadow">
@@ -87,7 +89,7 @@
                                         </div>
                                     </div>
                                     <p class="mt-3 mb-0 text-muted text-sm">
-                                        
+
                                         <span class="text-nowrap">Today</span>
                                     </p>
                                 </div>
@@ -99,7 +101,14 @@
                                     <div class="row">
                                         <div class="col">
                                             <h5 class="card-title text-uppercase text-muted mb-0">Total Yesterday</h5>
-                                            <span class="h2 font-weight-bold mb-0" id="Totalyesterday">@ViewBag.TongDoanhThuHomQua $</span>
+                                            @if (@ViewBag.TongDoanhThuHomQua == null)
+                                            {
+                                                <span class="h2 font-weight-bold mb-0" id="Totalyesterday">0 $</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="h2 font-weight-bold mb-0" id="Totalyesterday">@ViewBag.TongDoanhThuHomQua $</span>
+                                            }
                                         </div>
                                         <div class="col-auto">
                                             <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -108,13 +117,13 @@
                                         </div>
                                     </div>
                                     <p class="mt-3 mb-0 text-muted text-sm">
-                                        
+
                                         <span class="text-nowrap">Since yesterday</span>
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -220,8 +229,8 @@
                     if (data.numberOfSumTotal == null) {
                         $('#Sumtotal').text('0 $');
                     }
-                    else { $('#Sumtotal').text(data.numberOfSumTotal + ' $');}
-                    
+                    else { $('#Sumtotal').text(data.numberOfSumTotal + ' $'); }
+
                 },
                 error: function () {
                     // Xử lý lỗi nếu cần
@@ -242,10 +251,36 @@
                 }
             });
         }
-        setInterval(updateOnlineUserCount, 3000); 
+        setInterval(updateOnlineUserCount, 3000);
         setInterval(updateNumberOfOrders, 900);
-        setInterval(updateNumberOfSumTotal, 3000); 
-        setInterval(updateNumberOfSumTotalYesterday, 3000); 
+        setInterval(updateNumberOfSumTotal, 3000);
+        setInterval(updateNumberOfSumTotalYesterday, 3000);
+    </script>
+    <script>
+        var duration = 1 * 1000;
+        var end = Date.now() + duration;
+
+        (function frame() {
+            // launch a few confetti from the left edge
+            confetti({
+                particleCount: 7,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 }
+            });
+            // and launch a few from the right edge
+            confetti({
+                particleCount: 7,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 }
+            });
+
+            // keep going until we are out of time
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        }());
     </script>
 </body>
 

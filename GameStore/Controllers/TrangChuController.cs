@@ -63,6 +63,8 @@ namespace GameStore.Controllers
                         var listInfoKH = db.KHACHHANGs.FirstOrDefault(n => n.MaKH == i.Id_banbe);
                         if (listInfoKH != null)
                         {
+                            i.Online = (bool)listInfoKH.LastActivity;
+                            i.Avatar = listInfoKH.Avatar;
                             i.Tenbanbe = listInfoKH.HoTen;
                         }
                     }

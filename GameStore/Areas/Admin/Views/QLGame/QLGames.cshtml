@@ -9,7 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
-<h1 style="text-align:center;">Danh sách game</h1>
+<h1 style="text-align:center;">List Game</h1>
 <style>
     .pagination {
         display: flex;
@@ -99,294 +99,299 @@
     @Html.ActionLink("Create New", "Create",  new { @class = "link-button edit" })
 
 </p>
-
-<table class="table table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImgName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PriceGame)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.YearRelease)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NumSale)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr id="@item.Id" data-name="@item.Name">
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @if (!string.IsNullOrEmpty(item.ImgName))
-                {
-
-                    <a href="#" class="avatar rounded-circle mr-3">
-                        <img alt="Image placeholder" src="~/Theme/images/ImageResource/@item.ImgName">
-                    </a>
-                }
-
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PriceGame)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.YearRelease)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumSale)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "link-button edit" })
-
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link-button delete" })
-                @Html.ActionLink("Manage", "Manage", new { id = item.Id }, new { @class = "link-button manage" })
-            </td>
-
+<div class="container">
+    <table id="example" class="table table-striped">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImgName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PriceGame)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearRelease)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumSale)
+            </th>
+            <th>Action</th>
         </tr>
-    }
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr id="@item.Id" data-name="@item.Name">
 
-</table>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImgName))
+                    {
 
-<div style="display:none;" class="modal" id="deleteModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 style="text-align:center;" class="modal-title">Bạn có thực sự muốn xóa game này?</h2>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
+                        <a href="#" class="avatar rounded-circle mr-3">
+                            <img alt="Image placeholder" src="~/Theme/images/ImageResource/@item.ImgName">
+                        </a>
+                    }
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriceGame)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.YearRelease)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumSale)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "link-button edit" })
+
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "link-button delete" })
+                    @Html.ActionLink("Manage", "Manage", new { id = item.Id }, new { @class = "link-button manage" })
+                </td>
+
+            </tr>
+        }
+
+    </table>
+    </div>
+
+    <div style="display:none;" class="modal" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 style="text-align:center;" class="modal-title">Do you really want to delete this game?</h2>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="pagination">
-    @if (ViewBag.TotalPages > 1)  // Kiểm tra nếu có nhiều hơn 1 trang
-    {
-        if (ViewBag.CurrentPage <= 3)
+    <div class="pagination">
+        @if (ViewBag.TotalPages > 1)  // Kiểm tra nếu có nhiều hơn 1 trang
         {
-            // Hiển thị 5 trang đầu
-            for (int i = 1; i <= 5; i++)
+            if (ViewBag.CurrentPage <= 3)
             {
-                if (i == ViewBag.CurrentPage)
+                // Hiển thị 5 trang đầu
+                for (int i = 1; i <= 5; i++)
                 {
-                    <span>@i</span>
-                }
-                else
-                {
-                    <a href="@Url.Action("QLGames", new { page = i })">@i</a>
-                }
-            }
-            // Hiển thị dấu chấm gián đoạn
-            <span>...</span>
-            // Hiển thị trang cuối
-            <a href="@Url.Action("QLGames", new { page = ViewBag.TotalPages })">@ViewBag.TotalPages</a>
-        }
-        else if (ViewBag.CurrentPage > ViewBag.TotalPages - 3)
-        {
-            // Hiển thị trang đầu
-            <a href="@Url.Action("QLGames", new { page = 1 })">1</a>
-            // Hiển thị dấu chấm gián đoạn
-            <span>...</span>
-            // Hiển thị 5 trang cuối
-            for (int i = ViewBag.TotalPages - 4; i <= ViewBag.TotalPages; i++)
-            {
-                if (i == ViewBag.CurrentPage)
-                {
-                    <span>@i</span>
-                }
-                else
-                {
-                    <a href="@Url.Action("QLGames", new { page = i })">@i</a>
-                }
-            }
-        }
-        else
-        {
-            // Hiển thị trang đầu
-            <a href="@Url.Action("QLGames", new { page = 1 })">1</a>
-            // Hiển thị dấu chấm gián đoạn
-            <span>...</span>
-            // Hiển thị 3 trang trước và sau trang hiện tại
-            for (int i = ViewBag.CurrentPage - 2; i <= ViewBag.CurrentPage + 2; i++)
-            {
-                if (i == ViewBag.CurrentPage)
-                {
-                    <span>@i</span>
-                }
-                else
-                {
-                    <a href="@Url.Action("QLGames", new { page = i })">@i</a>
-                }
-            }
-            // Hiển thị dấu chấm gián đoạn
-            <span>...</span>
-            // Hiển thị trang cuối
-            <a href="@Url.Action("QLGames", new { page = ViewBag.TotalPages })">@ViewBag.TotalPages</a>
-        }
-    }
-</div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('.pagination .page-number').on('click', function () {
-            $('.pagination .active-page').removeClass('active-page');
-            $(this).addClass('active-page');
-        });
-    });
-</script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script>
-    $(document).ready(function () {
-        // Khi click vào nút "Delete"
-        $('.delete').on('click', function (e) {
-            e.preventDefault(); // Ngăn chặn chuyển hướng đến trang Delete
-            // Lấy giá trị thuộc tính "data_id" từ nút "Delete" được nhấn
-            var itemId = $(this).closest('tr').attr('id');
-
-            // Mở modal
-            $('#deleteModal').modal('show');
-
-            // Khi click vào nút "Xóa" trong modal
-            $('#confirmDelete').on('click', function () {
-                $.ajax({
-                    url: '/Admin/QLGame/Delete',
-                    type: 'POST',
-                    data: { id: itemId },
-                    success: function (response) {
-                        if (response.success === true) {
-                            $('#deleteModal').modal('hide');
-                            toastr.success('Xóa thành công!', 'Thành công');
-                            setTimeout(function () {
-                                location.reload();
-
-                            }, 1500);
-                        } else {
-                            toastr.error(response.message, 'Lỗi');
-                        }
-                    },
-                    error: function () {
-                        toastr.error('Đã xảy ra lỗi. Vui lòng thử lại.', 'Lỗi');
+                    if (i == ViewBag.CurrentPage)
+                    {
+                        <span>@i</span>
                     }
+                    else
+                    {
+                        <a href="@Url.Action("QLGames", new { page = i })">@i</a>
+                    }
+                }
+                // Hiển thị dấu chấm gián đoạn
+                <span>...</span>
+                // Hiển thị trang cuối
+                <a href="@Url.Action("QLGames", new { page = ViewBag.TotalPages })">@ViewBag.TotalPages</a>
+            }
+            else if (ViewBag.CurrentPage > ViewBag.TotalPages - 3)
+            {
+                // Hiển thị trang đầu
+                <a href="@Url.Action("QLGames", new { page = 1 })">1</a>
+                // Hiển thị dấu chấm gián đoạn
+                <span>...</span>
+                // Hiển thị 5 trang cuối
+                for (int i = ViewBag.TotalPages - 4; i <= ViewBag.TotalPages; i++)
+                {
+                    if (i == ViewBag.CurrentPage)
+                    {
+                        <span>@i</span>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("QLGames", new { page = i })">@i</a>
+                    }
+                }
+            }
+            else
+            {
+                // Hiển thị trang đầu
+                <a href="@Url.Action("QLGames", new { page = 1 })">1</a>
+                // Hiển thị dấu chấm gián đoạn
+                <span>...</span>
+                // Hiển thị 3 trang trước và sau trang hiện tại
+                for (int i = ViewBag.CurrentPage - 2; i <= ViewBag.CurrentPage + 2; i++)
+                {
+                    if (i == ViewBag.CurrentPage)
+                    {
+                        <span>@i</span>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("QLGames", new { page = i })">@i</a>
+                    }
+                }
+                // Hiển thị dấu chấm gián đoạn
+                <span>...</span>
+                // Hiển thị trang cuối
+                <a href="@Url.Action("QLGames", new { page = ViewBag.TotalPages })">@ViewBag.TotalPages</a>
+            }
+        }
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#example").DataTable();
+        })
+        $(document).ready(function () {
+            $('.pagination .page-number').on('click', function () {
+                $('.pagination .active-page').removeClass('active-page');
+                $(this).addClass('active-page');
+            });
+        });
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Khi click vào nút "Delete"
+            $('.delete').on('click', function (e) {
+                e.preventDefault(); // Ngăn chặn chuyển hướng đến trang Delete
+                // Lấy giá trị thuộc tính "data_id" từ nút "Delete" được nhấn
+                var itemId = $(this).closest('tr').attr('id');
+
+                // Mở modal
+                $('#deleteModal').modal('show');
+
+                // Khi click vào nút "Xóa" trong modal
+                $('#confirmDelete').on('click', function () {
+                    $.ajax({
+                        url: '/Admin/QLGame/Delete',
+                        type: 'POST',
+                        data: { id: itemId },
+                        success: function (response) {
+                            if (response.success === true) {
+                                $('#deleteModal').modal('hide');
+                                toastr.success('Xóa thành công!', 'Thành công');
+                                setTimeout(function () {
+                                    location.reload();
+
+                                }, 1500);
+                            } else {
+                                toastr.error(response.message, 'Lỗi');
+                            }
+                        },
+                        error: function () {
+                            toastr.error('Đã xảy ra lỗi. Vui lòng thử lại.', 'Lỗi');
+                        }
+                    });
                 });
             });
         });
-    });
-    $(document).ready(function () {
-        // Khi click vào nút "Manage"
-        $('.manage').on('click', function (e) {
-            e.preventDefault(); // Ngăn chặn chuyển hướng đến trang Manage
-            var nameGameValue = $(this).closest('tr').attr('data-name');
-            var itemId = $(this).closest('tr').attr('id');
+        $(document).ready(function () {
+            // Khi click vào nút "Manage"
+            $('.manage').on('click', function (e) {
+                e.preventDefault(); // Ngăn chặn chuyển hướng đến trang Manage
+                var nameGameValue = $(this).closest('tr').attr('data-name');
+                var itemId = $(this).closest('tr').attr('id');
 
-            $('#TenGame').text(nameGameValue);
+                $('#TenGame').text(nameGameValue);
 
-            getsp(itemId)
-            // Mở modal
-            $('#UpdateKhoModal').modal('show');
-            $('#UpdateKhoModal').on('hide.bs.modal', function () {
-                $('#saveKho').off('click');
-            });
-            $('#saveKho').on('click', function () {
-                var soluongconlai = $("#SLCL").val()
-                $.ajax({
-                    url: '/Admin/QLGame/EditManage',
-                    type: 'POST',
-                    data: { id: itemId, soluongconlai: soluongconlai },
-                    success: function (response) {
-                        if (response.success === true) {
+                getsp(itemId)
+                // Mở modal
+                $('#UpdateKhoModal').modal('show');
+                $('#UpdateKhoModal').on('hide.bs.modal', function () {
+                    $('#saveKho').off('click');
+                });
+                $('#saveKho').on('click', function () {
+                    var soluongconlai = $("#SLCL").val()
+                    $.ajax({
+                        url: '/Admin/QLGame/EditManage',
+                        type: 'POST',
+                        data: { id: itemId, soluongconlai: soluongconlai },
+                        success: function (response) {
+                            if (response.success === true) {
 
-                            toastr.success(response.message, 'Thành công');
-                            setTimeout(function () {
-                                location.reload();
+                                toastr.success(response.message, 'Thành công');
+                                setTimeout(function () {
+                                    location.reload();
 
-                            }, 1500);
-                        } else {
-                            toastr.error(response.message, 'Lỗi');
+                                }, 1500);
+                            } else {
+                                toastr.error(response.message, 'Lỗi');
+                            }
+                        },
+                        error: function () {
+                            toastr.error('Đã xảy ra lỗi. Vui lòng thử lại.', 'Lỗi');
                         }
-                    },
-                    error: function () {
-                        toastr.error('Đã xảy ra lỗi. Vui lòng thử lại.', 'Lỗi');
-                    }
+                    });
                 });
             });
-        });
 
-    });
-    function getsp(id) {
-        $.ajax({
-            url: '/Admin/QLGame/GetManage',
-            type: 'POST',
-            data: { id: id },
-            success: function (response) {
-                if (response.success === true) {
-                    $("#SLDB").text(response.getsp.SoLuongDaBan)
-                    $("#SLCL").val(response.getsp.SoLuongConLai)
-                } else {
-                    toastr.error(response.message, 'Lỗi');
+        });
+        function getsp(id) {
+            $.ajax({
+                url: '/Admin/QLGame/GetManage',
+                type: 'POST',
+                data: { id: id },
+                success: function (response) {
+                    if (response.success === true) {
+                        $("#SLDB").text(response.getsp.SoLuongDaBan)
+                        $("#SLCL").val(response.getsp.SoLuongConLai)
+                    } else {
+                        toastr.error(response.message, 'Lỗi');
+                    }
+                },
+                error: function () {
+                    toastr.error('Đã xảy ra lỗi. Vui lòng thử lại.', 'Lỗi');
                 }
-            },
-            error: function () {
-                toastr.error('Đã xảy ra lỗi. Vui lòng thử lại.', 'Lỗi');
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
 
-<div class="modal fade" id="UpdateKhoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="exampleModalLongTitle">Quản lý kho</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="modal-table">
-                    <thead>
-                        <tr>
+    <div class="modal fade" id="UpdateKhoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLongTitle">Quản lý kho</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="modal-table">
+                        <thead>
+                            <tr>
 
-                            <th>Tên sản phẩm</th>
-                            <th>Số lượng đã bán</th>
-                            <th>Số lượng còn lại</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng đã bán</th>
+                                <th>Số lượng còn lại</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
 
-                            <td>
-                                <label id="TenGame"></label>
-                            </td>
-                            <td>
-                                <label id="SLDB"></label>
-                            </td>
-                            <td>
-                                <input type="number" id="SLCL" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveKho">Cập nhật</button>
+                                <td>
+                                    <label id="TenGame"></label>
+                                </td>
+                                <td>
+                                    <label id="SLDB"></label>
+                                </td>
+                                <td>
+                                    <input type="number" id="SLCL" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveKho">Cập nhật</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
