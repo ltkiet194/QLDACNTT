@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using GameStore.Models;
+using System.Text.Json;
 
 namespace GameStore.Models.DAO
 {
@@ -29,7 +31,7 @@ namespace GameStore.Models.DAO
             }
         }
 
-
+        GameStoreDataContext db = new GameStoreDataContext();
         public List<Games> LoadGameRelate(string typegame)
         {
             var result = new List<Games>();
@@ -100,6 +102,32 @@ namespace GameStore.Models.DAO
         public void SaveGameInCartListByIdKH(int idkh, string listGame)
         {
             DataProvider.Instance.ExcuteNonQuery($"UPDATE KHACHHANG SET ListGameInCart = N'{listGame}' WHERE MaKH = {idkh}");
+        }
+
+        public List<TBAddFriend> GetSLBanbechuakb(KHACHHANG kh)
+        {
+            if (kh != null)
+            {
+                var listbb = db.BANBEs.Where(n => n.Id_KH == kh.MaKH).SingleOrDefault();
+                if (listbb != null)
+                {
+                    var lisJsonFriend = listbb.ListFriends;
+                    List<TBAddFriend> fr = JsonSerializer.Deserialize<List<TBAddFriend>>(lisJsonFriend);
+                    var listChuaKB = fr.Where(n => n.TrangThai == 2).Select(n => n.Id_banbe).ToList();
+                    var listID = fr.Where(f => listChuaKB.Contains(f.Id_banbe)).ToList();
+                    foreach (var i in listID)
+                    {
+                        var layid = db.KHACHHANGs.FirstOrDefault(n => n.MaKH == i.Id_banbe);
+                        if (layid != null)
+                        {
+                            i.Id_banbe = layid.MaKH;
+                            i.Tenbanbe = layid.HoTen;
+                        }         
+                    }
+                    return listID;
+                } 
+            }
+            return new List<TBAddFriend>();
         }
 
     }

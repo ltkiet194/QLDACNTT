@@ -71,6 +71,7 @@
                         toastr.success("Thêm bạn bè thành công");
                         $(`div[data-id='${friendId}']`).remove();
                         reloadLi();
+                        location.reload();
                     } else {
                         console.log(response.message);
                         alert("Đồng ý kết bạn thất bại!");
@@ -94,6 +95,7 @@
                         toastr.success("Từ chối kết bạn thành công");
                         $(`div[data-id='${friendId}']`).remove();
                         $("#xemthongbao").load(location.href + " #xemthongbao");
+                        location.reload();
                     } else {
                         console.log(response.message);
                         alert("Từ chối kết bạn thất bại!");

@@ -13,6 +13,9 @@ namespace GameStore.Models.DTO
         public int Id { get; set; }
         public KHACHHANG KhachHang { get; set; }
 
+        public List<TBAddFriend> SLBanBeGuiLoiMoi { get; set; }
+        
+
         public List<GamesInCart> listGames { get; set; }
 
         public UserInfo()
@@ -24,6 +27,9 @@ namespace GameStore.Models.DTO
             Id = kh.MaKH;
             KhachHang = kh;
             listGames= JsonConvert.DeserializeObject<List<GamesInCart>>(GamesDAO.Instance.GetGameCartByIdKH(kh.MaKH));
+            SLBanBeGuiLoiMoi = GamesDAO.Instance.GetSLBanbechuakb(kh);
         }
+
+
     }
 }
