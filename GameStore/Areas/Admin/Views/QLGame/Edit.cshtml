@@ -1,0 +1,79 @@
+﻿@model GameStore.Models.Game
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1 style="text-align:center;">Edit</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.id)
+
+    <div class="form-group">
+        <label>Name Game:</label>
+        <input type="text" class="form-control" name="nameGame" value="@Model.nameGame"/>
+    </div>
+    <div class="form-group">
+        <label>Image Game:</label>
+        <input type="file" class="form-control" name="imgGame" value="@Model.imgName"/>
+    </div>
+    <div class="form-group">
+        <label>Tag Game:</label>
+        <input type="text" class="form-control" name="tagGame" value="@Model.tagGame"/>
+    </div>
+
+    <div class="form-group">
+        <label>Type Game:</label>
+        <input type="text" class="form-control" name="typeGame" value="@Model.typeGame"/>
+    </div>
+
+    <div class="form-group">
+        <label>Devs Game:</label>
+        <input type="text" class="form-control" name="devsGame" value="@Model.devsGame"/>
+    </div>
+
+    <div class="form-group">
+        <label>Publisher:</label>
+        <input type="text" class="form-control" name="publisher" value="@Model.publisher"/>
+    </div>
+
+    <div class="form-group">
+        <label>Price Game:</label>
+        <input type="number" class="form-control" name="priceGame" value="@Model.priceGame"/>
+    </div>
+
+    <div class="form-group">
+        <label>Des Game:</label>
+        <textarea class="form-control" name="desGame" rows="4" cols="50">@Model.desGame
+        </textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Year:</label>
+        <input type="text" class="form-control" name="yearRelease" value="@Model.yearRelease"/>
+    </div>
+
+    <div class="form-group">
+        <label>Require Game:</label>
+        <textarea rows="4" cols="50" class="form-control" name="requireGame">@Model.requireGame
+        </textarea>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save"  class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "QLGames")
+</div>

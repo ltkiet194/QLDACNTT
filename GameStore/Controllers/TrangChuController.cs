@@ -8,7 +8,7 @@ using GameStore.Models.DTO;
 using System.Text.Json;
 using FireSharp.Interfaces;
 using FireSharp.Config;
-
+using System.Threading;
 
 namespace GameStore.Controllers
 {
@@ -54,15 +54,17 @@ namespace GameStore.Controllers
                     var listjsonFriend = listbb.ListFriends;
                     List<Friends> fr = JsonSerializer.Deserialize<List<Friends>>(listjsonFriend);
                     var listfriendLocTT = fr.Where(n => n.TrangThai == 0).Select(n => n.Id_banbe).ToList();
-                    var listfriendLocTTGuiLoiMoi = fr.Where(n => n.TrangThai == 2).Select(n => n.Id_banbe).ToList();
-                    ViewBag.FriendCount = listfriendLocTTGuiLoiMoi.Count();
-                    var listfriendDaloc = fr.Where(f => listfriendLocTT.Contains(f.Id_banbe)).ToList();
+                    var listfriendLocTT2 = fr.Where(n => n.TrangThai == 2).Select(n => n.Id_banbe).ToList();
 
+                    var listfriendDaloc = fr.Where(f => listfriendLocTT.Contains(f.Id_banbe)).ToList();
+                    ViewBag.SL = listfriendLocTT2.Count();
                     foreach (var i in listfriendDaloc)
                     {
                         var listInfoKH = db.KHACHHANGs.FirstOrDefault(n => n.MaKH == i.Id_banbe);
                         if (listInfoKH != null)
                         {
+                            i.Online = (bool)listInfoKH.LastActivity;
+                            i.Avatar = listInfoKH.Avatar;
                             i.Tenbanbe = listInfoKH.HoTen;
                         }
                     }
@@ -71,6 +73,7 @@ namespace GameStore.Controllers
                 }
             }
             return PartialView();
+
         }
 
         public ActionResult PartialLi()
@@ -238,8 +241,10 @@ namespace GameStore.Controllers
             }
             else
             {
-                string authen = "UEX3DWXKythkhw9EfQTi6NO3jyahnKbTZA2gOPic";
-                string path = "https://chat-project-85651-default-rtdb.firebaseio.com/";
+                //string authen = "UEX3DWXKythkhw9EfQTi6NO3jyahnKbTZA2gOPic";
+                string authen = "uYT2Yr1RSr0qCSqoGZZwjMoZJugqGu0H2ynAVHw9";
+                //string path = "https://chat-project-85651-default-rtdb.firebaseio.com/";
+                string path = "https://chat-gamestore-default-rtdb.firebaseio.com/";
                 IFirebaseClient client;
                 IFirebaseConfig config = new FirebaseConfig
                 {
@@ -262,7 +267,8 @@ namespace GameStore.Controllers
                         var name = dataItem["Name"].ToString();
                         var message = dataItem["Message"].ToString();
                         var room = dataItem["Room"].ToString();
-                        if ((name == id && id != null) || (kh != null && name == kh.MaKH.ToString()) && room == kh.MaKH + "-" + id || room == id + "-" + kh.MaKH)
+                        if ((kh != null && name == kh.MaKH.ToString() && room == kh.MaKH + "-" + id) ||
+                    (kh != null && name == id && room == id + "-" + kh.MaKH))
                         {
                             var dataDict = new Dictionary<string, object>();
                             dataDict["Key"] = key;
@@ -278,12 +284,16 @@ namespace GameStore.Controllers
             }
         }
 
+
+
         [HttpPost]
         public JsonResult sendChat(string message, string id)
         {
             KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
-            string authen = "UEX3DWXKythkhw9EfQTi6NO3jyahnKbTZA2gOPic";
-            string path = "https://chat-project-85651-default-rtdb.firebaseio.com/";
+            //string authen = "UEX3DWXKythkhw9EfQTi6NO3jyahnKbTZA2gOPic";
+            string authen = "uYT2Yr1RSr0qCSqoGZZwjMoZJugqGu0H2ynAVHw9";
+            //string path = "https://chat-project-85651-default-rtdb.firebaseio.com/";
+            string path = "https://chat-gamestore-default-rtdb.firebaseio.com/";
             IFirebaseClient client;
             IFirebaseConfig config = new FirebaseConfig
             {

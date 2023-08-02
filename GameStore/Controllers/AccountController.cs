@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.IO;
+using System.Net.PeerToPeer;
 
 namespace GameStore.Controllers
 {
@@ -32,6 +33,8 @@ namespace GameStore.Controllers
                 var getkh = db.KHACHHANGs.Where(s => s.TaiKhoan == list[0]).SingleOrDefault();
                 if(check == 1)
                 {
+                    getkh.LastActivity = true;
+                    db.SubmitChanges();
                     Session["KhachHang"] = getkh;
                 }    
                 if (check <1)
@@ -40,6 +43,8 @@ namespace GameStore.Controllers
                     kh.TaiKhoan = list[0];
                     kh.HoTen = list[1];
                     db.KHACHHANGs.InsertOnSubmit(kh);
+                    kh.LastActivity = true;
+                    kh.Balance = 0;
                     db.SubmitChanges();
                     Session["KhachHang"] = kh;
                 }
@@ -62,7 +67,10 @@ namespace GameStore.Controllers
                 var getkh = db.KHACHHANGs.Where(s => s.TaiKhoan == username && s.MatKhau == password).SingleOrDefault();
                 if (check == 1)
                 {
+                    getkh.LastActivity = true;
+                    db.SubmitChanges();
                     Session["KhachHang"] = getkh;
+                    
                 }
                 else
                 {                
@@ -80,7 +88,11 @@ namespace GameStore.Controllers
         }
         public ActionResult Logout()
         {
+            KHACHHANG kh = (KHACHHANG) Session["KhachHang"];
+            var getkh = db.KHACHHANGs.Where(s => s.MaKH == kh.MaKH).SingleOrDefault();
             FormsAuthentication.SignOut();
+            getkh.LastActivity = false;
+            db.SubmitChanges();
             Session["KhachHang"] = null;
             return RedirectToAction("TrangChu", "TrangChu");
         }
@@ -126,6 +138,8 @@ namespace GameStore.Controllers
                 kh.Email = email;
                 kh.HoTen = fullname;
                 kh.DiaChi = address;
+                kh.Balance = 0;
+                kh.LastActivity = true;
                 db.KHACHHANGs.InsertOnSubmit(kh);
                 db.SubmitChanges();
 
@@ -230,6 +244,37 @@ namespace GameStore.Controllers
                     smtp.Send(mail);
                    
                 }
+            }
+        }
+      
+
+        public ActionResult AddBalance()
+        {
+            KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+            var acc = db.KHACHHANGs.Where(n => n.MaKH == kh.MaKH).Single();
+
+            return View(kh);
+        }
+
+        [HttpPost]
+        public ActionResult AddBalance(string Code)
+        {
+            KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+            var acc = db.KHACHHANGs.Where(n => n.MaKH == kh.MaKH).Single();
+            MaTheNap the = db.MaTheNaps.SingleOrDefault(n => n.MaThe == Code);
+            if (the == null || the.TrangThai == true)
+            {
+                return Json(new { success = false, message = "Giftcode does not exist or used!" });
+            }else{
+
+                the.TrangThai = true;
+
+                kh.Balance += (float)the.GiaTriNap;
+                acc.Balance += (float)the.GiaTriNap;
+                db.SubmitChanges();
+
+
+                return Json(new { success = true, message = "Redeem Giftcode success !", data = kh.Balance });
             }
         }
 

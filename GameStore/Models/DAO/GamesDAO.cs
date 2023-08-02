@@ -56,6 +56,28 @@ namespace GameStore.Models.DAO
             return result;
         }
 
+        public List<Games> GetGameBySearch(string query, int page, int pageSize)
+        {
+            var result = new List<Games>();
+            DataTable dt = DataProvider.Instance.ExcuteQuery($"SELECT * FROM Game WHERE nameGame LIKE '%{query}%' ORDER BY Id OFFSET ({page} - 1) * {pageSize} ROWS FETCH NEXT {pageSize} ROWS ONLY;");
+            foreach (DataRow row in dt.Rows)
+            {
+                Games game = new Games(row);
+                result.Add(game);
+            }
+            return result;
+        }
+        public List<Games> GetNumGameBySearch(string query)
+        {
+            var result = new List<Games>();
+            DataTable dt = DataProvider.Instance.ExcuteQuery($"SELECT * FROM Game WHERE nameGame LIKE '%{query}%' ");
+            foreach (DataRow row in dt.Rows)
+            {
+                Games game = new Games(row);
+                result.Add(game);
+            }
+            return result;
+        }
 
         public Games GetGameById(int id)
         {          

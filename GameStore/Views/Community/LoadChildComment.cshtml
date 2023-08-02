@@ -1,0 +1,78 @@
+﻿@model IEnumerable<GameStore.Models.DTO.CommentNew>
+
+@{ int i = 0;
+
+    foreach (var item in Model)
+    {
+    <details open class="comment" id="comment-2">
+        <a href="#comment-2" class="comment-border-link">
+            <span class="sr-only">@item.Name</span>
+        </a>
+        <summary>
+            <div class="comment-heading">
+                <img class="circle-image" src="@item.Avatar" />
+                <div class="comment-info">
+                    <a href="#" class="comment-author">@item.Name</a>
+                    <p class="m-0">
+
+                        @{
+                            // Hàm tính khoảng thời gian từ thời điểm hiện tại đến thời gian cung cấp
+                            DateTime cmTime = Convert.ToDateTime(item.DateModified); // Assuming NgayDang is the property for the post's timestamp
+                            DateTime cmcurrentTime = DateTime.Now;
+                            TimeSpan cmtimeDifference = cmcurrentTime.Subtract(cmTime);
+
+                            if (cmtimeDifference.TotalMinutes < 1)
+                            {
+                                @: Just now
+                            }
+                            else if (cmtimeDifference.TotalMinutes < 60)
+                            {
+                                @: @cmtimeDifference.Minutes minute(s) ago
+                            }
+                            else if (cmtimeDifference.TotalHours < 24)
+                            {
+                                @: @cmtimeDifference.Hours hour(s) ago
+                            }
+                            else if (cmtimeDifference.TotalDays < 7)
+                            {
+                                @: @cmtimeDifference.Days day(s) ago
+                            }
+                            else
+                            {
+                                @: @cmTime.ToString("MMMM dd, yyyy") <!-- Display full date if older than a week -->
+                            }
+                        }
+                    </p>
+                </div>
+            </div>
+        </summary>
+
+        <div class="comment-body">
+            <p>
+                @item.Content
+            </p>
+            <button type="button" class="reply2" id="r2comment-@item.Id_Conmment-@item.Id_Post-reply-form">Reply</button>
+            <!-- Reply form start -->
+            <form method="POST" action="/Community/CommentChild" class="reply-form d-none" id="txr2comment-@item.Id_Conmment-@item.Id_Post-reply-form">
+                <input name="id" value="@item.Id_Post-@item.Id_Conmment" class="d-none" />
+                <textarea placeholder="Reply to comment" rows="4" name="textCommentContent"></textarea>
+                <button type="submit">Submit</button>
+                <button type="button" data-toggle="reply-form" data-target="comment-2-reply-form">Cancel</button>
+            </form>
+            <!-- Reply form end -->
+        </div>
+        <div class="replies">
+            @if (ViewBag.lst[i] != 0)
+            {
+
+                @Html.Action("LoadChildComment", "Community", new { idBaiDang = item.Id_Post, parentId = item.Id_Conmment })
+
+            }
+        </div>
+
+    </details>
+        i++;
+    }
+
+}
+

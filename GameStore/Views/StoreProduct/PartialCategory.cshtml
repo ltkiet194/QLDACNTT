@@ -6,12 +6,9 @@
             @{ 
                 foreach (var category in Model)
                 {
-                    <li><a href="#">@category.TenTheLoai</a></li>
+                    <li><a href="@Url.Action("GameByCategory","Store",new { category = category.TenTheLoai})">@category.TenTheLoai</a></li>
                 }
-            }
-
-            
-
+            }         
         </ul>
     </div>
 </div>

@@ -5059,6 +5059,9 @@ img.rounded {
 
 @media (max-width: 767px) {
     .nk-contacts-icons {
+        position: absolute;
+        top: 15px;
+        right: 0;
         margin-right: 0;
     }
 }

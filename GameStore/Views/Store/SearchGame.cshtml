@@ -1,0 +1,166 @@
+﻿
+@model IEnumerable<GameStore.Models.Game>
+
+@using GameStore.Models
+@using GameStore.Models.DTO
+@{
+    KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+    ViewBag.Title = "Search Game";
+    Layout = "~/Views/Shared/_LayoutUserFullWidth.cshtml";
+}
+
+<style>
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .pagination a,
+        .pagination span {
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #dd163b;
+        }
+
+            .pagination a:hover {
+                background-color: #f5f5f5;
+            }
+
+            .pagination span.current {
+                background-color: #007bff;
+                color: #fff;
+            }
+</style>
+
+
+<!-- END: Some Products -->
+
+<!-- START: All Game -->
+<div class="nk-gap-3"></div>
+<h3 class="nk-decorated-h-2"><span><span class="text-main-1">Keyword</span> @ViewData["searchQuery"]</span></h3>
+<div class="nk-gap"></div>
+<div class="row vertical-gap">
+    @{
+        foreach (var item in Model)
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="nk-product-cat">
+                    <a class="nk-product-image" href="@Url.Action("GameDetail","Store", new { id =item.id})">
+                        <img src="~/Theme/images/ImageResource/@item.imgName" alt="@item.nameGame">
+                    </a>
+                    <div class="nk-product-cont">
+                        <h3 class="nk-product-title h5"><a href="@Url.Action("GameDetail","Store", new { id =item.id})">@item.nameGame</a></h3>
+                        <div class="nk-gap-1"></div>
+                        @*<div class="nk-product-rating" data-rating="3">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>*@
+                        <div class="nk-gap-1"></div>
+                        <div class="nk-product-price">@item.priceGame .00 $</div>
+                        <div class="nk-gap-1"></div>
+                        @{
+                            if (@kh != null)
+                            {
+                                <a href="@Url.Action("AddToCart","StoreCart", new {gameId = item.id,gameName =item.nameGame,imgName=item.imgName, priceGame=item.priceGame, url = Request.Url.ToString()})" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                            }
+                            else
+                            {
+                                <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Add to Cart</a>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        }
+    }
+
+</div>
+<div class="nk-gap-3"></div>
+
+<div class="nk-gap"></div>
+<div class="pagination">
+    @if (ViewBag.SearchTotalPages > 1)  // Kiểm tra nếu có nhiều hơn 1 trang
+    {
+        if (ViewBag.SearchCurrentPage <= 3)
+        {
+            // Hiển thị 5 trang đầu
+            for (int i = 1; i <= 5; i++)
+            {
+                if (i == ViewBag.CurrentPage)
+                {
+                    <span style="background-color: #d3d3d3;">@i</span>
+                }
+                else
+                {
+                    <a href="@Url.Action("SearchGame", new {searchQuery = ViewData["searchQuery"], page = i })">@i</a>
+                }
+            }
+            // Hiển thị dấu chấm gián đoạn
+            <span>...</span>
+            // Hiển thị trang cuối
+            <a href="@Url.Action("SearchGame", new {searchQuery = ViewData["searchQuery"], page = ViewBag.SearchTotalPages })">@ViewBag.SearchTotalPages</a>
+        }
+        else if (ViewBag.SearchCurrentPage > ViewBag.SearchTotalPages - 3)
+        {
+            // Hiển thị trang đầu
+            <a href="@Url.Action("SearchGame", new {searchQuery = ViewData["searchQuery"], page = 1 })">1</a>
+            // Hiển thị dấu chấm gián đoạn
+            <span>...</span>
+            // Hiển thị 5 trang cuối
+            for (int i = ViewBag.SearchTotalPages - 4; i <= ViewBag.SearchTotalPages; i++)
+            {
+                if (i == ViewBag.SearchCurrentPage)
+                {
+                    <span style="background-color: #d3d3d3;">@i</span>
+                }
+                else
+                {
+                    <a href="@Url.Action("SearchGame", new {searchQuery = ViewData["searchQuery"], page = i })">@i</a>
+                }
+            }
+        }
+        else
+        {
+            // Hiển thị trang đầu
+            <a href="@Url.Action("SearchGame", new {searchQuery = ViewData["searchQuery"], page = 1 })">1</a>
+            // Hiển thị dấu chấm gián đoạn
+            <span>...</span>
+            // Hiển thị 3 trang trước và sau trang hiện tại
+            for (int i = ViewBag.SearchCurrentPage - 2; i <= ViewBag.SearchCurrentPage + 2; i++)
+            {
+                if (i == ViewBag.SearchCurrentPage)
+                {
+                    <span style="background-color: #d3d3d3;">@i</span>
+                }
+                else
+                {
+                    <a href="@Url.Action("SearchGame", new { searchQuery = ViewData["searchQuery"],page = i })">@i</a>
+                }
+            }
+            // Hiển thị dấu chấm gián đoạn
+            <span>...</span>
+            // Hiển thị trang cuối
+            <a href="@Url.Action("SearchGame", new { searchQuery = ViewData["searchQuery"],page = ViewBag.SearchTotalPages })">@ViewBag.SearchTotalPages</a>
+        }
+    }
+</div>
+<!-- END: Most Popular -->
+
+
+

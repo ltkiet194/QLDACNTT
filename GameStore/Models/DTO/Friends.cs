@@ -13,5 +13,7 @@ namespace GameStore.Models.DTO
         public DateTime NgayGui { get; set; }
 
         public string Tenbanbe { get; set; }
+        public string Avatar { get; set; }
+        public bool Online { get; set; }
     }
 }

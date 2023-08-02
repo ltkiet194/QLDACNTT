@@ -76,6 +76,18 @@
             .swal2-confirm:hover {
                 background-color: #2868c7;
             }
+
+         @@media
+        (max-width: 767px)
+         {
+            .nk-contacts-icons {
+                position: absolute !important;
+                top: 15px !important;
+                right: 0 !important;
+            }
+
+         }
+
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.all.min.js"></script>
@@ -196,7 +208,7 @@
         position: absolute;
         top: 100%;
         left: 0;
-        z-index: 10000;
+        z-index: 100000;
         display: none;
         float: left;
         min-width: 160px;
@@ -330,17 +342,30 @@
     }
 
     .friend-avatar {
+        position: relative;
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        overflow: hidden;
         margin-right: 10px;
     }
 
         .friend-avatar img {
             width: 100%;
+            border-radius:50%;
             height: 100%;
             object-fit: cover;
+        }         
+
+        /* Định dạng pseudo-element thể hiện trạng thái online */
+        .friend-avatar .status-circle {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            background: green;
+            border-radius: 50%;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
         }
 
     .friend-details {
@@ -400,18 +425,34 @@
                         @foreach (var i in Model)
                         {
                             <li class="friend-item" id="@i.Id_banbe" style="display: flex; color: #f0f2f5; margin-bottom: 15px;">
-                                <div class="friend-avatar">
-                                    <img src="~/Theme/images/gallery-8-thumb.jpg" alt="@i.Tenbanbe">
-                                </div>
+                                @if (i.Avatar == null)
+                                {
+                                    <div class="friend-avatar">
+                                        <img src="~/Theme/images/gallery-8-thumb.jpg" alt="@i.Tenbanbe">
+                                        @if (i.Online == true)
+                                        {
+                                            <span class="status-circle"></span>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="friend-avatar">
+                                        <img src="@i.Avatar" alt="@i.Tenbanbe">
+                                        @if (i.Online == true)
+                                        {
+                                            <span class="status-circle"></span>
+                                        }
+                                    </div>
+                                }
+                            
                                 <div class="friend-details">
                                     <h4>@i.Tenbanbe</h4>
                                 </div>
                                 <div>
                                     <a href="#" class="messenger-button">Messenger</a>
                                 </div>
-
                             </li>
-
                         }
                     </ul>
                 </div>
@@ -542,7 +583,7 @@
                         <li id="mothongbao" class="notification-li">
                             <a href="#">
                                 <span class="fa fa-bell"></span>
-                                <span class="nk-badge">@ViewBag.FriendCount</span>
+                                <span class="nk-badge">@ViewBag.SL</span>
                             </a>
                             @Html.Action("AccessAddFriend", "TrangChu")
                         </li>
@@ -609,11 +650,14 @@
                     {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span id="name">@kh.HoTen</span>
+                                <span id="name">@kh.HoTen <span id="BalanceCurrent"> (@kh.Balance.00$)</span></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="@Url.Action("DetailInfo","Account")">Thông tin người dùng</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("AddBalance","Account")">Nạp tiền vào tài khoản</a>
                                 </li>
                                 <li>
                                     <a href="@Url.Action("Logout","Account")">Đăng xuất</a>
@@ -647,102 +691,13 @@
                 </a>
 
                 <ul class="nk-nav nk-nav-right d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
-
-                    <li class=" nk-drop-item">
-                        <a href="@Url.Action("Forum","Forum")">
-                            Forum
-                        </a><ul class="dropdown">
-                            <li class=" nk-drop-item">
-                                <a href="@Url.Action("ForumTopics","ForumTopics")">
-                                    Topics
-                                </a>
-                                @*<ul class="dropdown">
-
-                                        <li>
-                                            <a href="@Url.Action("Forum","Forum")">
-                                                Forum
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("ForumTopics","ForumTopics")">
-                                                Topics
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("ForumFingleTopics","ForumFingleTopics")ForumFingleTopic">
-                                                Single Topic
-                                            </a>
-                                        </li>
-                                    </ul>*@
-                            </li>
-                            @*<li>
-                                    <a href="#">
-                                        Coming Soon
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Offline
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        404
-
-                                    </a>
-                                </li>*@
-                        </ul>
-                    </li>
-                    <li class=" nk-drop-item">
-                        <a href="@Url.Action("BlogList","BlogList")">
-                            Community
-                        </a><ul class="dropdown">
-                            <li>
-                                <a href="@Url.Action("News","News")">
-                                    Blogs
-                                </a>
-                            </li>
-                            @*<li class=" nk-drop-item">
-                                    <a href="#">
-                                        Blog With Sidebar
-                                    </a><ul class="dropdown">
-                                        <li>
-                                            <a href="#">
-                                                Blog Grid
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Blog List
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Blog Fullwidth
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Blog Article
-                                    </a>
-                                </li>*@
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Gallery","Gallery")">
-                            Library
-                        </a>
-                    </li>
-
                     <li class=" nk-drop-item">
                         <a href="@Url.Action("Store","Store")">
                             Store
 
                         </a><ul class="dropdown">
 
-                            <li>
+                            @*<li>
                                 <a href="@Url.Action("Store","Store")">
                                     Store
                                 </a>
@@ -762,10 +717,10 @@
                                     Catalog Alt
 
                                 </a>
-                            </li>
+                            </li>*@
                             <li>
                                 <a href="@Url.Action("StoreCheckout","StoreCheckout")">
-                                    Checkout
+                                    Cart History
                                 </a>
                             </li>
                             <li>
@@ -775,6 +730,105 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        @if (kh == null)
+                        {
+                            <a href="#">
+                                Library
+                            </a>
+                        }
+                        else {
+                            <a href="@Url.Action("Gallery","Gallery")">
+                                Library
+                            </a>
+                        }
+                        
+                    </li>
+                    <li class=" nk-drop-item">
+                        <a href="@Url.Action("Forum","Forum")">
+                            Forum
+                        </a><ul class="dropdown">
+                            <li class=" nk-drop-item">
+                                <a href="@Url.Action("ForumTopics","ForumTopics")">
+                                    Topics
+                                </a>
+                                @*<ul class="dropdown">
+
+                        <li>
+                            <a href="@Url.Action("Forum","Forum")">
+                                Forum
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("ForumTopics","ForumTopics")">
+                                Topics
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("ForumFingleTopics","ForumFingleTopics")ForumFingleTopic">
+                                Single Topic
+                            </a>
+                        </li>
+                    </ul>*@
+                            </li>
+                            @*<li>
+                    <a href="#">
+                        Coming Soon
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Offline
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        404
+
+                    </a>
+                </li>*@
+                        </ul>
+                    </li>
+                    <li class=" nk-drop-item">
+                        <a href="@Url.Action("SocialNetwork","Community")">
+                            Community
+                        </a><ul class="dropdown">
+                            <li>
+                                <a href="@Url.Action("News","News")">
+                                    Blogs
+                                </a>
+                            </li>
+                            @*<li class=" nk-drop-item">
+                    <a href="#">
+                        Blog With Sidebar
+                    </a><ul class="dropdown">
+                        <li>
+                            <a href="#">
+                                Blog Grid
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Blog List
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        Blog Fullwidth
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Blog Article
+                    </a>
+                </li>*@
+                        </ul>
+                    </li>
+
+
+
                 </ul>
                 <ul class="nk-nav nk-nav-right nk-nav-icons">
                     <li class="single-icon d-lg-none">

@@ -1,0 +1,871 @@
+﻿
+@{
+    ViewBag.Title = "SocialNetwork";
+    Layout = "~/Views/Shared/_LayoutUserFullWidth.cshtml";
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@using Newtonsoft.Json;
+
+@using GameStore.Models.DTO;
+
+@model IEnumerable<GameStore.Models.BAIDANGCONGDONG>
+@using GameStore.Models
+@{
+    KHACHHANG kh = (KHACHHANG)Session["KhachHang"];
+}
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<style>
+    /* Định dạng nút "Like" khi đã like */
+    .btn-likenew.liked {
+        color: blue;
+    }
+
+    body {
+        background-color: #171e22 !important;
+    }
+
+    .bg-fbook {
+        background-color: #4267b2 !important;
+        padding: .1rem 1rem;
+    }
+
+    .btn-fbook {
+        color: #4a4a4a;
+        background-color: #ffffff;
+        border-color: transparent;
+        font-weight: 700;
+        transition: all .5s;
+    }
+
+        .btn-fbook:hover {
+            background-color: #f0f0f0;
+            border-color: transparent;
+        }
+
+    .btn-fposts {
+        background-color: #f0f0f0;
+        border-color: transparent;
+        border-radius: 5rem;
+        transition: all 0.5s;
+    }
+
+        .btn-fposts:hover {
+            background-color: rgba(0,0,0,.05);
+            border-color: transparent;
+        }
+
+    .h7 {
+        font-size: 0.87rem;
+        font-weight: 600;
+    }
+
+    .h8 {
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
+
+    .offset-fixed {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+    }
+
+    .f-left {
+        left: 0
+    }
+
+    .f-right {
+        right: 0;
+    }
+
+    .side-left {
+        margin-top: 4rem;
+        margin-left: 8.07rem
+    }
+
+    .side-right {
+        margin-top: 4rem;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: calc(100vh - 7.5rem);
+    }
+
+    .img-circle {
+        width: 5rem;
+        height: 3.1rem;
+        background-color: #f7f7f7;
+        border-radius: 50%;
+        border: 1px solid #dddddd;
+    }
+
+    .state {
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: green;
+        border-radius: 50%
+    }
+
+    .friend-state {
+        padding: 0.57rem 0.3rem;
+        cursor: pointer;
+        transition: all 0.1s;
+    }
+
+        .friend-state:hover {
+            background-color: #f7f7f7;
+        }
+
+
+    @@media (min-width: 1200px) {
+        .container {
+            max-width: 1125px;
+        }
+
+        .c-navbar {
+            margin-left: 7rem !important;
+        }
+    }
+
+    .nk-navbar {
+        z-index: 100 !important;
+    }
+
+
+    /*
+        Body, button, comment-thread, and utilities
+
+        Notes:
+            - This section sets some basic styles. You can ignore this part and
+            go directly to the comment styles.
+    */
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        line-height: 1.4;
+        color: rgba(0, 0, 0, 0.85);
+        background-color: #f9f9f9;
+    }
+
+    button {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        font-size: 14px;
+        padding: 4px 8px;
+        color: rgba(0, 0, 0, 0.85);
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+    }
+
+        button:hover,
+        button:focus,
+        button:active {
+            cursor: pointer;
+            background-color: #ecf0f1;
+        }
+
+    .comment-thread {
+        width: 700px;
+        max-width: 100%;
+        margin: auto;
+        padding: 0 30px;
+        background-color: #fff;
+        border: 1px solid transparent; /* Removes margin collapse */
+    }
+
+    .m-0 {
+        margin: 0;
+    }
+
+    .sr-only {
+        position: absolute;
+        left: -10000px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+    }
+
+    /* Comment */
+
+    .comment {
+        position: relative;
+        margin: 20px auto;
+    }
+
+    .comment-heading {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        font-size: 14px;
+    }
+
+    .comment-voting {
+        width: 20px;
+        height: 32px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+    }
+
+        .comment-voting button {
+            display: block;
+            width: 100%;
+            height: 50%;
+            padding: 0;
+            border: 0;
+            font-size: 10px;
+        }
+
+    .comment-info {
+        color: rgba(0, 0, 0, 0.5);
+        margin-left: 10px;
+    }
+
+    .comment-author {
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        .comment-author:hover {
+            text-decoration: underline;
+        }
+
+    .replies {
+        margin-left: 20px;
+    }
+
+    /* Adjustments for the comment border links */
+
+    .comment-border-link {
+        display: block;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 12px;
+        height: calc(100% - 50px);
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        background-color: rgba(0, 0, 0, 0.1);
+        background-clip: padding-box;
+    }
+
+        .comment-border-link:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+    .comment-body {
+        padding: 0 20px;
+        padding-left: 28px;
+    }
+
+    .replies {
+        margin-left: 28px;
+    }
+
+    /* Adjustments for toggleable comments */
+
+    details.comment summary {
+        position: relative;
+        list-style: none;
+        cursor: pointer;
+    }
+
+        details.comment summary -webkit-details-marker {
+            display: none;
+        }
+
+    details.comment:not([open]) .comment-heading {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .comment-heading::after {
+        display: inline-block;
+        position: absolute;
+        right: 5px;
+        align-self: center;
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.55);
+    }
+
+    details.comment[open] .comment-heading::after {
+        content: "Click to hide";
+    }
+
+    details.comment:not([open]) .comment-heading::after {
+        content: "Click to show";
+    }
+
+    /* Adjustment for Internet Explorer */
+
+    @@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+        /* Resets cursor, and removes prompt text on Internet Explorer */
+        .comment-heading {
+            cursor: default;
+        }
+
+        details.comment[open] .comment-heading::after,
+        details.comment:not([open]) .comment-heading::after {
+            content: " ";
+        }
+    }
+
+    /* Styling the reply to comment form */
+
+    .reply-form textarea {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        font-size: 16px;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 15px;
+        margin-bottom: 5px;
+    }
+
+    .d-none {
+        display: none;
+    }
+
+    .circle-image {
+        width: 10%;
+        border-radius: 50%;
+    }
+</style>
+
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<body>
+
+
+
+    <div class="container-fluid">
+        <div class="row" style="background:#fff">
+            @if (kh != null)
+            {
+                <div class="col-md-4" style="margin-top:12px">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="rounded-circle" src="@kh.Avatar" style=" width: 50%;">
+                            <div class="h5">Information</div>
+                            <div class="h7 text-muted">Fullname: @kh.HoTen</div>
+                            <div class="h7">Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java, Node.js, etc.</div>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="h6 text-muted">Followers</div>
+                                <div class="h5">5.2342</div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="h6 text-muted">Following</div>
+                                <div class="h5">6758</div>
+                            </li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                        </ul>
+                    </div>
+
+                </div>
+            }
+            else
+            {
+                <div class="col-md-4" style="margin-top: 12px; background: #EEE">
+                </div>
+            }
+
+            <div class="col-lg-8 ">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @if (kh != null)
+                        {
+
+                            <div class="card my-3">
+                                <div class="card-header">
+                                    <ul class="nav nav-tabs card-header-tabs nav-fill">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#">Make a post</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Photo/Video Album</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link disabled" href="#">Live Video</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body py-2">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img class="rounded-circle" width="50" src="@kh.Avatar">
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group mb-0">
+                                                <label class="sr-only" for="exampleFormControlTextarea1">Example textarea</label>
+                                                <textarea class="form-control border-0" id="content" rows="2" placeholder="What are you thinking?"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="picbefore"></div>
+
+                                <div class="card-footer p-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="col">
+                                            <button type="button" class="btn btn-fposts btn-block btn-sm">
+                                                <i class="fa fa-list"
+                                                   aria-hidden="true"></i> List
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <input type="file" id="photo-video-input" style="display: none;">
+                                            <button type="button" id="photo-video-btn" class="btn btn-fposts btn-block btn-sm">
+                                                <i class="fa fa-picture-o"
+                                                   aria-hidden="true"></i> Photo/Video
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-fposts btn-block btn-sm">
+                                                <i class="fa fa-user-plus"
+                                                   aria-hidden="true"></i> Tag Someone
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-fposts btn-block btn-sm">
+                                                <i class="fa fa-ellipsis-h"
+                                                   aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button id="postnew" type="button">Post</button>
+                            </div>
+                        }
+
+                        <!-- ITEM -->
+                        @foreach (var item in Model)
+                        {
+                            bool userHasLiked = false;
+                            List<CommentNew> cm = item.ListComment != null ? JsonConvert.DeserializeObject<List<CommentNew>>(item.ListComment) : new List<CommentNew>();
+                            var lst = cm.Where(m => m.IdParent == -1).ToList();
+                            int[] a = new int[cm.Count()];
+                            for (int ia = 0; ia < lst.Count; ia++)
+                            {
+                                var l = cm.Where(m => m.IdParent == lst[ia].Id_Conmment);
+                                a[ia] = l.Count();
+                            }
+                            ViewBag.lst = a;
+                            <div class="card my-3">
+                                <div class="card-header bg-white border-0 py-2">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="d-flex justify-content-between">
+                                            <a href="#">
+                                                <img class="rounded-circle" src="@ViewBag.Users[Convert.ToInt32(item.Id_NguoiDang)].Avatar" width="45" alt="" />
+                                            </a>
+                                            <div class="ml-3">
+                                                <div class="h6 m-0">
+                                                    @if (ViewBag.Users.ContainsKey(Convert.ToInt32(item.Id_NguoiDang)))
+                                                    {
+                                                        <a href="#">@ViewBag.Users[Convert.ToInt32(item.Id_NguoiDang)].HoTen</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <!-- Display a fallback message if the user information is not found -->
+                                                        <span>User Not Found</span>
+                                                    }
+                                                </div>
+                                                <div class="text-muted h8">
+                                                    @{
+                                                        DateTime postTime = Convert.ToDateTime(item.NgayDang); // Assuming NgayDang is the property for the post's timestamp
+                                                        DateTime currentTime = DateTime.Now;
+                                                        TimeSpan timeDifference = currentTime.Subtract(postTime);
+
+                                                        if (timeDifference.TotalMinutes < 1)
+                                                        {
+                                                            @: Just now
+                                                        }
+                                                        else if (timeDifference.TotalMinutes < 60)
+                                                        {
+                                                            @: @timeDifference.Minutes minute(s) ago
+                                                        }
+                                                        else if (timeDifference.TotalHours < 24)
+                                                        {
+                                                            @: @timeDifference.Hours hour(s) ago
+                                                        }
+                                                        else if (timeDifference.TotalDays < 7)
+                                                        {
+                                                            @: @timeDifference.Days day(s) ago
+                                                        }
+                                                        else
+                                                        {
+                                                            @: @postTime.ToString("MMMM dd, yyyy") <!-- Display full date if older than a week -->
+                                                        }
+                                                    }
+                                                    <i class="fa fa-globe" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown">
+                                            <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                @if (kh != null)
+                                                {
+                                                    <a id="DL_@item.Id_BaiDang" class="dropdown-item Deletenew" href="#">Delete</a>
+                                                }
+
+                                                <a class="dropdown-item" href="#">Another action</a>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0 pb-2">
+                                    @item.NoiDung
+                                </div>
+                                <img class="card-img-top rounded-0" src="@item.HinhAnh" alt="Card image cap">
+                                <div class="card-footer bg-white border-0 p-0">
+                                    <div class="d-flex justify-content-between align-items-center py-2 mx-3 border-bottom">
+                                        <div style="display:flex">
+                                            <div  class="h7"><span id="countlike_@item.Id_BaiDang">@item.CountLike </span> <a href="#"> Like</a></div>
+                                            <div style=" margin-left: 14px;" class="h7"><span id="countlike_@item.Id_BaiDang">@cm.Count </span> <a href="#"> Comment</a></div>
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center my-1">
+                                        @if (kh != null)
+                                        {
+                                            <div class="col">
+                                                @if (kh != null && !string.IsNullOrEmpty(item.ListUserLike))
+                                                {
+                                                    // Deserialize the ListUserLike JSON string and check if the current user has liked the post
+                                                    var userLikes = JsonConvert.DeserializeObject<List<UserLike>>(item.ListUserLike);
+                                                    userHasLiked = userLikes != null && userLikes.Any(l => l.Id_Bd == item.Id_BaiDang && l.Id_kh == kh.MaKH);
+                                                }
+                                                @if (!userHasLiked)
+                                                {
+                                                    <button id="@item.Id_BaiDang" type="button" class="btn-likenew btn btn-fbook btn-block btn-sm ">
+                                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button id="@item.Id_BaiDang" type="button" class="btn-likenew btn btn-fbook btn-block btn-sm liked">
+                                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
+                                                    </button>
+                                                }
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col">
+                                                <button type="button" class="btn btn-fbook btn-block btn-sm">
+                                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like
+                                                </button>
+                                            </div>
+                                        }
+                                        <div class="col">
+                                            <button type="button" id="cm_@item.Id_BaiDang" class="btn-comment btn btn-fbook btn-block btn-sm">
+                                                <i class="fa fa-comment"
+                                                   aria-hidden="true"></i> Comment
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-fbook btn-block btn-sm">
+                                                <i class="fa fa-share"
+                                                   aria-hidden="true"></i> Share
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                           
+
+
+
+
+                            <div id="mdcm_@item.Id_BaiDang" class="comment-thread" style="border: 1px solid rgba(0,0,0,.125); overflow: auto; height: 200px; display: none;">
+
+                                @{
+
+                                    int i = 0;
+                                }
+                                @if (lst.Count() == 0)
+                                {
+                                    <form method="POST" action="/Community/CommentParent" class="reply-form" id="txcomment-@item.Id_BaiDang-reply-form" style="display:block">
+                                        <input name="id" value="@item.Id_BaiDang" class="d-none" />
+                                        <textarea placeholder="Reply to comment" rows="4" style="width: 100%;" name="textCommentContent"></textarea>
+                                        <button type="submit">Submit</button>
+                                        <button type="button" class="cancelc">Cancel</button>
+                                    </form>
+                                }
+                                @foreach (var comment in lst)
+                                {
+                                    i = i + 1;
+                                    <!-- Comment 1 start -->
+                            <details open class="comment" id="comment-@comment.Id_Conmment">
+                                <a href="#comment-1" class="comment-border-link">
+                                    <span class="sr-only">Jump to comment</span>
+                                </a>
+                                <summary>
+                                    <div class="comment-heading">
+
+                                        <img class="circle-image" src="@comment.Avatar" />
+
+                                        <div class="comment-info">
+                                            <a href="#" class="comment-author">@comment.Name</a>
+                                            <p class="m-0">
+                                                @{
+                                                    // Hàm tính khoảng thời gian từ thời điểm hiện tại đến thời gian cung cấp
+                                                    DateTime cmTime = Convert.ToDateTime(comment.DateModified); // Assuming NgayDang is the property for the post's timestamp
+                                                    DateTime cmcurrentTime = DateTime.Now;
+                                                    TimeSpan cmtimeDifference = currentTime.Subtract(cmTime);
+
+                                                    if (timeDifference.TotalMinutes < 1)
+                                                    {
+                                                        @: Just now
+                                                    }
+                                                    else if (cmtimeDifference.TotalMinutes < 60)
+                                                    {
+                                                        @: @cmtimeDifference.Minutes minute(s) ago
+                                                    }
+                                                    else if (cmtimeDifference.TotalHours < 24)
+                                                    {
+                                                        @: @cmtimeDifference.Hours hour(s) ago
+                                                    }
+                                                    else if (cmtimeDifference.TotalDays < 7)
+                                                    {
+                                                        @: @cmtimeDifference.Days day(s) ago
+                                                    }
+                                                    else
+                                                    {
+                                                        @: @postTime.ToString("MMMM dd, yyyy") <!-- Display full date if older than a week -->
+                                                    }
+                                                }
+                                            </p>
+                                        </div>
+                                    </div>
+                                </summary>
+                                <div class="comment-body">
+                                    <p>
+                                        @comment.Content
+                                    </p>
+                                    <button type="button" id="comment-@comment.Id_Conmment-@item.Id_BaiDang-reply-form" class="reply">Reply</button>
+                                    <!-- Reply form start -->
+                                    <form method="POST" action="/Community/CommentChild" class="reply-form d-none" id="txcomment-@comment.Id_Conmment-@item.Id_BaiDang-reply-form" style="display:block">
+                                        <input name="id" value="@item.Id_BaiDang-@comment.Id_Conmment" class="d-none" />
+                                        <textarea placeholder="Reply to comment" rows="4" name="textCommentContent"></textarea>
+                                        <button type="submit">Submit</button>
+                                        <button type="button" class="cancelc">Cancel</button>
+                                    </form>
+                                    <!-- Reply form end -->
+                                </div>
+                                <div class="replies">
+                                    @Html.Action("LoadChildComment", "Community", new { idBaiDang = item.Id_BaiDang, parentId = comment.Id_Conmment })
+
+
+                                </div>
+                                @if (i == lst.Count)
+                                {
+                                    <form method="POST" action="/Community/CommentParent" class="reply-form" id="txcomment-@item.Id_BaiDang-reply-form" style="position: absolute; display: block; width: 100%;">
+                                        <input name="id" value="@item.Id_BaiDang" class="d-none" />
+                                        <textarea placeholder="Reply to comment" rows="4" style="width: 100%;" name="textCommentContent"></textarea>
+                                        <button type="submit">Submit</button>
+                                        <button type="button" class="cancelc">Cancel</button>
+                                    </form>
+                                }
+
+                            </details>
+                                }
+                                <!-- Comment 1 end -->
+                            </div>
+
+                        }
+                        <!-- ITEM -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal xác nhận xóa -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Xác nhận xóa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa mục này không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#photo-video-btn").click(function () {
+                $("#photo-video-input").click();
+            });
+
+            $("#photo-video-input").change(function () {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var preview = document.createElement("div");
+                        preview.classList.add("pic-preview");
+                        var image = document.createElement("img");
+                        image.setAttribute("src", e.target.result);
+                        image.setAttribute("width", "100");
+                        preview.appendChild(image);
+                        $("#picbefore").html(preview);
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+
+        $(document).ready(function () {
+
+            $("#postnew").click(function () {
+                var content = $("#content").val();
+                var file = $("#photo-video-input").prop("files")[0];
+
+                if (file) {
+                    var formData = new FormData();
+                    formData.append("Picturenew", file);
+                    formData.append("content", content); // Add the content to the formData
+
+                    $("#postnew").prop("disabled", true);
+
+                    $.ajax({
+                        url: "/Community/Postnew",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            toastr.success(response.message);
+                            setTimeout(function () {
+                                location.reload();
+                            }, 2500)
+                            $("#postnew").prop("disabled", false);
+                        },
+                        error: function () {
+                            toastr.error(response.message);
+                            $("#postnew").prop("disabled", false);
+                        }
+                    });
+                } else {
+                    toastr.error(response.message);
+                }
+            });
+        });
+
+        $(".btn-comment").click(function () {
+            // Lấy id của bài đăng từ thuộc tính id của nút "Comment"
+            var postId = $(this).attr('id');
+
+            var commentThreadId = "#md" + postId;
+
+
+            $(commentThreadId).toggle();
+
+
+        })
+
+
+        $(".btn-likenew").click(function () {
+            var id = $(this).closest('button').attr('id');
+            // Kiểm tra nút "Like" có class "liked" hay không
+            var isLiked = $(this).hasClass("liked");
+
+            // Giả định server trả về kết quả là isPostLiked
+            var isPostLiked = !isLiked; // Đảo ngược trạng thái "Like" (nếu đã like thì hủy like và ngược lại)
+
+            // Cập nhật màu sắc của nút "Like" dựa trên trạng thái isPostLiked
+            if (isPostLiked) {
+                $(this).addClass("liked"); // Thêm class "liked" để thay đổi màu sắc
+            } else {
+                $(this).removeClass("liked"); // Xóa class "liked" để đổi màu sắc trở lại mặc định
+            }
+            var countlike = "#countlike_" + id;
+            $.ajax({
+                url: "/Community/AddLike",
+                type: "POST",
+                data: { id: id },
+                success: function (response) {
+                    $(countlike).text(response.data)
+                },
+                error: function () {
+                    toastr.error(response.message);
+                }
+            });
+        })
+
+
+        $(".Deletenew").click(function () {
+            var id = $(this).attr('id');
+            $('#confirmDeleteModal').modal('show');
+            var idNumber = parseInt(id.split('_')[1]);
+
+            $("#confirmDeleteBtn").click(function () {
+                $('#confirmDeleteModal').modal('hide');
+                $.ajax({
+                    url: "/Community/DeleteNew",
+                    type: "POST",
+                    data: { id: idNumber },
+                    success: function (response) {
+                        toastr.success(response.message);
+                        setTimeout(function () {
+                            location.reload()
+                        }, 1500)
+                    },
+                    error: function () {
+                        toastr.error(response.message);
+                    }
+                });
+            })
+        })
+
+        $(".reply").click(function () {
+            var id = $(this).attr('id');
+
+            var gettg = "#tx" + id;
+
+            $(gettg).toggleClass("d-none");
+
+        })
+        $(".reply2").click(function () {
+            var id = $(this).attr('id');
+
+            var gettg = "#tx" + id;
+
+            $(gettg).toggleClass("d-none");
+
+        })
+    </script>
+</body>
+

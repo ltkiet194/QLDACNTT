@@ -1,0 +1,287 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        Dashboard Admin
+    </title>
+    <script src=" https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js "></script>
+    <!-- Favicon -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+
+<body class="">
+
+    <div class="main-content">
+
+        <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+            <div class="container-fluid">
+                <div class="header-body">
+                    <!-- Card stats -->
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card card-stats mb-4 mb-xl-0">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title text-uppercase text-muted mb-0">Games Buy</h5>
+                                            <span class="h2 font-weight-bold mb-0" id="SLBuyGame"></span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                                <i class="fas fa-chart-pie"></i>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="mt-3 mb-0 text-muted text-sm">
+
+                                        <span class="text-nowrap">Today</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card card-stats mb-4 mb-xl-0">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title text-uppercase text-muted mb-0">Users Online</h5>
+                                            <span class="h2 font-weight-bold mb-0" id="updatesl">@ViewBag.SoluongOL</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                                                <i class="fas fa-users"></i>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="mt-3 mb-0 text-muted text-sm">
+
+                                        <span class="text-nowrap">Login last three minutes ago</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card card-stats mb-4 mb-xl-0">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title text-uppercase text-muted mb-0">Total Today</h5>
+                                            @if (@ViewBag.TongDoanhThu == null)
+                                            {
+                                                <span class="h2 font-weight-bold mb-0" id="Sumtotal">0 $</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="h2 font-weight-bold mb-0" id="Sumtotal">@ViewBag.TongDoanhThu $</span>
+                                            }
+
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                                <i class="fas fa-chart-bar"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="mt-3 mb-0 text-muted text-sm">
+
+                                        <span class="text-nowrap">Today</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6">
+                            <div class="card card-stats mb-4 mb-xl-0">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="card-title text-uppercase text-muted mb-0">Total Yesterday</h5>
+                                            @if (@ViewBag.TongDoanhThuHomQua == null)
+                                            {
+                                                <span class="h2 font-weight-bold mb-0" id="Totalyesterday">0 $</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="h2 font-weight-bold mb-0" id="Totalyesterday">@ViewBag.TongDoanhThuHomQua $</span>
+                                            }
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                                                <i class="fas fa-chart-bar"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="mt-3 mb-0 text-muted text-sm">
+
+                                        <span class="text-nowrap">Since yesterday</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt--7">
+            <div class="row">
+                <div class="col-xl-8 mb-5 mb-xl-0">
+                    <div class="card bg-gradient-default shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
+                                    <h2 class="text-white mb-0">Sales value</h2>
+                                </div>
+                                <div class="col">
+                                    <ul class="nav nav-pills justify-content-end">
+                                        <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
+                                            <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
+                                                <span class="d-none d-md-block">Month</span>
+                                                <span class="d-md-none">M</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
+                                            <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
+                                                <span class="d-none d-md-block">Week</span>
+                                                <span class="d-md-none">W</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- Chart -->
+                            <div class="chart">
+                                <!-- Chart wrapper -->
+                                <canvas id="chart-sales" class="chart-canvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="card shadow">
+                        <div class="card-header bg-transparent">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
+                                    <h2 class="mb-0">Total orders</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- Chart -->
+                            <div class="chart">
+                                <canvas id="chart-orders" class="chart-canvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Hàm để cập nhật số lượng online user
+        function updateOnlineUserCount() {
+            $.ajax({
+                url: '/Admin/TrangChuAdmin/GetOnlineUserCount',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#updatesl').text(data.onlineUserCount)
+
+                },
+                error: function () {
+                    // Xử lý lỗi nếu cần
+                }
+            });
+        }
+        // Hàm để cập nhật số lượng mua game
+        function updateNumberOfOrders() {
+            $.ajax({
+                /**/
+                url: '/Admin/TrangChuAdmin/GetSLBuyGame',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#SLBuyGame').text(data.numberOfOrders);
+                },
+                error: function () {
+                    // Xử lý lỗi nếu cần
+                }
+            });
+        }
+        function updateNumberOfSumTotal() {
+            $.ajax({
+                /**/
+                url: '/Admin/TrangChuAdmin/GetTotalToday',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.numberOfSumTotal == null) {
+                        $('#Sumtotal').text('0 $');
+                    }
+                    else { $('#Sumtotal').text(data.numberOfSumTotal + ' $'); }
+
+                },
+                error: function () {
+                    // Xử lý lỗi nếu cần
+                }
+            });
+        }
+        function updateNumberOfSumTotalYesterday() {
+            $.ajax({
+                /**/
+                url: '/Admin/TrangChuAdmin/GetTotalTodayYesterday',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#Totalyesterday').text(data.numberOfSumTotal + ' $');
+                },
+                error: function () {
+                    // Xử lý lỗi nếu cần
+                }
+            });
+        }
+        setInterval(updateOnlineUserCount, 3000);
+        setInterval(updateNumberOfOrders, 900);
+        setInterval(updateNumberOfSumTotal, 3000);
+        setInterval(updateNumberOfSumTotalYesterday, 3000);
+    </script>
+    <script>
+        var duration = 1 * 1000;
+        var end = Date.now() + duration;
+
+        (function frame() {
+            // launch a few confetti from the left edge
+            confetti({
+                particleCount: 7,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 }
+            });
+            // and launch a few from the right edge
+            confetti({
+                particleCount: 7,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 }
+            });
+
+            // keep going until we are out of time
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        }());
+    </script>
+</body>
+
+</html>
