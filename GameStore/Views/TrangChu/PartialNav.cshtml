@@ -694,8 +694,8 @@
                     <li class=" nk-drop-item">
                         <a href="@Url.Action("Store","Store")">
                             Store
-
-                        </a><ul class="dropdown">
+                        </a>
+                        @*<ul class="dropdown">*@
 
                             @*<li>
                                 <a href="@Url.Action("Store","Store")">
@@ -718,7 +718,7 @@
 
                                 </a>
                             </li>*@
-                            <li>
+                            @*<li>
                                 <a href="@Url.Action("StoreCheckout","StoreCheckout")">
                                     Cart History
                                 </a>
@@ -727,8 +727,8 @@
                                 <a href="@Url.Action("StoreCart","StoreCart")">
                                     Cart
                                 </a>
-                            </li>
-                        </ul>
+                            </li>*@
+                        @*</ul>*@
                     </li>
                     <li>
                         @if (kh == null)
