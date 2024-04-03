@@ -2865,6 +2865,10 @@
     <Content Include="Views\Community\LoadChildComment.cshtml" />
     <Content Include="Views\Store\SearchGame.cshtml" />
     <Content Include="Views\Store\GameByCategory.cshtml" />
+    <Content Include="Views\TrangChu\TrangChu.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\TrangChu\PartialLi.cshtml" />
+    <Content Include="Views\TrangChu\ModalChat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
