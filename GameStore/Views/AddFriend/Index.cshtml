@@ -109,7 +109,7 @@
             {
                 <li>
                     <div class="friend-info">
-                        <img src="" alt="Avatar" class="friend-avatar">
+                        <img src="~/Theme/images/avatar-3.jpg" alt="Avatar" class="friend-avatar">
                         @friend.HoTen
                     </div>
                     <div class="friend-actions">
@@ -198,7 +198,7 @@
                         $.each(response, function (index, friend) {
                             var listItem = $('<li>');
                             var friendInfo = $('<div>').addClass('friend-info');
-                            var friendAvatar = $('<img>').addClass('friend-avatar').attr('src', 'Theme/images/gallery-10.jpg').attr('alt', 'Avatar');
+                            var friendAvatar = $('<img>').addClass('friend-avatar').attr('src', '../Theme/images/avatar-3.jpg').attr('alt', 'Avatar');
                             var friendName = $('<span>').addClass('friend-name').text(friend.HoTen);
                             friendInfo.append(friendAvatar, friendName);
                             var friendActions = $('<div>').addClass('friend-actions');
